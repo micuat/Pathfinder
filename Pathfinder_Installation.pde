@@ -1,3 +1,4 @@
+import processing.awt.PSurfaceAWT;
 import peasy.*;
 import java.util.*;
 import saito.objloader.*;
@@ -27,7 +28,16 @@ void enableVSync() {
 }
 
 void setup() {
-  size(1920, 1080, OPENGL);
+  //PSurfaceAWT awtSurface = (PSurfaceAWT)surface;
+  //PSurfaceAWT.SmoothCanvas smoothCanvas = (PSurfaceAWT.SmoothCanvas)awtSurface.getNative();
+  //smoothCanvas.getFrame().setAlwaysOnTop(true);
+  //smoothCanvas.getFrame().removeNotify();
+  //smoothCanvas.getFrame().setUndecorated(true);
+  ////smoothCanvas.getFrame().setLocation(0, 0);
+  //smoothCanvas.getFrame().setLocation(300, 300);
+  //smoothCanvas.getFrame().addNotify();
+  size(1920, 1080, P3D);
+  smooth();
 
   mat_scene = getMatrix();
 
@@ -39,7 +49,7 @@ void setup() {
   //((PJOGL)PGraphicsOpenGL.pgl).gl.setSwapInterval(1); // enable waiting for vsync
 
   back = loadImage("back.jpg");
-  contentGr = createGraphics(width, height, OPENGL);
+  contentGr = createGraphics(width, height, P3D);
   contentGr2D = createGraphics(width, height);
 
 
@@ -63,19 +73,8 @@ void setup() {
   initVideo();
 }
 
-public void init() {
- 
- frame.removeNotify();
- frame.setUndecorated(true);
- frame.addNotify();
- frame.setAlwaysOnTop(true);
- super.init();
- } 
-
-
-
 void draw() {
-    frame.setLocation(0,0);
+  surface.setLocation(0, 0);
 
   updateFrame();
 
@@ -92,7 +91,7 @@ void draw() {
   image(contentGr, 0, 0);
   drawMenu();
 
-  frame.setTitle("Morpher || "+int(frameRate)+" fps");
+  surface.setTitle("Morpher || "+int(frameRate)+" fps");
 
   cam.endHUD();
 
@@ -100,7 +99,7 @@ void draw() {
   drawVideo();
   cam.endHUD();
 
- // controlInstallation();
+  // controlInstallation();
 }
 
 
@@ -123,7 +122,7 @@ void drawFrame(PGraphics in) {
   in.colorMode(HSB, 360);
   in.scale(cp5WorldScale);
   in.translate(0, 0, -5);
- 
+
   drawVisuals(in);
   in.endDraw();
 }
@@ -151,7 +150,7 @@ void movieEvent(Movie movie) {
 void drawVideo() {
   if (mov.time() < mov.duration()) image(mov, 0, 0);
   int timeRestartVideo=10*60;//in seconds
-//  if ((millis()/1000)%timeRestartVideo==0 && (mov.time() >10 || mov.time()<0)) startVideo();
+  //  if ((millis()/1000)%timeRestartVideo==0 && (mov.time() >10 || mov.time()<0)) startVideo();
   println(mov.duration() +" - "+ mov.time());
 }
 
@@ -175,6 +174,4 @@ void controlInstallation() {
 
   cp53DAnim = (tSwitch3D==0);
   if (!cp53DAnim) globalRotate=0;
-
 }
-

@@ -88,11 +88,11 @@ void oscEvent(OscMessage theOscMessage) {
 
   if (theOscMessage.addrPattern().equals("/Motion/speed")) {
     cp5TransSpeed = 0.1 + theOscMessage.get(0).floatValue() * 3;  
-    cp5.controller("cp5TransSpeed").setValue(cp5TransSpeed);
+    cp5.getController("cp5TransSpeed").setValue(cp5TransSpeed);
   }
   if (theOscMessage.addrPattern().equals("/Motion/delay")) {
     cp5TransDelay = 0.1 + theOscMessage.get(0).floatValue() * 3;  
-    cp5.controller("cp5TransDelay").setValue(cp5TransDelay);
+    cp5.getController("cp5TransDelay").setValue(cp5TransDelay);
   }
 
 

@@ -129,10 +129,8 @@ void setupGui() {
   cp5.addToggle("cp5WorldOrigin").setLabel("Origin");
   cp5.addToggle("cp5WorldGrid").setLabel("Grid");
   cp5.addToggle("cp5WorldRoom").setLabel("Room");
-  cp5.addButton("cp5Save").setLabel("Save").setPosition(0, unitSpace*20);
-  cp5.controller("cp5Save").setId(101);
-  cp5.addButton("cp5Load").setLabel("Load").setPosition(100, unitSpace*20);
-  cp5.controller("cp5Load").setId(100);
+  cp5.addButton("cp5Save").setLabel("Save").setPosition(0, unitSpace*20).setId(101);
+  cp5.addButton("cp5Load").setLabel("Load").setPosition(100, unitSpace*20).setId(100);
   cp5.end();
 
   setupObjectGui();
@@ -173,10 +171,10 @@ void customize(DropdownList ddl) {
   ddl.setBackgroundColor(color(190));
   ddl.setItemHeight(20);
   ddl.setBarHeight(15);
-  ddl.captionLabel().set("easing");
-  ddl.captionLabel().style().marginTop = 3;
-  ddl.captionLabel().style().marginLeft = 3;
-  ddl.valueLabel().style().marginTop = 3;
+  ddl.getCaptionLabel().set("easing");
+  ddl.getCaptionLabel().getStyle().marginTop = 3;
+  ddl.getCaptionLabel().getStyle().marginLeft = 3;
+  ddl.getValueLabel().getStyle().marginTop = 3;
   for (int i=0;i<easingsVariableNames.length;i++) {
     ddl.addItem(easingsVariableNames[i], i);
   }
@@ -193,9 +191,9 @@ void customizeObjects( int num) {
   objectGui[num].setItemHeight(20);
   objectGui[num].setBarHeight(15);
   objectGui[num].setSize(100, 500);
-  objectGui[num].captionLabel().style().marginTop = 3;
-  objectGui[num].captionLabel().style().marginLeft = 3;
-  objectGui[num].valueLabel().style().marginTop = 3;
+  objectGui[num].getCaptionLabel().getStyle().marginTop = 3;
+  objectGui[num].getCaptionLabel().getStyle().marginLeft = 3;
+  objectGui[num].getValueLabel().getStyle().marginTop = 3;
   for (int i=0;i<nameofBody.length;i++) {
     objectGui[num].addItem(nameofBody[i], i);
   }
@@ -210,7 +208,7 @@ void updateObjectGUI() {
 
     if (objectGui[i]!=null) {
       String y = int(i+1)+"";
-      objectGui[i].captionLabel().set(y+"_"+nameofBody[listofBody[i]]); 
+      objectGui[i].getCaptionLabel().set(y+"_"+nameofBody[listofBody[i]]); 
       if (i ==indexCurTarget) 
         objectGui[i].setColorBackground(highlight1);
       else objectGui[i].setColorBackground(color(60));
@@ -225,7 +223,7 @@ void updateObjectGUI() {
 
 void controlEvent(ControlEvent theEvent) {
   if (theEvent.isFrom(r)) {
-    cp5PlaybackStyle = int(theEvent.group().value());
+    cp5PlaybackStyle = int(theEvent.group().getValue());
     choreo.changePlayback();
 
     return;
@@ -419,4 +417,3 @@ void fileSaveCP5(File selection)
   //cp5.setAutoInitialization(true);
   cp5.saveProperties(initStringLoadCP5);
 }
-

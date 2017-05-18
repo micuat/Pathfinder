@@ -347,4 +347,3 @@ class PTri extends PFace {
     vert[3] = new PVector((vert[0].x + vert[2].x)/2.0, (vert[0].y + vert[2].y)/2.0, (vert[0].z + vert[2].z)/2.0);
   }
 }
-

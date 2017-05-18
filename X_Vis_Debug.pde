@@ -16,8 +16,7 @@ void drawWorld(PGraphics in) {
       in.line(0, 0, 0, cp5WorldRangeX, 0, 0);
       in.line(0, 0, 0, 0, -cp5WorldRangeY, 0);
       in.line(0, 0, 0, 0, 0, cp5WorldRangeY);
-    } 
-    else {
+    } else {
       in.ellipse(0, 0, 0.5, 0.5);
     }
     in.popStyle();
@@ -49,16 +48,15 @@ void drawWorld(PGraphics in) {
       if (cp5WorldRoom)
         in.strokeWeight(strokeWeightObjects/2);
       else 
-        in.strokeWeight(strokeWeightObjects);
+      in.strokeWeight(strokeWeightObjects);
 
-      for (int i= -cp5WorldRangeX; i<(cp5WorldRangeX+1);i+=1) 
+      for (int i= -cp5WorldRangeX; i<(cp5WorldRangeX+1); i+=1) 
         in.line(i, cp5WorldRangeY, -cp5WorldRangeY, i, cp5WorldRangeY, cp5WorldRangeY);
-      for (int i= -cp5WorldRangeY; i<(cp5WorldRangeY+1);i+=1) 
+      for (int i= -cp5WorldRangeY; i<(cp5WorldRangeY+1); i+=1) 
         in.line(-cp5WorldRangeX, cp5WorldRangeY, i, cp5WorldRangeX, cp5WorldRangeY, i);
-    }
-    else {
-      for (int i= -(cp5WorldRangeX-1); i<(cp5WorldRangeX) ;i+=1) {
-        for (int j= -(cp5WorldRangeY-1); j<(cp5WorldRangeY);j+=1) {
+    } else {
+      for (int i= -(cp5WorldRangeX-1); i<(cp5WorldRangeX); i+=1) {
+        for (int j= -(cp5WorldRangeY-1); j<(cp5WorldRangeY); j+=1) {
           in.stroke(highlight2);
 
 
@@ -92,7 +90,7 @@ void drawHUD() {
   int yUnit = 25;
   int xLength=100;
 
-  for (int i =0 ; i < choreo.toDoTasks.length;i++) {
+  for (int i =0; i < choreo.toDoTasks.length; i++) {
     stroke(255, 30);
     line (100, i*yUnit - 5, 100+xLength, i*yUnit - 5);
     stroke(360);
@@ -172,7 +170,7 @@ void drawHUD() {
 
 void drawBody(PGraphics in, Body body, color colorFill, color colorStroke) {
 
-  for (int i=0;i < body.element.length;i++) {
+  for (int i=0; i < body.element.length; i++) {
     drawMesh(in, body.element[i].mesh, colorFill, colorStroke);
   }
 }
@@ -239,7 +237,7 @@ void drawMesh(PGraphics in, WETriangleMesh meshI, color colorFill, color colorSt
       in.pushStyle();
       in.fill(255);
       in.textSize(66);
-      for (int i=0; i < 4;i++) {
+      for (int i=0; i < 4; i++) {
         in.stroke(360);
         in.pushMatrix();
         in.translate(pos[i].x, cp5WorldRangeY, cp5WorldRangeY);
@@ -354,4 +352,3 @@ void drawPolyMesh(PGraphics in, Vec3D [] pos, color fillCol, color strokeCol, fl
     endShape();
   }
 }
-

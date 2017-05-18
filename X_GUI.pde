@@ -85,14 +85,14 @@ void setupGui() {
 
   r = cp5.addRadioButton("radioButton")
     .setPosition(unitSpace, unitSpace)
-      .setSize(25, 15)
-        .setItemsPerRow(3)
-          .setSpacingColumn(125)
-            .addItem("Auto", 1)
-              .addItem("Loop", 2)
-                .addItem("Manual", 3)
-                  .setColorActive(highlight1)
-                    ;
+    .setSize(25, 15)
+    .setItemsPerRow(3)
+    .setSpacingColumn(125)
+    .addItem("Auto", 1)
+    .addItem("Loop", 2)
+    .addItem("Manual", 3)
+    .setColorActive(highlight1)
+    ;
   r.activate(0);
 
   cp5.addSlider("cp5TransSpeed", 0.1, 8).linebreak().setLabel("Speed").setPosition(0, unitSpace*3); 
@@ -139,7 +139,7 @@ void setupGui() {
 
 void setupObjectGui() {
   objectGui = new DropdownList[listofBody.length];
-  for (int i=0;i < objectGui.length;i++) 
+  for (int i=0; i < objectGui.length; i++) 
     customizeObjects(i);
 
 
@@ -156,8 +156,7 @@ void drawGui() {
 
   if (mouseX > width-300) {
     cam.setMouseControlled(false);  //PeasyCam off
-  }
-  else
+  } else
     cam.setMouseControlled(true);
   popStyle();
 
@@ -175,7 +174,7 @@ void customize(DropdownList ddl) {
   ddl.getCaptionLabel().getStyle().marginTop = 3;
   ddl.getCaptionLabel().getStyle().marginLeft = 3;
   ddl.getValueLabel().getStyle().marginTop = 3;
-  for (int i=0;i<easingsVariableNames.length;i++) {
+  for (int i=0; i<easingsVariableNames.length; i++) {
     ddl.addItem(easingsVariableNames[i], i);
   }
   ddl.setColorBackground(color(60));
@@ -194,7 +193,7 @@ void customizeObjects( int num) {
   objectGui[num].getCaptionLabel().getStyle().marginTop = 3;
   objectGui[num].getCaptionLabel().getStyle().marginLeft = 3;
   objectGui[num].getValueLabel().getStyle().marginTop = 3;
-  for (int i=0;i<nameofBody.length;i++) {
+  for (int i=0; i<nameofBody.length; i++) {
     objectGui[num].addItem(nameofBody[i], i);
   }
   //ddl.scroll(0);
@@ -204,7 +203,7 @@ void customizeObjects( int num) {
 
 
 void updateObjectGUI() {
-  for (int i=0;i < objectGui.length;i++) {
+  for (int i=0; i < objectGui.length; i++) {
 
     if (objectGui[i]!=null) {
       String y = int(i+1)+"";
@@ -282,8 +281,7 @@ void keyReleased() {
     if (keyCode == LEFT) {
       if (framePos==0) framePos=1920; 
       else framePos=0;
-    } 
-    else if (keyCode == RIGHT) {
+    } else if (keyCode == RIGHT) {
       if (framePos==0) framePos=1920; 
       else framePos=0;
     }
@@ -358,47 +356,47 @@ void keyReleased() {
 }
 
 void pointPoint() {
-  for (int i =0; i < listofBody.length;i++) 
+  for (int i =0; i < listofBody.length; i++) 
     listofBody[i]=0;
 }
 
 void lineLine() {
-  for (int i =0; i < listofBody.length;i++) 
+  for (int i =0; i < listofBody.length; i++) 
     listofBody[i]=1;
 }
 
 void planePlane() {
-  for (int i =0; i < listofBody.length;i++) 
+  for (int i =0; i < listofBody.length; i++) 
     listofBody[i]=(i%2)+2;
 }
 
 void pointLine() {
   listofBody[0]=4;
-    listofBody[1]=3;
-      listofBody[2]=4;
-        listofBody[3]=2;
-/*listofBody = {
-  0,1,2,3
-};*/
+  listofBody[1]=3;
+  listofBody[2]=4;
+  listofBody[3]=2;
+  /*listofBody = {
+   0,1,2,3
+   };*/
 }
 
 void pointPlane() {
-  for (int i =0; i < listofBody.length;i++) 
+  for (int i =0; i < listofBody.length; i++) 
     listofBody[i]=(i%2) < 1  ?  0 : 2;
 }
 
 void linePlane() {
-  for (int i =0; i < listofBody.length;i++) 
+  for (int i =0; i < listofBody.length; i++) 
     listofBody[i]=(i%2) < 1  ?  1 : 2;
 }
 
 void randObj() {
-  for (int i =0; i < listofBody.length;i++) 
+  for (int i =0; i < listofBody.length; i++) 
     listofBody[i]=(int)random(body.length);
 }
 
 void planeBox() {
-  for (int i =0; i < listofBody.length;i++) 
+  for (int i =0; i < listofBody.length; i++) 
     listofBody[i]=(i%3)+2;
 }
 

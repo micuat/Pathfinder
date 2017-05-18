@@ -68,23 +68,23 @@ void oscEvent(OscMessage theOscMessage) {
   if (theOscMessage.addrPattern().equals("/Object/faderManual")) {
     cp5SeekAniValue=theOscMessage.get(0).floatValue();
   }
-  
-  
-  
+
+
+
 
   if (theOscMessage.addrPattern().equals("/Object/90")) {
     if (theOscMessage.get(0).floatValue()==1) 
-    cp5QuantAnim=true;
+      cp5QuantAnim=true;
     else cp5QuantAnim=false;
   }  
-   if (theOscMessage.addrPattern().equals("/Object/3D")) {
+  if (theOscMessage.addrPattern().equals("/Object/3D")) {
     if (theOscMessage.get(0).floatValue()==1) 
-    cp53DAnim=true;
+      cp53DAnim=true;
     else cp53DAnim=false;
   } 
-  
-  
-  
+
+
+
 
   if (theOscMessage.addrPattern().equals("/Motion/speed")) {
     cp5TransSpeed = 0.1 + theOscMessage.get(0).floatValue() * 3;  
@@ -125,8 +125,7 @@ void oscEvent(OscMessage theOscMessage) {
     if (theOscMessage.get(0).floatValue()==1) {
       cp5DisplayLines=true;
       cp5DisplayPoints=true;
-    }
-    else {
+    } else {
       cp5DisplayLines=false;
       cp5DisplayPoints=false;
     }

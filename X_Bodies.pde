@@ -10,9 +10,9 @@ int[] listofBody = {
 
 
 int[] listofBody = {
-  0,1,2,3
+  0, 1, 2, 3
 };
-  
+
 /*
 int[] listofBody = {
  4, 3,4,2
@@ -35,19 +35,15 @@ String[] nameofBody = {
 };
 
 int calcRandomValue(int from, int to) {
-  int val= (int)random(from,to+1);
+  int val= (int)random(from, to+1);
 
-  return constrain(val,from,to);
-  
-  
+  return constrain(val, from, to);
 } 
 
 int calcRandomValue(float from, float to) {
-  float val= (int)random(from,to+1);
+  float val= (int)random(from, to+1);
 
-  return (int)constrain(val,from,to);
-  
-  
+  return (int)constrain(val, from, to);
 } 
 
 
@@ -55,7 +51,7 @@ void setupBodyPrimitives() {
 
   sampleOriginBody=new Body(new PFace(new PVector(-0.5, 0.5, 0), new PVector(-0.5, -0.5, 0), new PVector(0.5, -0.5, 0), new PVector(0.5, 0.5, 0)));
 
-  for (int i=0;i < body.length;i++) getNextRandomBody(i);
+  for (int i=0; i < body.length; i++) getNextRandomBody(i);
 }
 
 
@@ -79,7 +75,7 @@ void getNextRandomBody(int i) {
   if (i==4) {
     if (!cp53DAnim) body[4]=new Body(new PFace());
     else 
-      body[4]=new Body(new PBox().face);
+    body[4]=new Body(new PBox().face);
   }
   numRandomBody++;
   println(numRandomBody);
@@ -90,14 +86,14 @@ void getNextRandomBody(int i) {
 
 
 
-  float globalScaleMult=0.5;
+float globalScaleMult=0.5;
 class PBox {
   PFace[] face = new PFace[6];
 
   float w, h, d = 1;
   PVector pos=new PVector(0, 0, 0);
-  
-  
+
+
 
   public PBox() {
     setup();
@@ -115,7 +111,7 @@ class PBox {
 
   void setTrans(PVector posI) {
     pos=new PVector(posI.x, posI.y, posI.z);
-    for (int i=0;i < face.length;i++) {
+    for (int i=0; i < face.length; i++) {
       face[i].setTrans(pos);
     }
   }
@@ -132,7 +128,7 @@ class PBox {
 
 
   void setRot(PVector dir, float amount) {
-    for (int i=0;i < face.length;i++)
+    for (int i=0; i < face.length; i++)
       face[i].setRot(dir, amount);
   }
 
@@ -141,7 +137,7 @@ class PBox {
     w=wI;
     h=hI;
     d=dI;
-    for (int i=0;i < face.length;i++) {
+    for (int i=0; i < face.length; i++) {
       face[i].setScale(w, h, d);
     }
   }
@@ -149,38 +145,38 @@ class PBox {
 
   public void setup() {
     face[0] = new PFace(new PVector( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Top)
-    new PVector(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Top)
-    new PVector(-1.0f, 1.0f, 1.0f), // Bottom Left Of The Quad (Top)
-    new PVector( 1.0f, 1.0f, 1.0f));    // Bottom Right Of The Quad (Top)
+      new PVector(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Top)
+      new PVector(-1.0f, 1.0f, 1.0f), // Bottom Left Of The Quad (Top)
+      new PVector( 1.0f, 1.0f, 1.0f));    // Bottom Right Of The Quad (Top)
 
     face[1] = new PFace(new PVector( 1.0f, -1.0f, 1.0f), // Top Right Of The Quad (Bottom)
-    new PVector(-1.0f, -1.0f, 1.0f), // Top Left Of The Quad (Bottom)
-    new PVector(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Bottom)
-    new PVector( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Bottom)
+      new PVector(-1.0f, -1.0f, 1.0f), // Top Left Of The Quad (Bottom)
+      new PVector(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Bottom)
+      new PVector( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Bottom)
 
     face[2] = new PFace(new PVector( 1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Front)
-    new PVector(-1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Front)
-    new PVector(-1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Front)
-    new PVector( 1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Front)
+      new PVector(-1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Front)
+      new PVector(-1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Front)
+      new PVector( 1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Front)
 
     face[3] = new PFace(new PVector( 1.0f, -1.0f, -1.0f), // Top Right Of The Quad (Back)
-    new PVector(-1.0f, -1.0f, -1.0f), // Top Left Of The Quad (Back)
-    new PVector(-1.0f, 1.0f, -1.0f), // Bottom Left Of The Quad (Back)
-    new PVector( 1.0f, 1.0f, -1.0f));    // Bottom Right Of The Quad (Back)
+      new PVector(-1.0f, -1.0f, -1.0f), // Top Left Of The Quad (Back)
+      new PVector(-1.0f, 1.0f, -1.0f), // Bottom Left Of The Quad (Back)
+      new PVector( 1.0f, 1.0f, -1.0f));    // Bottom Right Of The Quad (Back)
 
     face[4] = new PFace(new PVector(-1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Left)
-    new PVector(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Left)
-    new PVector(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Left)
-    new PVector(-1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Left)
+      new PVector(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Left)
+      new PVector(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Left)
+      new PVector(-1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Left)
 
     face[5] = new PFace(new PVector( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Right)
-    new PVector( 1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Right)
-    new PVector( 1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Right)
-    new PVector( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Right)
+      new PVector( 1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Right)
+      new PVector( 1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Right)
+      new PVector( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Right)
   }
 
   public void draw() {
-    for (int i=0;i <face.length;i++)
+    for (int i=0; i <face.length; i++)
       face[i].draw();
   }
 }
@@ -246,9 +242,8 @@ class PFace {
     setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
     setRandRot();    
     PVector dim = getDimensions(); 
-  //  setTrans(new PVector(random(-cp5WorldRangeX, cp5WorldRangeX), random(-cp5WorldRangeY, cp5WorldRangeY), random(-cp5WorldRangeY, cp5WorldRangeY)  ) );
-     setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
-
+    //  setTrans(new PVector(random(-cp5WorldRangeX, cp5WorldRangeX), random(-cp5WorldRangeY, cp5WorldRangeY), random(-cp5WorldRangeY, cp5WorldRangeY)  ) );
+    setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
 
   public PFace(PVector a, PVector b, float heightV) {
@@ -271,7 +266,7 @@ class PFace {
     float  sY=0;
     float sZ=0;
 
-    for (int i=0;i < vert.length; i++) {
+    for (int i=0; i < vert.length; i++) {
 
       if (abs(vert[i].x) >= sX) sX = abs(vert[i].x);
       if (abs(vert[i].y) >= sY) sY = abs(vert[i].y);
@@ -308,7 +303,7 @@ class PFace {
     pos=new PVector(posI.x, posI.y, posI.z);
     if (cp5QuantAnim) pos=new PVector((int)posI.x, (int)posI.y, (int)posI.z);
 
-    for (int j=0;j < vert.length;j++) {
+    for (int j=0; j < vert.length; j++) {
       vert[j].x+=pos.x;
       vert[j].y+=pos.y;      
       vert[j].z+=pos.z;
@@ -330,7 +325,7 @@ class PFace {
       d=(int)d;
     }
 
-    for (int j=0;j < vert.length;j++) {
+    for (int j=0; j < vert.length; j++) {
       vert[j].x*=w;
       vert[j].y*=h;
       vert[j].z*=d;

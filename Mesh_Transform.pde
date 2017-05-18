@@ -34,8 +34,7 @@ class MeshTransform {
     if (verts.length>2 && motionClap) {
       motionClapIndex=(int)random(0, verts.length-1);
       motionClapIndex=1;
-    }
-    else {
+    } else {
       motionClap=false; 
       motionClapIndex=-1;
     }
@@ -74,8 +73,7 @@ class MeshTransform {
 
     if (checkForEnd(rotAmount, rotNormAmount, transAmountX, transAmountY, transAmountZ, sizeAmountX, sizeAmountY, triAmount)) {
       ;
-    }
-    else {
+    } else {
 
       cur = updateTransAndRot(cur, src, dst, rotAmount, rotNormAmount, transAmountX, transAmountY, transAmountZ);
       cur= m.update(cur);
@@ -91,7 +89,7 @@ class MeshTransform {
     src = m.update(src);
     dst = m.update(dst);
     cur=src.copy();
-   
+
     cur = m.getRot(cur, dst, rotAmount, motionClapIndex);
     cur = m.update(cur);
     cur = m.getRotNormal(cur, dst, rotNormAmount);
@@ -124,24 +122,24 @@ class MeshTransform {
     float ax = targetWidth/widthCur; 
     float ay = targetHeight/heightCur; 
     curL.scale(new Vec3D(ax, ay, 0)); 
-    
-   
+
+
     ax = targetWidth/widthDst; 
     ay = targetHeight/heightDst; 
     dstL.scale(new Vec3D(ax, ay, 0)); 
-   
+
     Vec3D center = m.getCenter(curL);
     Vec3D[] verts =  m.getVertexVec(curL);
     Vec3D[] vertsT =  m.getVertexVec(dstL);
-        
-    
+
+
     verts[3] = new Vec3D(verts[3].x  + (vertsT[3].x-verts[3].x)*triAmount, verts[3].y  + (vertsT[3].y-verts[3].y)*triAmount, verts[3].z  + (vertsT[3].z-verts[3].z)*triAmount);
 
     curL.clear();
     curL.addFace(verts[0], verts[1], verts[2]);
     curL.addFace(verts[2], verts[3], verts[0]); 
     curL = updateTransAndRot(curL, curL, cur, 1, 1, 1, 1, 1);
-  
+
     return curL;
   }
 
@@ -161,4 +159,3 @@ class MeshTransform {
     return false;
   }
 }
-

@@ -10,18 +10,16 @@ class Math {
   }
 
   boolean compareMesh(WETriangleMesh src, WETriangleMesh dst) {
-       Vec3D[] srcA = getVertexVec(src); 
-       Vec3D[] srcB = getVertexVec(dst);
-       
-       boolean res=true;
-       
-       for (int i=0;i < srcA.length;i++) {
-         if (srcA[i].distanceTo(srcB[i]) > 0.1 ) res=false;
-         
-               
-       }
-    
-    
+    Vec3D[] srcA = getVertexVec(src); 
+    Vec3D[] srcB = getVertexVec(dst);
+
+    boolean res=true;
+
+    for (int i=0; i < srcA.length; i++) {
+      if (srcA[i].distanceTo(srcB[i]) > 0.1 ) res=false;
+    }
+
+
     return res;
   }
 
@@ -81,21 +79,21 @@ class Math {
   }
 
   float getHeight(WETriangleMesh src) { 
-    
+
     Vec3D[]  t = getVertexVec(src);
-    
-   return t[0].distanceTo(t[1]);
-  //  float[] vs = src.getUniqueVerticesAsArray();  
-  //    return dist(vs[0], vs[1], vs[2], vs[3], vs[4], vs[5]); //new Vec3D(abs(vs[0]-vs[3]),abs(vs[1]-vs[4]),abs(vs[2]-vs[5]));  
+
+    return t[0].distanceTo(t[1]);
+    //  float[] vs = src.getUniqueVerticesAsArray();  
+    //    return dist(vs[0], vs[1], vs[2], vs[3], vs[4], vs[5]); //new Vec3D(abs(vs[0]-vs[3]),abs(vs[1]-vs[4]),abs(vs[2]-vs[5]));
   }
 
   float getWidth(WETriangleMesh src) {  
-  Vec3D[]  t = getVertexVec(src);
-    
+    Vec3D[]  t = getVertexVec(src);
+
     return t[1].distanceTo(t[2]);
-    
-  //  float[] vs = src.getUniqueVerticesAsArray();  
-  //    return dist(vs[3], vs[4], vs[5], vs[6], vs[7], vs[8]); //new Vec3D(abs(vs[0]-vs[3]),abs(vs[1]-vs[4]),abs(vs[2]-vs[5]));  
+
+    //  float[] vs = src.getUniqueVerticesAsArray();  
+    //    return dist(vs[3], vs[4], vs[5], vs[6], vs[7], vs[8]); //new Vec3D(abs(vs[0]-vs[3]),abs(vs[1]-vs[4]),abs(vs[2]-vs[5]));
   }
 
   Vec3D getFaceTowards(WETriangleMesh src) { 
@@ -109,16 +107,16 @@ class Math {
   Vec3D[] getVertexVec(WETriangleMesh src) { 
     Vec3D[] res = new Vec3D[1];
     res[0]=new Vec3D(0, 0, 0);
-   /* 
-    Collection <Vertex> res2 = src.getVertices();
-    res = (Vec3D[])(res2.toArray());
-   //for (int i=0;i < res2.size();i++) res[i] = res2.get(i);*/
+    /* 
+     Collection <Vertex> res2 = src.getVertices();
+     res = (Vec3D[])(res2.toArray());
+     //for (int i=0;i < res2.size();i++) res[i] = res2.get(i);*/
     float[] vs = src.getUniqueVerticesAsArray();  
 
     int lng = vs.length;
     if (lng>3) {
       res = new Vec3D[lng/3];
-      for (int i=0;i < lng;i+=3) {
+      for (int i=0; i < lng; i+=3) {
         res[i/3] = new Vec3D(vs[i+0], vs[i+1], vs[i+2]);
       }
     }
@@ -131,91 +129,89 @@ class Math {
   ///////////////////////////////////////////////////////////////////////////////////////////
 
 
-WETriangleMesh getRot(WETriangleMesh src, WETriangleMesh dst, float amount, int clapIndex) {
-  WETriangleMesh mesh = new WETriangleMesh();
-  mesh = src.copy();  
+  WETriangleMesh getRot(WETriangleMesh src, WETriangleMesh dst, float amount, int clapIndex) {
+    WETriangleMesh mesh = new WETriangleMesh();
+    mesh = src.copy();  
 
-  Vec3D tempA =  getNormal(src);
-  Vec3D tempB =  getNormal(dst);
+    Vec3D tempA =  getNormal(src);
+    Vec3D tempB =  getNormal(dst);
 
-  Vec3D center = getCenter(mesh);//mesh.computeCentroid();
-  mesh.translate(new Vec3D(-center.x, -center.y, -center.z));    
+    Vec3D center = getCenter(mesh);//mesh.computeCentroid();
+    mesh.translate(new Vec3D(-center.x, -center.y, -center.z));    
 
-  Vec3D rotVector = (tempA.cross(tempB)); 
-  rotVector.normalize();
+    Vec3D rotVector = (tempA.cross(tempB)); 
+    rotVector.normalize();
 
-  Vec3D[] offSetA = getVertexVec(mesh); 
-  
-  
-  if (rotVector.x==0 && rotVector.y==0 && rotVector.z==0) {
-
-    Vec3D diff = (offSetA[0].sub(offSetA[1])).normalize().abs();
-
-    WETriangleMesh test=new WETriangleMesh();
-    test.addFace(diff, tempA, tempB);
-
-    rotVector = getNormal(test);
-  } 
-
-  float angleDiff =  atan2(rotVector.dot( tempA.cross(tempB)), tempA.dot(tempB));
-
-  angleDiff = radians(degrees(angleDiff) * amount);
-  Vec3D  noTr = tempA.getRotatedAroundAxis(rotVector, angleDiff);  
+    Vec3D[] offSetA = getVertexVec(mesh); 
 
 
+    if (rotVector.x==0 && rotVector.y==0 && rotVector.z==0) {
 
-  Vec3D offSet = new Vec3D(0, 0, 0); 
-  if (clapIndex>=0 && clapIndex< offSetA.length) offSet = offSetA[clapIndex];
+      Vec3D diff = (offSetA[0].sub(offSetA[1])).normalize().abs();
 
-  mesh.translate(new Vec3D(offSet.x, offSet.y, offSet.z));
-  mesh.pointTowards(noTr.getNormalized(), tempA.getNormalized());
-  mesh.translate(new Vec3D(-offSet.x, - offSet.y, -offSet.z));
-  mesh.translate(center);
+      WETriangleMesh test=new WETriangleMesh();
+      test.addFace(diff, tempA, tempB);
 
-  return mesh;
-}
+      rotVector = getNormal(test);
+    } 
+
+    float angleDiff =  atan2(rotVector.dot( tempA.cross(tempB)), tempA.dot(tempB));
+
+    angleDiff = radians(degrees(angleDiff) * amount);
+    Vec3D  noTr = tempA.getRotatedAroundAxis(rotVector, angleDiff);  
 
 
 
-  PVector[]  setPVectorRotation(PVector[] face, PVector dir,float rot) {
-    
-   for (int i=0;i < face.length;i++) {
-   Vec3D res = new Vec3D(face[i].x,face[i].y,face[i].z);
-   res = res.getRotatedAroundAxis(new Vec3D(dir.x,dir.y,dir.z), rot);
-   face[i] = new PVector(res.x,res.y,res.z);
-   }
-                                        
-   return face;
+    Vec3D offSet = new Vec3D(0, 0, 0); 
+    if (clapIndex>=0 && clapIndex< offSetA.length) offSet = offSetA[clapIndex];
+
+    mesh.translate(new Vec3D(offSet.x, offSet.y, offSet.z));
+    mesh.pointTowards(noTr.getNormalized(), tempA.getNormalized());
+    mesh.translate(new Vec3D(-offSet.x, - offSet.y, -offSet.z));
+    mesh.translate(center);
+
+    return mesh;
   }
-  
-  
+
+
+
+  PVector[]  setPVectorRotation(PVector[] face, PVector dir, float rot) {
+
+    for (int i=0; i < face.length; i++) {
+      Vec3D res = new Vec3D(face[i].x, face[i].y, face[i].z);
+      res = res.getRotatedAroundAxis(new Vec3D(dir.x, dir.y, dir.z), rot);
+      face[i] = new PVector(res.x, res.y, res.z);
+    }
+
+    return face;
+  }
+
+
   PVector  getRandVector(boolean quant) {
-   Vec3D res =  new Vec3D(0,0,1);
-   
-   if (!cp53DAnim) return new PVector (0,0,1);
+    Vec3D res =  new Vec3D(0, 0, 1);
 
-   if (!quant) { 
-    res = new Vec3D(1,1,1).randomVector();
-    res = res.normalize();
-    return new PVector (res.x,res.y,res.z);
-   } else {
-     int dir = (int)random(0,2);
-     if (dir ==0) res = new Vec3D(1,0,0);
-     if (dir ==1) res = new Vec3D(0,1,0);
-      return new PVector (res.x,res.y,res.z);
-   }   
-   
+    if (!cp53DAnim) return new PVector (0, 0, 1);
 
+    if (!quant) { 
+      res = new Vec3D(1, 1, 1).randomVector();
+      res = res.normalize();
+      return new PVector (res.x, res.y, res.z);
+    } else {
+      int dir = (int)random(0, 2);
+      if (dir ==0) res = new Vec3D(1, 0, 0);
+      if (dir ==1) res = new Vec3D(0, 1, 0);
+      return new PVector (res.x, res.y, res.z);
+    }
   }
-  
- PVector  setPVectorRotation(PVector face, PVector dir,float rot) {
-   PVector resP=new PVector(0,0,0);
 
-   Vec3D res = new Vec3D(face.x,face.y,face.z);
-   res = res.getRotatedAroundAxis(new Vec3D(dir.x,dir.y,dir.z), rot);
-   resP = new PVector(res.x,res.y,res.z);
-                                        
-   return resP;
+  PVector  setPVectorRotation(PVector face, PVector dir, float rot) {
+    PVector resP=new PVector(0, 0, 0);
+
+    Vec3D res = new Vec3D(face.x, face.y, face.z);
+    res = res.getRotatedAroundAxis(new Vec3D(dir.x, dir.y, dir.z), rot);
+    resP = new PVector(res.x, res.y, res.z);
+
+    return resP;
   }
 
 
@@ -231,16 +227,16 @@ WETriangleMesh getRot(WETriangleMesh src, WETriangleMesh dst, float amount, int 
 
     Vec3D memNormal = getNormal(mesh);
 
-  //  rotAngleToTarget = radians(degrees(rotAngleToTarget) * amount);
+    //  rotAngleToTarget = radians(degrees(rotAngleToTarget) * amount);
     mesh.rotateAroundAxis(getNormal(mesh), (float)rotAngleToTarget * amount); 
-   // mesh.pointTowards(memNormal, getNormal(mesh)); 
+    // mesh.pointTowards(memNormal, getNormal(mesh)); 
     mesh.translate(center);
     return mesh;
   }
 
-//  WETriangleMesh getTrans(WETriangleMesh src, WETriangleMesh dst, float amount,Vec3D offSet) {
-//    return getTrans(src, dst, amount, amount, amount,offSet);
-//  }
+  //  WETriangleMesh getTrans(WETriangleMesh src, WETriangleMesh dst, float amount,Vec3D offSet) {
+  //    return getTrans(src, dst, amount, amount, amount,offSet);
+  //  }
 
 
   WETriangleMesh update(WETriangleMesh src) {
@@ -250,22 +246,22 @@ WETriangleMesh getRot(WETriangleMesh src, WETriangleMesh dst, float amount, int 
 
     return src;
   }
-  
-  
+
+
   boolean isTriangle(WETriangleMesh src) {
     Vec3D center = getCenter(src);
-    
+
     Vec3D[] pos = getVertexVec(src); 
-    
+
     float dist1= pos[3].distanceTo(center);
     float dist2 = pos[0].distanceTo(center);
-    
+
     if (dist1<dist2/2) return true;
     else return false;
   }
 
 
-  WETriangleMesh getTrans(WETriangleMesh src, WETriangleMesh dst, float amountX, float amountY, float amountZ,Vec3D offSet) {
+  WETriangleMesh getTrans(WETriangleMesh src, WETriangleMesh dst, float amountX, float amountY, float amountZ, Vec3D offSet) {
 
 
     WETriangleMesh mesh = new WETriangleMesh();
@@ -274,7 +270,7 @@ WETriangleMesh getRot(WETriangleMesh src, WETriangleMesh dst, float amount, int 
     Vec3D cDst=getCenter(dst);//dst.computeCentroid();
 
 
-    Vec3D tr = new Vec3D(cSrc.x+(cDst.x-cSrc.x)*amountX , cSrc.y+(cDst.y-cSrc.y)*amountY , cSrc.z+(cDst.z-cSrc.z)*amountZ  );
+    Vec3D tr = new Vec3D(cSrc.x+(cDst.x-cSrc.x)*amountX, cSrc.y+(cDst.y-cSrc.y)*amountY, cSrc.z+(cDst.z-cSrc.z)*amountZ  );
     Vec3D centerN=getCenter(src);//src.computeCentroid();
     mesh.translate(tr.sub(centerN));
 
@@ -337,12 +333,12 @@ class TransformInfo {
   }
 
   void checkPosition(Vec3D offSet) {
-   Vec3D srcC = m.getCenter(src);
-   Vec3D dstC = m.getCenter(dst).sub(offSet);    
+    Vec3D srcC = m.getCenter(src);
+    Vec3D dstC = m.getCenter(dst).sub(offSet);    
 
-   if (srcC.x==dstC.x && offSet.x==0) transAmountX=0;
-   if (srcC.y==dstC.y && offSet.y==0) transAmountY=0;
-   if (srcC.z==dstC.z && offSet.z==0) transAmountZ=0;
+    if (srcC.x==dstC.x && offSet.x==0) transAmountX=0;
+    if (srcC.y==dstC.y && offSet.y==0) transAmountY=0;
+    if (srcC.z==dstC.z && offSet.z==0) transAmountZ=0;
   }
 
 
@@ -353,19 +349,19 @@ class TransformInfo {
 
     float widthSrc = m.getWidth(src);
     float widthDst = m.getWidth(dst);
-    
-    
-    
+
+
+
     if (abs(widthSrc-widthDst)< pPointSize) sizeAmountX=0;    
     if (abs(heightSrc-heightDst)< pPointSize) sizeAmountY=0;
-    
+
     Vec3D[] verts =  m.getVertexVec(src);
     Vec3D[] vertsT =  m.getVertexVec(dst);
-    
-    
-    
+
+
+
     if (m.isTriangle(src)==m.isTriangle(dst)) triAmount=0;
-  //  if (dist(verts[1].x,verts[1].y,verts[1].z, verts[3].x,verts[3].y,verts[3].z) != dist(vertsT[1].x,vertsT[1].y,vertsT[1].z, vertsT[3].x,vertsT[3].y,vertsT[3].z)) sizeAmountX=1;
+    //  if (dist(verts[1].x,verts[1].y,verts[1].z, verts[3].x,verts[3].y,verts[3].z) != dist(vertsT[1].x,vertsT[1].y,vertsT[1].z, vertsT[3].x,vertsT[3].y,vertsT[3].z)) sizeAmountX=1;
   }
 
   void checkRot() {
@@ -378,8 +374,7 @@ class TransformInfo {
 
   void checkRotNorm() {
 
-   if (m.getRotToTarget(src, dst)==0) rotNormAmount=0;
-
+    if (m.getRotToTarget(src, dst)==0) rotNormAmount=0;
   }
 
 
@@ -395,4 +390,3 @@ class TransformInfo {
     println();
   }
 }
-

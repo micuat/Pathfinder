@@ -10,8 +10,7 @@ void enterBodyRecording(Body body, boolean insertLines) {
 
   boolean enter=false;
   if (rot1==0 && rot2==0) {
-  }
-  else {
+  } else {
 
     if (rot1!=choreo.aniRot || rot2!=choreo.aniRotNo) {
 
@@ -25,11 +24,11 @@ void enterBodyRecording(Body body, boolean insertLines) {
 
   if (elementCopy.length>0 && elementCopy!=null) {
     //  println(item.edges.size());
-    for (int i=0;i < body.element.length && i <  elementCopy.length ;i++) {
+    for (int i=0; i < body.element.length && i <  elementCopy.length; i++) {
 
       Vec3D [] pos = m.getVertexVec(body.element[i].mesh);
       Vec3D [] posCopy = m.getVertexVec(elementCopy[i].mesh);
-      for (int j=0;j < pos.length && j <  posCopy.length ;j++) {
+      for (int j=0; j < pos.length && j <  posCopy.length; j++) {
 
         if (drawPointVsLines)
           item.enterEdge(pos[j], posCopy[j]);
@@ -43,7 +42,7 @@ void enterBodyRecording(Body body, boolean insertLines) {
 
 
   elementCopy = new MeshElement[ body.element.length];
-  for (int i=0; i < elementCopy.length;i++) 
+  for (int i=0; i < elementCopy.length; i++) 
     elementCopy[i] = body.element[i].copy();
 }
 
@@ -76,7 +75,7 @@ class Item {
     float s = min(6000, pos.size());
     //println("x " + (float)mouseX/(float)width * 10);
     // println("y " + mouseY);
-    for (int i=1; i < s;i++) {
+    for (int i=1; i < s; i++) {
       in.pushMatrix();
       // 
       //  in.stroke(highlight2);
@@ -196,8 +195,7 @@ class VisMesh {
     life-=1/120.0;
     if (life < 0) {
       return true;
-    } 
-    else {
+    } else {
       return false;
     }
   }
@@ -205,7 +203,7 @@ class VisMesh {
 
 
   void display(PGraphics in) {
-    for (int i=0;i < body.element.length;i++) {
+    for (int i=0; i < body.element.length; i++) {
 
       Vec3D [] pos = m.getVertexVec(body.element[i].mesh);
 
@@ -215,10 +213,10 @@ class VisMesh {
       int till=0;
       if (m.isTriangle(body.element[i].mesh)) till=1;
       if (pos.length>3)
-        for (int j=0;j < pos.length - till;j++) {
+        for (int j=0; j < pos.length - till; j++) {
 
           boolean draw=true;
-          for (int t=0; t < j;t++) {
+          for (int t=0; t < j; t++) {
             if (dist(pos[j].x, pos[j].y, pos[j].z, pos[t].x, pos[t].y, pos[t].z)==0) draw=false;
           }
           if (draw) {
@@ -251,4 +249,3 @@ class VisMesh {
     }
   }
 }
-

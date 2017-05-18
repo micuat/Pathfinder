@@ -19,24 +19,21 @@ class BodyTransform {
 
 
   void updateNewTarget(Body tI, boolean overWrite) {
-    
-    
-    if (overWrite) {
-    transformBody = new Body(targetBody);
-    sourceBody = new Body(targetBody);
-    targetBody=tI;
 
-    }
-    else {
-    targetBody=tI;    
-    transformBody = new Body(transformBody);
-    sourceBody = new Body(transformBody);            
+
+    if (overWrite) {
+      transformBody = new Body(targetBody);
+      sourceBody = new Body(targetBody);
+      targetBody=tI;
+    } else {
+      targetBody=tI;    
+      transformBody = new Body(transformBody);
+      sourceBody = new Body(transformBody);
     }
     reset();
-    
-    
+
+
     trails.setup(transformBody);
- 
   }
 
 
@@ -45,24 +42,24 @@ class BodyTransform {
     info = new TransformInfo();
     init();
     checkTransInfo();
-  //  println("transBody mesh count = " +transformBody.element.length);
-    
-    
-   // println(m.compareMesh(transformBody.element[0].mesh, transformBody.element[1].mesh));
+    //  println("transBody mesh count = " +transformBody.element.length);
+
+
+    // println(m.compareMesh(transformBody.element[0].mesh, transformBody.element[1].mesh));
   }
 
   void checkTransInfo() {
-    for (int i = 0; i < transformBody.element.length;i++) {
+    for (int i = 0; i < transformBody.element.length; i++) {
       info.enterMeshTransInfo(transformBody.element[i].meshTransform.info);
     }
     info.invert();    
-    
-    for (int g=0;g<transformBody.element.length;g++) 
+
+    for (int g=0; g<transformBody.element.length; g++) 
       transformBody.element[g].meshTransform.motionClap=motionClap;
-      
-      
-     // info.printIt();
-     // println("############################");
+
+
+    // info.printIt();
+    // println("############################");
   }
 
 
@@ -73,12 +70,12 @@ class BodyTransform {
     if (targetBody.element.length >0 && transformBody.element.length >0) {
 
       if (transformBody.element.length<targetBody.element.length) resizeOriginClosest();
-      for (int g=0;g<transformBody.element.length;g++) {
+      for (int g=0; g<transformBody.element.length; g++) {
         int indexChosenT=-1;
         int indexChosenC=-1;
 
         if (g%targetBody.element.length==0) {
-          for (int j = 0;j< max(targetBody.element.length,transformBody.element.length);j++) {         
+          for (int j = 0; j< max(targetBody.element.length, transformBody.element.length); j++) {         
 
             if (targetBody.element.length>j)
               targetBody.element[j].chosen=false;
@@ -88,12 +85,12 @@ class BodyTransform {
         float distV=10000000;
         float distC=0;
 
-        for (int i=0;i<transformBody.element.length;i++) {
+        for (int i=0; i<transformBody.element.length; i++) {
 
           // if this element not already found itargetBody target
           if (!transformBody.element[i].chosen) {
 
-            for (int j = 0;j< targetBody.element.length;j++) {
+            for (int j = 0; j< targetBody.element.length; j++) {
               //if this target has not yet been found
               if (!targetBody.element[j].chosen) {
 
@@ -124,9 +121,9 @@ class BodyTransform {
   void resizeOriginClosest() {
     int n=0;
     float distLast=1000000;
-    for (int i =transformBody.element.length ;i<targetBody.element.length;i++) {
+    for (int i =transformBody.element.length; i<targetBody.element.length; i++) {
 
-      for (int j = 0;j<transformBody.element.length;j++) {
+      for (int j = 0; j<transformBody.element.length; j++) {
         float distCheck = transformBody.element[j].center.distanceTo(targetBody.element[i].center);
         if (distCheck<distLast) {
           distLast=distCheck;
@@ -140,9 +137,9 @@ class BodyTransform {
 
 
 
-  public void update(float aniRot, float aniRotNo, float aniTransX, float aniTransY, float aniTransZ, float aniSizeX, float aniSizeY,float triAmount){
-    for (int i=0;i<transformBody.element.length;i++)
-      transformBody.element[i].update(aniRot, aniRotNo, aniTransX, aniTransY, aniTransZ, aniSizeX, aniSizeY,triAmount);
+  public void update(float aniRot, float aniRotNo, float aniTransX, float aniTransY, float aniTransZ, float aniSizeX, float aniSizeY, float triAmount) {
+    for (int i=0; i<transformBody.element.length; i++)
+      transformBody.element[i].update(aniRot, aniRotNo, aniTransX, aniTransY, aniTransZ, aniSizeX, aniSizeY, triAmount);
   }
 
 
@@ -152,19 +149,15 @@ class BodyTransform {
     showDebugVertNum=abs(showDebugVertNum);
 
 
-    for (int i=0;i<transformBody.element.length;i++) {
+    for (int i=0; i<transformBody.element.length; i++) {
 
       if (showDebugVertNum==i) {
         pushStyle();
         fill(255, 0, 255);
         //drawMesh(transformBody.element[i].meshTransform.cur, color(255, 255, 0), true,true);
-       // drawMesh(transformBody.element[i].meshTransform.dst, color(255, 255, 0), true,false);
-       popStyle();
+        // drawMesh(transformBody.element[i].meshTransform.dst, color(255, 255, 0), true,false);
+        popStyle();
       }
     }
   }
-  
-  
-  
 }
-

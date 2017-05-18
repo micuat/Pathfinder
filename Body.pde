@@ -13,18 +13,20 @@ class Body {
   }
 
   public Body(Body source) {
-   element=new MeshElement[0];
-   
-  // source.element = 
-    for (int i=0;i<source.element.length;i++) {      
+    element=new MeshElement[0];
+
+    // source.element = 
+    for (int i=0; i<source.element.length; i++) {      
       boolean found=false;
-      for (int j=0;j<element.length;j++) {
+      for (int j=0; j<element.length; j++) {
         if (i!=j) {
-          if (m.compareMesh(source.element[i].mesh, element[j].mesh)) { found = true; println("yes-------------------------------------");  }
-          else ;//println("nooo-----------------------------"); 
+          if (m.compareMesh(source.element[i].mesh, element[j].mesh)) { 
+            found = true; 
+            println("yes-------------------------------------");
+          } else ;//println("nooo-----------------------------");
         }
       }
-       if (!found) element = (MeshElement[])  append(element, new MeshElement(source.element[i].mesh));
+      if (!found) element = (MeshElement[])  append(element, new MeshElement(source.element[i].mesh));
     }
   }
 
@@ -62,7 +64,7 @@ class Body {
           if (f.getVertices().length>3) 
             d = new Vec3D(vs[3].x, vs[3].y, vs[3].z);
           else 
-            d = new Vec3D((c.x+a.x)/2, (c.y+a.y)/2, (c.z+a.z)/2);
+          d = new Vec3D((c.x+a.x)/2, (c.y+a.y)/2, (c.z+a.z)/2);
           mesh.addFace(c, d, a);
 
           duplicateCheck(mesh);
@@ -77,18 +79,18 @@ class Body {
 
 
   public Body(PFace face) {
-   element =  new MeshElement[0];
+    element =  new MeshElement[0];
     addFace(face);
   }
-  
-  
+
+
   public Body(PFace[] faces) {    
-   element = new MeshElement[0];
-    for (int i=0;i < faces.length;i++) {   
-       addFace(faces[i]);
+    element = new MeshElement[0];
+    for (int i=0; i < faces.length; i++) {   
+      addFace(faces[i]);
     }
   }
-  
+
 
   public Body(PTri tri) {
     element = new MeshElement[0];
@@ -123,9 +125,9 @@ class Body {
   public boolean duplicateCheck(WETriangleMesh mesh) {
     float[] a = mesh.getUniqueVerticesAsArray();
     Vec3D [] posOld = new Vec3D[4];
-    
+
     if (a.length/3==3) {
-      for (int i=0;i<3;i++) {
+      for (int i=0; i<3; i++) {
         posOld[i] = new Vec3D(a[i*3], a[i*3+1], a[i*3+2]);
       }
       posOld[3] = new Vec3D((posOld[0].x+posOld[2].x)/2, (posOld[0].y+posOld[2].y)/2, (posOld[0].z+posOld[2].z)/2);
@@ -179,12 +181,11 @@ class Body {
 
 
 
-    for (int i=0;i<element.length;i++) {
+    for (int i=0; i<element.length; i++) {
 
 
 
-      element[i].draw(colorI, debug,drawGrid);
+      element[i].draw(colorI, debug, drawGrid);
     }
   }
 }
-

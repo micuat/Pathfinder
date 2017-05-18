@@ -16,12 +16,12 @@ class Choreo {
   float aniSizeX=0;
   float aniSizeY=0;
   float aniTri=0;
-  
+
 
   PApplet p5;
   AniSequence seq;
   float currentSeek=0;
-  
+
   float speed=0.20;
   float delay=0.0;
   int easingType=6;//26;
@@ -35,16 +35,16 @@ class Choreo {
 
   public Choreo(PApplet p5I) {
     p5 = p5I;
-  //  seq = new AniSequence(p5);
+    //  seq = new AniSequence(p5);
   }
 
   public void setupAni() {
     speed=cp5TransSpeed;
     delay=cp5TransDelay;
-  //  seq.pause();
+    //  seq.pause();
     seq = new AniSequence(p5);
     seq.beginSequence();
-    
+
     aniRot=0;
     aniRotNo=0;
     aniSizeX=0;
@@ -55,31 +55,31 @@ class Choreo {
     aniTri=0; 
 
 
-    for (int i =0 ; i < toDoTasks.length;i++) {
+    for (int i =0; i < toDoTasks.length; i++) {
       seq.beginStep();  
       if (toDoTasks[i].equals("aniRot"))
-      seq.add(Ani.to(this, speed, delay, "aniRot", 100, easings[easingType%easings.length],"onEnd:callCircle"));
+        seq.add(Ani.to(this, speed, delay, "aniRot", 100, easings[easingType%easings.length], "onEnd:callCircle"));
 
       if (toDoTasks[i].equals("aniRotNo"))
-       seq.add(Ani.to(this, speed, delay, "aniRotNo", 100, easings[easingType%easings.length],"onEnd:callCircle"));
+        seq.add(Ani.to(this, speed, delay, "aniRotNo", 100, easings[easingType%easings.length], "onEnd:callCircle"));
 
       if (toDoTasks[i].equals("aniTransX"))
-        seq.add(Ani.to(this, speed, delay, "aniTransX", 100, easings[easingType%easings.length],"onEnd:callCircle"));
+        seq.add(Ani.to(this, speed, delay, "aniTransX", 100, easings[easingType%easings.length], "onEnd:callCircle"));
 
       if (toDoTasks[i].equals("aniTransY"))
-        seq.add(Ani.to(this, speed, delay, "aniTransY", 100, easings[easingType%easings.length],"onEnd:callCircle"));
+        seq.add(Ani.to(this, speed, delay, "aniTransY", 100, easings[easingType%easings.length], "onEnd:callCircle"));
 
       if (toDoTasks[i].equals("aniTransZ"))
-        seq.add(Ani.to(this, speed, delay, "aniTransZ", 100, easings[easingType%easings.length],"onEnd:callCircle"));
+        seq.add(Ani.to(this, speed, delay, "aniTransZ", 100, easings[easingType%easings.length], "onEnd:callCircle"));
 
       if (toDoTasks[i].equals("aniSizeX"))
-        seq.add(Ani.to(this, speed, delay, "aniSizeX", 100, easings[easingType%easings.length],"onEnd:callCircle"));
+        seq.add(Ani.to(this, speed, delay, "aniSizeX", 100, easings[easingType%easings.length], "onEnd:callCircle"));
 
       if (toDoTasks[i].equals("aniSizeY"))
-        seq.add(Ani.to(this, speed, delay, "aniSizeY", 100, easings[easingType%easings.length],"onEnd:callCircle")); 
+        seq.add(Ani.to(this, speed, delay, "aniSizeY", 100, easings[easingType%easings.length], "onEnd:callCircle")); 
 
       if (toDoTasks[i].equals("aniTri"))
-        seq.add(Ani.to(this, speed, delay, "aniTri", 100, easings[easingType%easings.length],"onEnd:callCircle")); 
+        seq.add(Ani.to(this, speed, delay, "aniTri", 100, easings[easingType%easings.length], "onEnd:callCircle")); 
       seq.endStep();
     }
     seq.endSequence();
@@ -88,9 +88,9 @@ class Choreo {
   }
 
   void callCircle(Ani theAni) {
-   // Body here;
-   //here = new Body( transform.transformBody);
-   // visEdges.enter(here,false);
+    // Body here;
+    //here = new Body( transform.transformBody);
+    // visEdges.enter(here,false);
   }
 
   public void setup(TransformInfo info) {
@@ -108,9 +108,9 @@ class Choreo {
 
     if (cp5Shuffle) Collections.shuffle(Arrays.asList(toDoTasks));
 
-   // info.printIt();
-   // println(toDoTasks);
-   // println(transform.transformBody.element[0].meshTransform.motionClapOffset);
+    // info.printIt();
+    // println(toDoTasks);
+    // println(transform.transformBody.element[0].meshTransform.motionClapOffset);
     setupAni();
   }
 
@@ -118,30 +118,27 @@ class Choreo {
 
 
 
-  
+
   public void update() {
     if (seq!=null) {
-   //  println(seq.getSeek());
-    if (cp5PlaybackStyle==2) {
+      //  println(seq.getSeek());
+      if (cp5PlaybackStyle==2) {
 
-         seq.seek( (sin(((float)frameCount/100.0))+1)/2.0 );
-         seq.resume();
-      
-    }
-
-    if (cp5PlaybackStyle==3) {
-       {
-        // float seekValue = 
-        // if (pmouseX!=mouseX ) cp5SeekAniValue = (float)mouseX/(float)width;
-         float seekValue = cp5SeekAniValue;
-         seq.seek( seekValue);
-         seq.resume();
+        seq.seek( (sin(((float)frameCount/100.0))+1)/2.0 );
+        seq.resume();
       }
-    }
-    
-    transform.update(aniRot/100.0, aniRotNo/100.0, aniTransX/100.0, aniTransY/100.0, aniTransZ/100.0, aniSizeX/100.0, aniSizeY/100.0, aniTri/100.0);
 
+      if (cp5PlaybackStyle==3) {
+        {
+          // float seekValue = 
+          // if (pmouseX!=mouseX ) cp5SeekAniValue = (float)mouseX/(float)width;
+          float seekValue = cp5SeekAniValue;
+          seq.seek( seekValue);
+          seq.resume();
+        }
+      }
 
+      transform.update(aniRot/100.0, aniRotNo/100.0, aniTransX/100.0, aniTransY/100.0, aniTransZ/100.0, aniSizeX/100.0, aniSizeY/100.0, aniTri/100.0);
     }
     if (checkAniEnded()) {
       nextMorphTarget();
@@ -159,7 +156,7 @@ class Choreo {
 
 
   boolean contains(String task) {
-    for (int i=0;i <toDoTasks.length;i++) {
+    for (int i=0; i <toDoTasks.length; i++) {
       if (toDoTasks[i].equals(task)) return true;
     }
     return false;
@@ -168,53 +165,45 @@ class Choreo {
 
 
 
-  
-  void changePlayback() {
-    
-    if (seq!=null) {
-     if (cp5PlaybackStyle==1) {
-       //seq.seek(seq.getSeek());
-       //seq.resume();
-       jumpNextTarget();
-     }
-     if (cp5PlaybackStyle==2) {
-       seq.pause();
-       
-     }
-     if (cp5PlaybackStyle==3) {seq.pause();
-     
-     }
-    }
- 
 
+  void changePlayback() {
+
+    if (seq!=null) {
+      if (cp5PlaybackStyle==1) {
+        //seq.seek(seq.getSeek());
+        //seq.resume();
+        jumpNextTarget();
+      }
+      if (cp5PlaybackStyle==2) {
+        seq.pause();
+      }
+      if (cp5PlaybackStyle==3) {
+        seq.pause();
+      }
+    }
   }
-  
-  
+
+
   void jumpNextTarget() {   
 
     init();
   }
-  
+
   void nextMorphTarget() {
-    visEdges.enter(transform.transformBody,true);    
-    
-   
+    visEdges.enter(transform.transformBody, true);    
+
+
     init();
   }
-  
+
   void init() {
     if (seq!=null) seq.pause();
 
     indexCurTarget=(indexCurTarget+1)%listofBody.length;
-    
+
     int number=listofBody[indexCurTarget];
     getNextRandomBody(number);
     transform.updateNewTarget(body[number], true);
-    setup(transform.info);   
+    setup(transform.info);
   }
-  
-  
-  
-  
 }
-

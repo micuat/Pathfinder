@@ -9,7 +9,7 @@ color[] vertColor = new color[4];
 
 
 float strokWeightTrails = 2;
-float strokeWeightObjects =1/4;
+float strokeWeightObjects =1.0f/4.0f;
 float strokeWeightPoints = strokeWeightObjects;
 float strokeWeightRecording = strokeWeightObjects;
 
@@ -49,8 +49,7 @@ public void updateVisualStyle() {
     strokeWeightRecording = strokWeightTrails*1.5;
     highlight1 = color(204, 300, 270, 360);
     highlight2 = color(190, 249, 243, 360);
-  }
-  else {
+  } else {
     backgroundCol = color(0);
     strokWeightTrails =3;
     strokeWeightObjects =strokWeightTrails/2;
@@ -82,8 +81,7 @@ public void drawBodies(PGraphics in) {
 
   if (cp5DisplayDestiny)   drawBody(in, transform.targetBody, color(360, 0), highlight1);
   if (cp5DisplaySource)    drawBody(in, transform.sourceBody, color(360, 0), highlight1);
-  
-  
-    drawBody(in, transform.transformBody, color(360, 100), color(360));
-}
 
+
+  drawBody(in, transform.transformBody, color(360, 100), color(360));
+}

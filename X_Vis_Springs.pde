@@ -18,7 +18,7 @@ class Trails {
   public void setup(Body transBody) {
 
 
-    for (int i=0;i <ribbons.size();i++) {
+    for (int i=0; i <ribbons.size(); i++) {
       Ribbon rib;
       rib = ribbons.get(i);
       rib.kill=true;
@@ -26,11 +26,11 @@ class Trails {
 
 
 
-    for (int i=0;i < transBody.element.length;i++) {
+    for (int i=0; i < transBody.element.length; i++) {
       Vec3D pos[] = m.getVertexVec(transBody.element[i].mesh);
-      for (int j=0;j < pos.length;j++) {
+      for (int j=0; j < pos.length; j++) {
         Ribbon rib;
-        
+
         rib = new Ribbon(new PVector(pos[j].x, pos[j].y, pos[j].z), 50, 8 /* dicke schweif*/, 0.1, j);
         ribbons.add(rib);
       }
@@ -48,10 +48,10 @@ class Trails {
 
 
     int num=0;
-    for (int i=0;i < transBody.element.length;i++) {
+    for (int i=0; i < transBody.element.length; i++) {
       Vec3D pos[] = m.getVertexVec(transBody.element[i].mesh); 
 
-      for (int j=0;j < pos.length;j++) {
+      for (int j=0; j < pos.length; j++) {
         if (ribbons.size()> num ) {
 
           Ribbon rib = ribbons.get(num);  
@@ -63,7 +63,7 @@ class Trails {
       }
     }
 
-    for (int i = num; i < ribbons.size();i++) {
+    for (int i = num; i < ribbons.size(); i++) {
       Ribbon rib = ribbons.get(i);  
 
       boolean remove= rib.update();
@@ -79,7 +79,7 @@ class Trails {
     }
     in.popMatrix();
 
-   // println(ribbons.size());
+    // println(ribbons.size());
   }
 }
 
@@ -156,8 +156,6 @@ class Ribbon {
 
 
     counter   = PI;//random(PConstants.TWO_PI);
-
-
   }
 
 
@@ -213,7 +211,7 @@ class Ribbon {
     //  println("y-"+(float)mouseY/(float)height);
 
     in.noStroke();
-    
+
     in.pushStyle();
     in.blendMode(BLEND);
     in.hint(DISABLE_DEPTH_TEST);
@@ -224,28 +222,27 @@ class Ribbon {
 
       rads    = abs(sin(getRadians(node[i].getX(), node[i].getY(), node[i-1].getX(), node[i-1].getY()) ));
       rads2   = abs(sin(getRadians(node[i].getX(), node[i].getY(), node[i].orbit.getX(), node[i].orbit.getY())));
-      
+
       hh = 360 * RibbonHMouse + abs(rads - rads2) *3;
 
       ss = 360 * RibbonSMouse + abs(rads - rads2) * 10.0f ; 
-      ss = constrain(ss, 0,360);
+      ss = constrain(ss, 0, 360);
       bb = 200 +   abs(rads2 - rads) * 160.0f; 
-      bb = constrain(bb,200,360);
+      bb = constrain(bb, 200, 360);
 
       float lerp = (1-(float)(i)/(float)(totalNodes));
-      lerp = min(1,   max(0 , lerp));
-      
-      
-      float val = sin( PI/2 * (1-(float)(i)/(float)(totalNodes)));
-      val=pow(val,6);
-      val=val/2.0;
-     //val=pow(val,7);   /// Länge schweif
+      lerp = min(1, max(0, lerp));
 
-      in.fill(hh ,ss ,bb ,    360.0*val*killTime);
+
+      float val = sin( PI/2 * (1-(float)(i)/(float)(totalNodes)));
+      val=pow(val, 6);
+      val=val/2.0;
+      //val=pow(val,7);   /// Länge schweif
+
+      in.fill(hh, ss, bb, 360.0*val*killTime);
 
       in.vertex(node[i].orbit.getX(), node[i].orbit.getY(), node[i].orbit.getZ());
       in.vertex(node[i].getX(), node[i].getY(), node[i].getZ());
-
     }
     in.endShape();
     in.popStyle();
@@ -407,8 +404,7 @@ class Node {
       x = r.getX();
       y = r.getY();
       z = r.getZ();
-    } 
-    else {
+    } else {
       x -= (x - n.getX()) * r.decay;
       y -= (y - n.getY()) * r.decay;
       z -= (z - n.getZ()) * r.decay;
@@ -449,8 +445,3 @@ class Node {
     z = zSent;
   }
 }
-
-
-
-
-

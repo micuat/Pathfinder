@@ -1,7 +1,6 @@
 import processing.awt.PSurfaceAWT;
 import peasy.*;
 import java.util.*;
-import saito.objloader.*;
 import toxi.geom.*;
 import toxi.geom.mesh.subdiv.*;
 import toxi.geom.mesh.*;

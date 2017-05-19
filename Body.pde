@@ -30,54 +30,6 @@ class Body {
     }
   }
 
-  // The OBJ Body Transformer
-  public Body(OBJModel model) {
-    element = new MeshElement[0];
-
-    for (int j = 0; j < model.getSegmentCount(); j++)
-    {
-
-      Segment segment = model.getSegment(j);
-
-      saito.objloader.Face[] faces = segment.getFaces();
-
-      for (int i = 0; i < faces.length; i++) {
-        WETriangleMesh mesh = new WETriangleMesh();
-        saito.objloader.Face f = faces[i];
-
-        PVector[] vs = f.getVertices();
-        PVector[] ns = f.getNormals();
-
-        if (f.getVertices().length>2) {
-          Vec3D a = new Vec3D(vs[0].x, vs[0].y, vs[0].z);
-
-          Vec3D b = new Vec3D(vs[1].x, vs[1].y, vs[1].z);          
-          Vec3D c = new Vec3D(vs[2].x, vs[2].y, vs[2].z);
-          Vec3D d = new Vec3D(0, 0, 0);
-
-          //eraseStroke
-          if (a.distanceTo(c)==0) continue;
-
-
-          mesh.addFace(a, b, c);
-
-          if (f.getVertices().length>3) 
-            d = new Vec3D(vs[3].x, vs[3].y, vs[3].z);
-          else 
-          d = new Vec3D((c.x+a.x)/2, (c.y+a.y)/2, (c.z+a.z)/2);
-          mesh.addFace(c, d, a);
-
-          duplicateCheck(mesh);
-          element = (MeshElement[])  append(element, new MeshElement(mesh));
-        }
-      }
-    }
-
-    println(element.length);
-  }
-
-
-
   public Body(PFace face) {
     element =  new MeshElement[0];
     addFace(face);

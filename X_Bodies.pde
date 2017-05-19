@@ -1,4 +1,3 @@
-OBJModel[] kinModel = new OBJModel[2];
 Body [] body = new Body[5];
 
 Body sampleOriginBody;

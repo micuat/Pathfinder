@@ -15,9 +15,6 @@ PGraphics contentGr;
 PGraphics contentGr2D;
 PMatrix mat_scene; // to store initial PMatrix
 
-PImage back;
-
-
 void enableVSync() {
 }
 
@@ -41,7 +38,6 @@ void setup() {
   frameRate(29);                                      // set unlimited frame rate
   //((PJOGL)PGraphicsOpenGL.pgl).gl.setSwapInterval(1); // enable waiting for vsync
 
-  back = loadImage("back.jpg");
   contentGr = createGraphics(width, height, P3D);
   contentGr2D = createGraphics(width, height);
 

@@ -5,11 +5,6 @@ import toxi.geom.*;
 import toxi.geom.mesh.subdiv.*;
 import toxi.geom.mesh.*;
 import toxi.processing.*;
-ToxiclibsSupport gfx;
-import wblut.hemesh.core.*;
-import wblut.hemesh.creators.*;
-import wblut.hemesh.modifiers.*;
-import wblut.core.processing.*;
 
 PeasyCam cam;
 BodyTransform transform;
@@ -41,7 +36,6 @@ void setup() {
   mat_scene = getMatrix();
 
   //  size(1600, 1200, OPENGL);
-  gfx=new ToxiclibsSupport(this);
   cam = new PeasyCam(this, 330);
 
   frameRate(29);                                      // set unlimited frame rate

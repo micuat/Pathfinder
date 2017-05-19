@@ -5,6 +5,7 @@ import toxi.geom.*;
 import toxi.geom.mesh.subdiv.*;
 import toxi.geom.mesh.*;
 import toxi.processing.*;
+import processing.video.*;
 
 PeasyCam cam;
 BodyTransform transform;
@@ -15,34 +16,26 @@ PGraphics contentGr;
 PGraphics contentGr2D;
 PMatrix mat_scene; // to store initial PMatrix
 
-void enableVSync() {
-}
-
 void setup() {
   //PSurfaceAWT awtSurface = (PSurfaceAWT)surface;
   //PSurfaceAWT.SmoothCanvas smoothCanvas = (PSurfaceAWT.SmoothCanvas)awtSurface.getNative();
   //smoothCanvas.getFrame().setAlwaysOnTop(true);
   //smoothCanvas.getFrame().removeNotify();
   //smoothCanvas.getFrame().setUndecorated(true);
-  ////smoothCanvas.getFrame().setLocation(0, 0);
-  //smoothCanvas.getFrame().setLocation(300, 300);
+  //smoothCanvas.getFrame().setLocation(0, 0);
   //smoothCanvas.getFrame().addNotify();
   size(1920, 1080, P3D);
   smooth();
 
   mat_scene = getMatrix();
 
-  //  size(1600, 1200, OPENGL);
   cam = new PeasyCam(this, 330);
 
   frameRate(29);                                      // set unlimited frame rate
-  //((PJOGL)PGraphicsOpenGL.pgl).gl.setSwapInterval(1); // enable waiting for vsync
 
   contentGr = createGraphics(width, height, P3D);
   contentGr2D = createGraphics(width, height);
 
-
-  // noCursor();
   contentGr2D.beginDraw();
   contentGr2D.background(0);
   contentGr2D.endDraw();
@@ -123,7 +116,6 @@ boolean drawPoints=true;
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-import processing.video.*;
 Movie mov;
 
 

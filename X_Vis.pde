@@ -70,6 +70,8 @@ public void updateVisuals() {
 
 
 public void drawVisuals(PGraphics in) {
+  strokeWeightObjects = 1.0f / 4.0f;
+  strokWeightTrails = 2;
   drawWorld(in);   
   drawBodies(in);
   visEdges.draw(in);

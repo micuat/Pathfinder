@@ -43,18 +43,18 @@ void setupVisuals() {
 public void updateVisualStyle() {
   if (!videoMode) {
     backgroundCol = color(250, 110, 0);
-    strokWeightTrails = 1.5;
-    strokeWeightObjects =strokWeightTrails/2;
+    strokWeightTrails = 2.0f/5;//1.5;
+    strokeWeightObjects =1.0f/4.0f/2;//strokWeightTrails/2;
     strokeWeightPoints = strokWeightTrails;
-    strokeWeightRecording = strokWeightTrails*1.5;
+    strokeWeightRecording = strokWeightTrails;//*1.5;
     highlight1 = color(204, 300, 270, 360);
     highlight2 = color(190, 249, 243, 360);
   } else {
     backgroundCol = color(0);
-    strokWeightTrails =3;
-    strokeWeightObjects =strokWeightTrails/2;
+    strokWeightTrails =2.0f/5;//3;
+    strokeWeightObjects =1.0f/4.0f/2;//strokWeightTrails/2;
     strokeWeightPoints = strokWeightTrails;
-    strokeWeightRecording = strokWeightTrails/2;
+    strokeWeightRecording = strokWeightTrails;///2;
     highlight1 = color(204, 300, 270, 360);
     highlight2 = color(190, 249, 243, 360);
   }
@@ -70,8 +70,8 @@ public void updateVisuals() {
 
 
 public void drawVisuals(PGraphics in) {
-  strokeWeightObjects = 1.0f / 4.0f;
-  strokWeightTrails = 2;
+  strokeWeightObjects = 1.0f / 4.0f/2;
+  strokWeightTrails = 2.0f/5;
   drawWorld(in);   
   drawBodies(in);
   visEdges.draw(in);

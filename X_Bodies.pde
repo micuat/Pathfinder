@@ -55,11 +55,11 @@ void setupBodyPrimitives() {
 int numRandomBody = 0;
 void getNextRandomBody(int i) {
   if (i==0) {
-    body[0]=new Body(new PPoint().face);
+    body[0]=new Body(new PPoint());
   }
   if (i==1) {
 
-    body[1]=new Body(new PLine().face);//(new PVector(2, -1, 0), new PVector(3, 0, 0)).face);
+    body[1]=new Body(new PLine());//(new PVector(2, -1, 0), new PVector(3, 0, 0)).face);
   }  
   if (i==2) {   
     body[2]=new Body(new PFace());
@@ -164,44 +164,35 @@ class PBox {
   }
 }
 
-class PLine {
-
-  PFace face;
-
+class PLine extends PFace {
   public PLine() {
 
-    face = new PFace(new PVector(-1, 0, 0), new PVector(+1, 0, 0), 0.01);
-    face.vert[0] = new PVector(-1, 0.01, 0);
-    face.vert[1] = new PVector(-1, -0.01, 0);
-    face.vert[2] = new PVector(1, -0.01, 0);
-    face.vert[3] = new PVector(1, 0.01, 0);
-    face.setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), 1, 1);
-    face.setRandRot();
-    // face.setTrans(new PVector(random(-cp5WorldRangeX, cp5WorldRangeX), random(-cp5WorldRangeY, cp5WorldRangeY), random(-cp5WorldRangeY, cp5WorldRangeY)));
-    face.setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
+    super(new PVector(-1, 0, 0), new PVector(+1, 0, 0), 0.01);
+    vert[0] = new PVector(-1, 0.01, 0);
+    vert[1] = new PVector(-1, -0.01, 0);
+    vert[2] = new PVector(1, -0.01, 0);
+    vert[3] = new PVector(1, 0.01, 0);
+    setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), 1, 1);
+    setRandRot();
+    // setTrans(new PVector(random(-cp5WorldRangeX, cp5WorldRangeX), random(-cp5WorldRangeY, cp5WorldRangeY), random(-cp5WorldRangeY, cp5WorldRangeY)));
+    setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
 }
 
 static float pPointSize=0.005;
 
-class PPoint {
-  PFace face;
+class PPoint extends PFace {
   PVector pos=new PVector(0, 0, 0);
 
   public PPoint() {
-    setup();
-    // face.setTrans(new PVector(random(-cp5WorldRangeX, cp5WorldRangeX), random(-cp5WorldRangeY, cp5WorldRangeY), random(-cp5WorldRangeY, cp5WorldRangeY)));
-    face.setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
+    super(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
+    // setTrans(new PVector(random(-cp5WorldRangeX, cp5WorldRangeX), random(-cp5WorldRangeY, cp5WorldRangeY), random(-cp5WorldRangeY, cp5WorldRangeY)));
+    setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
   public PPoint(PVector posI) {
-    setup();
+    super(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
     pos=posI;
-    face.setTrans(new PVector(pos.x, pos.y, pos.z));
-  }
-
-
-  public void setup() {
-    face =  new PFace(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
+    setTrans(new PVector(pos.x, pos.y, pos.z));
   }
 }
 

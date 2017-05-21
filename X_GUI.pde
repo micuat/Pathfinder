@@ -10,7 +10,6 @@ boolean isGuiDraw=true;
 
 
 boolean drawPointVsLines=false;
-boolean videoMode=true;
 float aniRot = 0;
 float aniRotNo = 0;
 float aniTransX = 0;
@@ -312,19 +311,20 @@ void keyReleased() {
 
   case '5' : 
     pointPlane();
-    break;    
+    break;
+
   case '6' : 
     linePlane();
     break;     
+
   case 'n' : 
     choreo.jumpNextTarget();
     break;
 
-
-
   case 'g' :
     isGuiDraw=!isGuiDraw;
     break; 
+
   case 'r' : 
     enterRecording = !enterRecording; 
     item.clear();
@@ -337,16 +337,13 @@ void keyReleased() {
   case 'd' : 
     drawDebug=!drawDebug;
     break;
+
   case 'w' :
     item.writeToFile();  
     break;
 
   case 's' : 
     choreo.setupAni();  
-    break;
-  case 'v' : 
-    videoMode=!videoMode;
-    updateVisualStyle();
     break;
 
   case 'l' : 

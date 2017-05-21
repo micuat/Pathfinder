@@ -13,27 +13,15 @@ float strokeWeightObjects =1.0f/4.0f;
 float strokeWeightPoints = strokeWeightObjects;
 float strokeWeightRecording = strokeWeightObjects;
 
-PImage backgroundImg;
-PImage wireTexture;
-PShader myShader;
-
 Trails trails;
 VisEdges visEdges;
 
-
 void setupVisuals() {
-  //myShader = loadShader("frag.glsl", "vert.glsl");
-
-  //backgroundImg = loadImage("back3.png");
-  //backgroundImg.resize(width, height);
-
-  //wireTexture = loadImage("metalTexture.jpg");
   Ani.init(this);
 
   visEdges = new VisEdges();
 
   colorMode(HSB, 360);
-
 
   trails = new Trails();
   updateVisualStyle();
@@ -41,23 +29,13 @@ void setupVisuals() {
 
 
 public void updateVisualStyle() {
-  if (!videoMode) {
-    backgroundCol = color(250, 110, 0);
-    strokWeightTrails = 2.0f/5;//1.5;
-    strokeWeightObjects =1.0f/4.0f/2;//strokWeightTrails/2;
-    strokeWeightPoints = strokWeightTrails;
-    strokeWeightRecording = strokWeightTrails;//*1.5;
-    highlight1 = color(204, 300, 270, 360);
-    highlight2 = color(190, 249, 243, 360);
-  } else {
-    backgroundCol = color(0);
-    strokWeightTrails =2.0f/5;//3;
-    strokeWeightObjects =1.0f/4.0f/2;//strokWeightTrails/2;
-    strokeWeightPoints = strokWeightTrails;
-    strokeWeightRecording = strokWeightTrails;///2;
-    highlight1 = color(204, 300, 270, 360);
-    highlight2 = color(190, 249, 243, 360);
-  }
+  backgroundCol = color(250, 110, 0);
+  strokWeightTrails = 2.0f/5;
+  strokeWeightObjects =1.0f/4.0f/2;
+  strokeWeightPoints = strokWeightTrails;
+  strokeWeightRecording = strokWeightTrails;
+  highlight1 = color(204, 300, 270, 360);
+  highlight2 = color(190, 249, 243, 360);
 } 
 
 

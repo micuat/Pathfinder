@@ -45,16 +45,12 @@ int calcRandomValue(float from, float to) {
   return (int)constrain(val, from, to);
 } 
 
-
 void setupBodyPrimitives() {
 
   sampleOriginBody=new Body(new PFace(new PVector(-0.5, 0.5, 0), new PVector(-0.5, -0.5, 0), new PVector(0.5, -0.5, 0), new PVector(0.5, 0.5, 0)));
 
   for (int i=0; i < body.length; i++) getNextRandomBody(i);
 }
-
-
-
 
 int numRandomBody = 0;
 void getNextRandomBody(int i) {
@@ -80,19 +76,13 @@ void getNextRandomBody(int i) {
   println(numRandomBody);
 }
 
-
-
-
-
-
 float globalScaleMult=0.5;
+
 class PBox {
   PFace[] face = new PFace[6];
 
   float w, h, d = 1;
   PVector pos=new PVector(0, 0, 0);
-
-
 
   public PBox() {
     setup();
@@ -115,9 +105,6 @@ class PBox {
     }
   }
 
-
-
-
   void setRandRot() {
     if (!cp5QuantAnim) setRot(m.getRandVector(false), random(-1, 1)*PI/2);
     else {    
@@ -125,12 +112,10 @@ class PBox {
     }
   }
 
-
   void setRot(PVector dir, float amount) {
     for (int i=0; i < face.length; i++)
       face[i].setRot(dir, amount);
   }
-
 
   void setScale(float wI, float hI, float dI) {
     w=wI;
@@ -140,7 +125,6 @@ class PBox {
       face[i].setScale(w, h, d);
     }
   }
-
 
   public void setup() {
     face[0] = new PFace(new PVector( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Top)
@@ -200,7 +184,6 @@ class PLine {
 
 static float pPointSize=0.005;
 
-
 class PPoint {
   PFace face;
   PVector pos=new PVector(0, 0, 0);
@@ -221,8 +204,6 @@ class PPoint {
     face =  new PFace(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
   }
 }
-
-
 
 class PFace {
   PVector pos=new PVector(0, 0, 0);
@@ -310,8 +291,6 @@ class PFace {
     }
   }
 
-
-
   void setScale(float wI, float hI, float dI) {
 
     w=wI;
@@ -331,8 +310,6 @@ class PFace {
     }
   }
 }
-
-
 
 class PTri extends PFace {
 

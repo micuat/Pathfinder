@@ -5,7 +5,6 @@ import toxi.geom.*;
 import toxi.geom.mesh.subdiv.*;
 import toxi.geom.mesh.*;
 import toxi.processing.*;
-import processing.video.*;
 
 PeasyCam cam;
 BodyTransform transform;
@@ -51,8 +50,6 @@ void setup() {
   transform = new BodyTransform(body[listofBody[0]], body[listofBody[1]]);
 
   item = new Item();
-
-  initVideo();
 }
 
 void draw() {
@@ -76,12 +73,6 @@ void draw() {
   surface.setTitle("Morpher || "+int(frameRate)+" fps");
 
   cam.endHUD();
-
-  //cam.beginHUD();
-  //drawVideo();
-  //cam.endHUD();
-
-  // controlInstallation();
 }
 
 
@@ -107,52 +98,4 @@ void drawFrame(PGraphics in) {
 
   drawVisuals(in);
   in.endDraw();
-}
-
-
-boolean drawPoints=true;
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-Movie mov;
-
-
-void initVideo() {
-  //mov = new Movie(this, "PathFinale_2.mp4");
-}
-
-
-void movieEvent(Movie movie) {
-  mov.read();
-}
-
-void drawVideo() {
-  if (mov.time() < mov.duration()) image(mov, 0, 0);
-  int timeRestartVideo=10*60;//in seconds
-  //  if ((millis()/1000)%timeRestartVideo==0 && (mov.time() >10 || mov.time()<0)) startVideo();
-  println(mov.duration() +" - "+ mov.time());
-}
-
-void startVideo() {
-  mov.jump(0); 
-  mov.play();
-}
-
-boolean switchRec=false;
-void controlInstallation() {
-  int time=5;
-  int tSwitch3D = millis()%(time*1000*2)/(time*1000);
-
-
-  time = 20;
-  int tSwitchRecord = millis()%(time*1000*2)/(time*1000);
-  boolean rem= switchRec;
-  switchRec=(tSwitchRecord==0);
-
-  if (rem!=switchRec) item.clear();
-
-  cp53DAnim = (tSwitch3D==0);
-  if (!cp53DAnim) globalRotate=0;
 }

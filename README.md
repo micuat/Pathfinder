@@ -1,7 +1,8 @@
 Pathfinder
 ========
 
-Developed by Christian Mio Loclair http://princemio.net/portfolio/pathfinder/
+Developed by Christian Mio Loclair
+http://waltzbinaire.com/work/pathfinder/
 
 Maintained by Naoto Hieda
 

@@ -17,6 +17,8 @@ PGraphics contentGr2D;
 PMatrix mat_scene; // to store initial PMatrix
 
 void setup() {
+  setupTouchpad();
+
   //PSurfaceAWT awtSurface = (PSurfaceAWT)surface;
   //PSurfaceAWT.SmoothCanvas smoothCanvas = (PSurfaceAWT.SmoothCanvas)awtSurface.getNative();
   //smoothCanvas.getFrame().setAlwaysOnTop(true);
@@ -43,8 +45,6 @@ void setup() {
   setupVisuals();
   setupGui();  
   setupBodyPrimitives();
-
-  setupTouchpad();
 
   choreo = new Choreo(this);
   //start with choreo from body 0 to body 1

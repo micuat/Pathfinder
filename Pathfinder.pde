@@ -77,9 +77,9 @@ void draw() {
 
   cam.endHUD();
 
-  cam.beginHUD();
-  drawVideo();
-  cam.endHUD();
+  //cam.beginHUD();
+  //drawVideo();
+  //cam.endHUD();
 
   // controlInstallation();
 }
@@ -120,7 +120,7 @@ Movie mov;
 
 
 void initVideo() {
-  mov = new Movie(this, "PathFinale_2.mp4");
+  //mov = new Movie(this, "PathFinale_2.mp4");
 }
 
 

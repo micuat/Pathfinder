@@ -22,12 +22,12 @@ VisEdges visEdges;
 
 
 void setupVisuals() {
-  myShader = loadShader("frag.glsl", "vert.glsl");
+  //myShader = loadShader("frag.glsl", "vert.glsl");
 
-  backgroundImg = loadImage("back3.png");
-  backgroundImg.resize(width, height);
+  //backgroundImg = loadImage("back3.png");
+  //backgroundImg.resize(width, height);
 
-  wireTexture = loadImage("metalTexture.jpg");
+  //wireTexture = loadImage("metalTexture.jpg");
   Ani.init(this);
 
   visEdges = new VisEdges();

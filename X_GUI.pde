@@ -3,7 +3,7 @@ int mode =3;
 import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
 
-
+import controlP5.*;
 
 boolean isGuiInit=false;
 boolean isGuiDraw=true;
@@ -55,16 +55,13 @@ boolean cp5WorldGrid=true;
 boolean cp5WorldRoom=true;
 
 boolean cp5UseCamera=false;
-import controlP5.*;
+
 ControlP5 cp5;
 int unitSpace=25;
-
 
 DropdownList[] objectGui;
 DropdownList d1;
 RadioButton r;
-
-
 
 void setupGui() {
   cp5 = new ControlP5(this);
@@ -104,8 +101,6 @@ void setupGui() {
   d1.setGroup(cg);
   cp5.end();
 
-
-
   ControlGroup cd = cp5.addGroup("Display", width-275, unitSpace*10);
   cp5.begin(cd, 0, unitSpace);
   cp5.addToggle("cp5DisplayPolygon").setLabel("Polygon");
@@ -117,7 +112,6 @@ void setupGui() {
   cp5.addToggle("cp5DisplaySource").setLabel("Show Source").linebreak();
   cp5.addToggle("cp5DisplayDestiny").setLabel("Show Destiny");
   cp5.end();
-
 
   ControlGroup cw = cp5.addGroup("World", width-275, unitSpace*20);
   cp5.begin(cw, 0, unitSpace);
@@ -141,7 +135,6 @@ void setupObjectGui() {
   for (int i=0; i < objectGui.length; i++) 
     customizeObjects(i);
 
-
   isGuiInit=true;
 }
 
@@ -162,8 +155,6 @@ void drawGui() {
   updateObjectGUI();
 }
 
-
-
 void customize(DropdownList ddl) {
   // a convenience function to customize a DropdownList
   ddl.setBackgroundColor(color(190));
@@ -179,7 +170,6 @@ void customize(DropdownList ddl) {
   ddl.setColorBackground(color(60));
   ddl.setColorActive(color(255, 128));
 }
-
 
 void customizeObjects( int num) {  
   int num2= num+1;
@@ -200,7 +190,6 @@ void customizeObjects( int num) {
   objectGui[num].setColorActive(color(255, 128));
 }
 
-
 void updateObjectGUI() {
   for (int i=0; i < objectGui.length; i++) {
 
@@ -211,13 +200,10 @@ void updateObjectGUI() {
         objectGui[i].setColorBackground(highlight1);
       else objectGui[i].setColorBackground(color(60));
 
-
       if (i == (indexCurTarget-1)%objectGui.length) objectGui[i].setColorBackground(color(155));
     }
   }
 }
-
-
 
 void controlEvent(ControlEvent theEvent) {
   if (theEvent.isFrom(r)) {
@@ -227,14 +213,12 @@ void controlEvent(ControlEvent theEvent) {
     return;
   }
 
-
   if (theEvent.getId()==100) selectInput("load settings", "fileLoadCP5");
   if (theEvent.getId()==101) selectInput("save settings", "fileSaveCP5");
 
   if (theEvent.isGroup()) {
     // check if the Event was triggered from a ControlGroup
     println("event from group : "+theEvent.getGroup().getValue()+" from "+theEvent.getGroup()); 
-
 
     String name = ""+theEvent.getGroup();
 
@@ -272,9 +256,7 @@ void controlEvent(ControlEvent theEvent) {
   }
 }
 
-
 void keyReleased() {
-
 
   if (key == CODED) {
     if (keyCode == LEFT) {
@@ -285,7 +267,6 @@ void keyReleased() {
       else framePos=0;
     }
   } 
-
 
   switch(key) {
 
@@ -404,7 +385,6 @@ void fileLoadCP5(File selection)
   //cp5.setAutoInitialization(true);
   cp5.loadProperties(initStringLoadCP5);
 }
-
 
 void fileSaveCP5(File selection)
 { 

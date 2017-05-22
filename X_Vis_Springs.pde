@@ -1,63 +1,47 @@
-
-
-float RibbonHMouse=0.028645834;
-float RibbonSMouse=0.33796296;
+float RibbonHMouse = 0.028645834;
+float RibbonSMouse = 0.33796296;
 
 class Trails {
-
   Body cur;
   ArrayList <Ribbon> ribbons;
-  int lastNum=0;
+  int lastNum = 0;
 
   public Trails() {
     ribbons = new ArrayList<Ribbon>();
   }
 
-
-
   public void setup(Body transBody) {
-
-
-    for (int i=0; i <ribbons.size(); i++) {
+    for (int i = 0; i < ribbons.size(); i++) {
       Ribbon rib;
       rib = ribbons.get(i);
-      rib.kill=true;
+      rib.kill = true;
     }
 
-
-
-    for (int i=0; i < transBody.element.length; i++) {
+    for (int i = 0; i < transBody.element.length; i++) {
       Vec3D pos[] = m.getVertexVec(transBody.element[i].mesh);
-      for (int j=0; j < pos.length; j++) {
+      for (int j = 0; j < pos.length; j++) {
         Ribbon rib;
 
-        rib = new Ribbon(new PVector(pos[j].x, pos[j].y, pos[j].z), 50, 8 /* dicke schweif*/, 0.1, j);
+        rib = new Ribbon(new PVector(pos[j].x, pos[j].y, pos[j].z), 50, 8, 0.1, j);
         ribbons.add(rib);
       }
     }
 
-
-
     lastNum = transBody.element.length;
   }
 
-
   public void update(Body transBody) {
-
-
-
-
-    int num=0;
-    for (int i=0; i < transBody.element.length; i++) {
+    int num = 0;
+    for (int i = 0; i < transBody.element.length; i++) {
       Vec3D pos[] = m.getVertexVec(transBody.element[i].mesh); 
 
-      for (int j=0; j < pos.length; j++) {
-        if (ribbons.size()> num ) {
-
+      for (int j = 0; j < pos.length; j++) {
+        if (ribbons.size() > num ) {
           Ribbon rib = ribbons.get(num);  
 
-          boolean remove= rib.update(pos[j].x, pos[j].y, pos[j].z);
-          if (!remove) ribbons.remove(i);
+          boolean remove = rib.update(pos[j].x, pos[j].y, pos[j].z);
+          if (!remove)
+            ribbons.remove(i);
           num++;
         }
       }
@@ -66,35 +50,29 @@ class Trails {
     for (int i = num; i < ribbons.size(); i++) {
       Ribbon rib = ribbons.get(i);  
 
-      boolean remove= rib.update();
-      if (!remove) ribbons.remove(i);
+      boolean remove = rib.update();
+      if (!remove)
+        ribbons.remove(i);
     }
   }
 
   public void draw(PGraphics in) {
     in.pushMatrix();
-    for (int i=0; i<ribbons.size(); i++) {
+    for (int i = 0; i < ribbons.size(); i++) {
       Ribbon rib = ribbons.get(i);
       rib.draw(in);
     }
     in.popMatrix();
-
-    // println(ribbons.size());
   }
 }
 
-
-
 class Ribbon {
-
-
-  float killTime=1;
-  boolean kill=false;
-  float killSpeed=0.01;
+  float killTime = 1;
+  boolean kill = false;
+  float killSpeed = 0.01;
 
   boolean pause = false;
-  int index=0;
-
+  int index =0;
 
   int totalNodes = 100;
   Node[] node;
@@ -103,21 +81,18 @@ class Ribbon {
   float y, yT, yDist, yInc;
   float z, zT, zDist, zInc;
 
-
   float rads, rads2;
 
   float decay;
 
-  float accel    ;      // acceleration variable
-  float friction ;      // friction variable
+  float accel;
+  float friction;
 
-  float radius   ;
-  float initRot  ;
-  float rotSpeed ;
+  float radius;
+  float initRot;
+  float rotSpeed;
 
-
-
-  float counter  ;
+  float counter;
 
   int fillColor;
   int strokeColor;
@@ -127,119 +102,93 @@ class Ribbon {
   float bb;
   float aa;
 
-
-
   Ribbon(PVector pos, int totalNodes, float radius, float decay, int index) {
-
-    this.index=index;
-    this.totalNodes=totalNodes;
+    this.index = index;
+    this.totalNodes = totalNodes;
     this.radius = radius;
     this.decay = decay;
 
-    xT=x=pos.x;
-    yT=y=pos.y;
-    zT=z=pos.z;
-    node      = new Node[totalNodes];
-    node[0]   = new Node(0, pos.x, pos.y, pos.z, this);
+    xT = x = pos.x;
+    yT = y = pos.y;
+    zT = z = pos.z;
+    node = new Node[totalNodes];
+    node[0] = new Node(0, pos.x, pos.y, pos.z, this);
 
-    for (int i=1; i<totalNodes; i++) {
-      //node[i] = new Node(i, pos.x, pos.y, pos.z, this);
+    for (int i = 1; i < totalNodes; i++) {
       node[i] = new Node(i, node[i-1], this);
     }
 
-    accel     = 2;//random(1.0f, 35.0f);      // acceleration variable
-    friction  = 0.3;//random(0.1f, 0.85f);      // friction variable
+    accel     = 2;
+    friction  = 0.3;
 
+    initRot   = PI;
+    rotSpeed  = 0.1;
 
-    initRot   = PI;//random(PConstants.TWO_PI * 2.0f);
-    rotSpeed  = 0.1;//random(-0.2f, 0.2f);
-
-
-    counter   = PI;//random(PConstants.TWO_PI);
+    counter   = PI;
   }
-
-
-
-
-
 
   boolean update() {
-
     return update(xT, yT, zT);
-    //return true;
   }
 
-
   boolean update(float x, float y, float z) {
-    xT=x;
-    yT=y;
-    zT=z;
+    xT = x;
+    yT = y;
+    zT = z;
 
     if (!pause) {
-      for (int i=0; i<totalNodes; i++) {
+      for (int i = 0; i < totalNodes; i++) {
         node[i].exist();
       }
       findPosition(x, y, z);
     }
 
-    killTime=killTime - ((kill)? killSpeed : 0) ;
+    killTime=killTime - ((kill)? killSpeed : 0);
 
-    if (kill) {
-      // decay += (0.6-decay) *(1-killTime);
-      //  decay = (int)(decay * killTime);
-    }
-
-    if (killTime>0) return true;
-    else return false;
+    if (killTime > 0)
+      return true;
+    else
+      return false;
   }
 
   void findPosition(float xI, float yI, float zI) {
     xDist   = xI - x;
     yDist   = yI - y;
     zDist   = zI - z;
-    xInc    = (xDist/accel + xInc) * friction;
-    yInc    = (yDist/accel + yInc) * friction;
-    zInc    = (zDist/accel + zInc) * friction;
-    x      += xInc;
-    y      += yInc;
+    xInc    = (xDist / accel + xInc) * friction;
+    yInc    = (yDist / accel + yInc) * friction;
+    zInc    = (zDist / accel + zInc) * friction;
+    x += xInc;
+    y += yInc;
     z += zInc;
   }
 
   void draw(PGraphics in) {
-
-    //  println((float)mouseX/(float)width);
-    //  println("y-"+(float)mouseY/(float)height);
-
     in.noStroke();
-
     in.pushStyle();
     in.blendMode(BLEND);
     in.hint(DISABLE_DEPTH_TEST);
     in.beginShape(QUAD_STRIP);
 
-    for (int i=1; i<totalNodes; i++) {
+    for (int i = 1; i < totalNodes; i++) {
+      rads  = abs(sin(getRadians(node[i].getX(), node[i].getY(), node[i-1].getX(), node[i-1].getY())));
+      rads2 = abs(sin(getRadians(node[i].getX(), node[i].getY(), node[i].orbit.getX(), node[i].orbit.getY())));
 
+      hh = 360 * RibbonHMouse + abs(rads - rads2) * 3;
 
-      rads    = abs(sin(getRadians(node[i].getX(), node[i].getY(), node[i-1].getX(), node[i-1].getY()) ));
-      rads2   = abs(sin(getRadians(node[i].getX(), node[i].getY(), node[i].orbit.getX(), node[i].orbit.getY())));
-
-      hh = 360 * RibbonHMouse + abs(rads - rads2) *3;
-
-      ss = 360 * RibbonSMouse + abs(rads - rads2) * 10.0f ; 
+      ss = 360 * RibbonSMouse + abs(rads - rads2) * 10.0f;
       ss = constrain(ss, 0, 360);
-      bb = 200 +   abs(rads2 - rads) * 160.0f; 
+      bb = 200 + abs(rads2 - rads) * 160.0f;
       bb = constrain(bb, 200, 360);
 
-      float lerp = (1-(float)(i)/(float)(totalNodes));
+      float lerp = (1 - (float)i / (float)totalNodes);
       lerp = min(1, max(0, lerp));
 
+      float val = sin(PI/2 * (1 - (float)i / (float)totalNodes));
+      val = pow(val, 6);
+      val = val / 2.0;
 
-      float val = sin( PI/2 * (1-(float)(i)/(float)(totalNodes)));
-      val=pow(val, 6);
-      val=val/2.0;
-      //val=pow(val,7);   /// Länge schweif
-
-      in.fill(hh, ss, bb, 360.0*val*killTime);
+      in.fill(hh, ss, bb, 360.0 * val * killTime);
 
       in.vertex(node[i].orbit.getX(), node[i].orbit.getY(), node[i].orbit.getZ());
       in.vertex(node[i].getX(), node[i].getY(), node[i].getZ());
@@ -269,9 +218,6 @@ class Ribbon {
   }
 }
 
-
-
-
 class Orbit {
   Node n;
   Ribbon r;
@@ -288,17 +234,12 @@ class Orbit {
   PApplet p;
 
   Orbit(Ribbon rSent, Node nSent, int indexSent) {
-
-
-    n       = nSent;
-    r       = rSent;
-
-
-    x=n.x;
-    y=n.y;
-    z=n.z;
+    n = nSent;
+    r = rSent;
+    x = n.x;
+    y = n.y;
+    z = n.z;
     index   = indexSent;
-
     counter = r.initRot + index / 158.0f;
     aug     = r.rotSpeed;
   }
@@ -309,33 +250,15 @@ class Orbit {
   }
 
   void findPosition() {
-
-
-
     float spike = 1;
-    if (index<100) {
-
+    if (index < 100) {
       spike = (0.01f * index);
-    } 
-    /*
-   //float noiseVal = 0.0f;
-     float noiseVal = noise((float)frameCount/100.0 * (float)index/100.0)-0.5;
-     float noiseVal2 = noise((float)frameCount/100.0 * (float)index/101.0)-0.5;
-     float noiseVal3 = noise((float)frameCount/100.0 * (float)index/102.0)-0.5;
-     
-     PVector off=new PVector(noiseVal,noiseVal2,noiseVal3);
-     off.normalize();*/
-
-
-    // float noiseVal = noise((float)frameCount/100.0+ (float)r.index)-0.5;
-    float noiseVal = noise(x/100.0, y/100.0, z/100.0)-0.5;//(float)(r.index+1) * (index+1)/100)-0.5;
+    }
+    float noiseVal = noise(x / 100.0, y / 100.0, z / 100.0) - 0.5;
     x = n.getX() + p.sin(noiseVal) * (r.radius - index/50.0f)*spike; 
     y = n.getY() + p.sin(noiseVal) * (r.radius - index/50.0f)*spike;
     z = n.getZ() + (p.sin(noiseVal) * (r.radius - index/50.0f)*spike);
   }
-
-
-
 
   float getX() {
     return x;
@@ -352,8 +275,6 @@ class Orbit {
 
 
 class Node {
-
-
   Ribbon r;
   Node n;
 
@@ -369,27 +290,22 @@ class Node {
   boolean isFirst;
 
   Node(int indexSent, float xSent, float ySent, float zSent, Ribbon rSent) {
-
-
-    isFirst   = true;
+    isFirst = true;
     init(xSent, ySent, zSent, indexSent, rSent);
   }
 
   Node(int indexSent, Node nSent, Ribbon rSent) {
-
-    isFirst   = false;
-    n         = nSent;
+    isFirst = false;
+    n       = nSent;
     init(n.x, n.y, n.z, indexSent, rSent);
   }
 
-
-
   void init(float xSent, float ySent, float zSent, int indexSent, Ribbon rSent) {
-    index     = indexSent;
-    r         = rSent;
-    x         = xSent;
-    y         = ySent;
-    z         = zSent;
+    index = indexSent;
+    r     = rSent;
+    x     = xSent;
+    y     = ySent;
+    z     = zSent;
 
     orbit = new Orbit(r, this, index);
   }
@@ -409,17 +325,15 @@ class Node {
       y -= (y - n.getY()) * r.decay;
       z -= (z - n.getZ()) * r.decay;
 
-
       //hole Band for each node____________
-      float noiseVal = noise(x/10.0, y/10.0, (float)frameCount/100.0)-0.5 ;
-      float noiseVal2 = noise(x/10.0, y/10.0, (float)frameCount/100.1)-0.5 ;
-      float noiseVal3 = noise(x/10.0, y/10.0, (float)frameCount/100.2)-0.5 ;
-      x += noiseVal/200.0;
-      y += noiseVal2/200.0;
-      z += noiseVal3/200.0;
+      float noiseVal  = noise(x / 10.0, y / 10.0, (float)frameCount / 100.0) - 0.5;
+      float noiseVal2 = noise(x / 10.0, y / 10.0, (float)frameCount / 100.1) - 0.5;
+      float noiseVal3 = noise(x / 10.0, y / 10.0, (float)frameCount / 100.2) - 0.5;
+      x += noiseVal  / 200.0;
+      y += noiseVal2 / 200.0;
+      z += noiseVal3 / 200.0;
     }
   }
-
 
   float getX() {
     return x;

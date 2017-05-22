@@ -1,10 +1,9 @@
-
 class MeshElement {
   //current mesh in transform process
   WETriangleMesh mesh = new WETriangleMesh();
   MeshTransform meshTransform;
 
-  boolean chosen=false;
+  boolean chosen = false;
   Vec3D center = new Vec3D(0, 0, 0);
 
   public MeshElement() {
@@ -29,30 +28,23 @@ class MeshElement {
     setCenter();
   }
 
-
   public void setCenter() {
-    center =  m.getCenter(mesh);
+    center = m.getCenter(mesh);
   }
 
   public void setTargetElement(MeshElement targetElement) {
     mesh = m.update(mesh);
-    targetElement.mesh= m.update(targetElement.mesh);
+    targetElement.mesh = m.update(targetElement.mesh);
 
     meshTransform = new MeshTransform(mesh, targetElement.mesh);
   }
 
-
-
   public void update(float rotAmount, float rotNormAmount, float transAmountX, float transAmountY, float transAmountZ, float sizeAmountX, float sizeAmountY, float triAmount) {
     meshTransform.update(rotAmount, rotNormAmount, transAmountX, transAmountY, transAmountZ, sizeAmountX, sizeAmountY, triAmount);
-    mesh=meshTransform.cur.copy();
+    mesh = meshTransform.cur.copy();
   }
 
-
-
-
   public void draw(color colorI, boolean debug, boolean drawGrid) {
-
     pushMatrix();  
     //drawMesh(meshTransform.cur, colorI, debug,drawGrid);  
     popMatrix();

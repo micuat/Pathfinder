@@ -1,9 +1,6 @@
-
 class Body {
 
   MeshElement[] element=new MeshElement[0];
-
-
 
   public Body() {
   }
@@ -13,20 +10,20 @@ class Body {
   }
 
   public Body(Body source) {
-    element=new MeshElement[0];
+    element = new MeshElement[0];
 
-    // source.element = 
-    for (int i=0; i<source.element.length; i++) {      
-      boolean found=false;
-      for (int j=0; j<element.length; j++) {
-        if (i!=j) {
+    for (int i = 0; i < source.element.length; i++) {
+      boolean found = false;
+      for (int j = 0; j < element.length; j++) {
+        if (i != j) {
           if (m.compareMesh(source.element[i].mesh, element[j].mesh)) { 
             found = true; 
             println("yes-------------------------------------");
-          } else ;//println("nooo-----------------------------");
+          } else ;
         }
       }
-      if (!found) element = (MeshElement[])  append(element, new MeshElement(source.element[i].mesh));
+      if (!found)
+        element = (MeshElement[])append(element, new MeshElement(source.element[i].mesh));
     }
   }
 
@@ -50,38 +47,27 @@ class Body {
   }
 
   public void addFace(PFace face) {
-    WETriangleMesh meshI= new WETriangleMesh();
-    Vec3D a = new Vec3D(face.vert[0].x, face.vert[0].y, face.vert[0].z);
-    Vec3D b = new Vec3D(face.vert[1].x, face.vert[1].y, face.vert[1].z);
-    Vec3D c = new Vec3D(face.vert[2].x, face.vert[2].y, face.vert[2].z);
-    Vec3D d = new Vec3D(face.vert[3].x, face.vert[3].y, face.vert[3].z);
+    WETriangleMesh meshI = new WETriangleMesh();
+    PVector[] v = face.vert;
+    Vec3D a = new Vec3D(v[0].x, v[0].y, v[0].z);
+    Vec3D b = new Vec3D(v[1].x, v[1].y, v[1].z);
+    Vec3D c = new Vec3D(v[2].x, v[2].y, v[2].z);
+    Vec3D d = new Vec3D(v[3].x, v[3].y, v[3].z);
 
     meshI.addFace(a, b, c);
     meshI.addFace(c, d, a);
-    element = (MeshElement[])  append(element, new MeshElement(meshI));
-  }
-
-  public void addFace(PTri tri) {
-    WETriangleMesh meshI= new WETriangleMesh();
-    Vec3D a = new Vec3D(tri.faces[0].vert[0].x, tri.faces[0].vert[0].y, tri.faces[0].vert[0].z);
-    Vec3D b = new Vec3D(tri.faces[0].vert[1].x, tri.faces[0].vert[1].y, tri.faces[0].vert[1].z);
-    Vec3D c = new Vec3D(tri.faces[0].vert[2].x, tri.faces[0].vert[2].y, tri.faces[0].vert[2].z);
-    Vec3D d = new Vec3D(tri.faces[0].vert[3].x, tri.faces[0].vert[3].y, tri.faces[0].vert[3].z);
-
-    meshI.addFace(a, b, c);
-    meshI.addFace(c, d, a);
-    element = (MeshElement[])  append(element, new MeshElement(meshI));
+    element = (MeshElement[])append(element, new MeshElement(meshI));
   }
 
   public boolean duplicateCheck(WETriangleMesh mesh) {
     float[] a = mesh.getUniqueVerticesAsArray();
-    Vec3D [] posOld = new Vec3D[4];
+    Vec3D[] posOld = new Vec3D[4];
 
-    if (a.length/3==3) {
-      for (int i=0; i<3; i++) {
+    if (a.length / 3 == 3) {
+      for (int i = 0; i < 3; i++) {
         posOld[i] = new Vec3D(a[i*3], a[i*3+1], a[i*3+2]);
       }
-      posOld[3] = new Vec3D((posOld[0].x+posOld[2].x)/2, (posOld[0].y+posOld[2].y)/2, (posOld[0].z+posOld[2].z)/2);
+      posOld[3] = new Vec3D((posOld[0].x+posOld[2].x) / 2, (posOld[0].y+posOld[2].y) / 2, (posOld[0].z+posOld[2].z) / 2);
       mesh.clear();
       mesh.addFace(posOld[0], posOld[1], posOld[2]);
       mesh.addFace(posOld[2], posOld[3], posOld[0]);
@@ -90,15 +76,15 @@ class Body {
   }
 
   // The HEMESH Body Transformer
-  public Body(HE_Mesh   meshI) {
+  public Body(HE_Mesh meshI) {
     element = new MeshElement[0];
 
-    int count=0;
+    int count = 0;
     Iterator<HE_Face> iter = meshI.fItr();
     for (int i = 0; iter.hasNext(); i++) {
       HE_Face f = iter.next();
       count++;
-      if (count%1==0) {
+      if (count % 1 == 0) {
         final List<WB_IndexedTriangle2D> tris = f.triangulate();
         final List<HE_Vertex> vertices = f.getFaceVertices();
         WB_Point3d v0, v1, v2;
@@ -117,16 +103,15 @@ class Body {
           Vec3D d = new Vec3D((float)(c.x+a.x)/2, (float)(c.y+a.y)/2, (float)(c.z+a.z)/2);
 
           mesh.addFace(a, b, c);
-
           mesh.addFace(c, d, a);
-          element = (MeshElement[])  append(element, new MeshElement(mesh));
+          element = (MeshElement[])append(element, new MeshElement(mesh));
         }
       }
     }
   }
 
   public void draw(color colorI, boolean debug, boolean drawGrid) {
-    for (int i=0; i<element.length; i++) {
+    for (int i = 0; i < element.length; i++) {
       element[i].draw(colorI, debug, drawGrid);
     }
   }

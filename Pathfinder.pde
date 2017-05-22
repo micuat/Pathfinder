@@ -10,10 +10,9 @@ PeasyCam cam;
 BodyTransform transform;
 Choreo choreo;
 
-boolean runMultiScreen=false;
+boolean runMultiScreen = false;
 PGraphics contentGr;
 PGraphics contentGr2D;
-PMatrix mat_scene; // to store initial PMatrix
 
 void setup() {
   setupTouchpad();
@@ -27,8 +26,6 @@ void setup() {
   //smoothCanvas.getFrame().addNotify();
   size(1920, 1080, P3D);
   smooth();
-
-  mat_scene = getMatrix();
 
   cam = new PeasyCam(this, 330);
 
@@ -59,7 +56,6 @@ void draw() {
 
   drawFrame(contentGr);
 
-
   if (runMultiScreen) {
     contentGr.loadPixels(); 
     arrayCopy(contentGr.pixels, contentGr2D.pixels); 
@@ -70,18 +66,15 @@ void draw() {
   image(contentGr, 0, 0);
   drawMenu();
 
-  surface.setTitle("Morpher || "+int(frameRate)+" fps");
+  surface.setTitle("Morpher || " + int(frameRate) + " fps");
 
   cam.endHUD();
 }
-
-
 
 void updateFrame() {
   choreo.update();
   updateVisuals();
 }
-
 
 void drawMenu() {
   if (isGuiDraw) drawHUD();

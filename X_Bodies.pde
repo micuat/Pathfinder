@@ -1,82 +1,61 @@
-Body [] body = new Body[5];
+Body[] body = new Body[5];
 
 Body sampleOriginBody;
 
-/*
-int[] listofBody = {
- 0, 2, 1, 3, 1, 0, 3, 2
- };*/
-
-
+// TODO: should be defined in GUI?
 int[] listofBody = {
   0, 1, 2, 3, 4
 };
-
-/*
-int[] listofBody = {
- 4, 3,4,2
- };*/
-
-/*
-int[] listofBody = {
- 2, 1, 3, 2, 1, 0, 3, 1
- };
- 
- 
-/*
- int[] listofBody = {
- 0, 2, 0, 2, 0, 2, 0, 2
- };*/
-
 
 String[] nameofBody = {
   "Point", "Line", "Plate", "Triangle", "Box"
 };
 
 int calcRandomValue(int from, int to) {
-  int val= (int)random(from, to+1);
+  int val = (int)random(from, to + 1);
 
   return constrain(val, from, to);
 } 
 
 int calcRandomValue(float from, float to) {
-  float val= (int)random(from, to+1);
+  float val = (int)random(from, to + 1);
 
   return (int)constrain(val, from, to);
 } 
 
 void setupBodyPrimitives() {
+  sampleOriginBody = new Body(new PFace(new PVector(-0.5, 0.5, 0), new PVector(-0.5, -0.5, 0), new PVector(0.5, -0.5, 0), new PVector(0.5, 0.5, 0)));
 
-  sampleOriginBody=new Body(new PFace(new PVector(-0.5, 0.5, 0), new PVector(-0.5, -0.5, 0), new PVector(0.5, -0.5, 0), new PVector(0.5, 0.5, 0)));
-
-  for (int i=0; i < body.length; i++) getNextRandomBody(i);
+  for (int i = 0; i < body.length; i++)
+    getNextRandomBody(i);
 }
 
 int numRandomBody = 0;
 void getNextRandomBody(int i) {
-  if (i==0) {
-    body[0]=new Body(new PPoint());
+  if (i == 0) {
+    body[0] = new Body(new PPoint());
   }
-  if (i==1) {
+  if (i == 1) {
 
-    body[1]=new Body(new PLine());
+    body[1] = new Body(new PLine());
   }  
-  if (i==2) {   
-    body[2]=new Body(new PPlate());
+  if (i == 2) {
+    body[2] = new Body(new PPlate());
   }
-  if (i==3) {
-    body[3]=new Body(new PTri());
+  if (i == 3) {
+    body[3] = new Body(new PTri());
   }  
-  if (i==4) {
-    if (!cp53DAnim) body[4]=new Body(new PFace());
+  if (i == 4) {
+    if (!cp53DAnim)
+      body[4] = new Body(new PFace());
     else 
-    body[4]=new Body(new PBox());
+      body[4] = new Body(new PBox());
   }
   numRandomBody++;
   println(numRandomBody);
 }
 
-float globalScaleMult=0.5;
+float globalScaleMult = 0.5;
 
 class PMesh {
   String type;
@@ -101,9 +80,10 @@ class PMesh {
   }
 
   void setRandRot() {
-    if (!cp5QuantAnim) setRot(m.getRandVector(false), random(-1, 1)*PI/2);
+    if (!cp5QuantAnim)
+      setRot(m.getRandVector(false), random(-1, 1) * PI / 2);
     else {    
-      setRot(m.getRandVector(true), (int)random(-2, 2)*PI/2);
+      setRot(m.getRandVector(true), (int)random(-2, 2) * PI / 2);
     }
   }
 
@@ -120,7 +100,6 @@ class PMesh {
 }
 
 class PBox extends PMesh {
-
   public PBox() {
     setup();
 
@@ -189,7 +168,7 @@ class PLine extends PMesh {
   }
 }
 
-static float pPointSize=0.005;
+static float pPointSize = 0.005;
 
 class PPoint extends PMesh {
   public PPoint() {
@@ -207,11 +186,11 @@ class PPoint extends PMesh {
 }
 
 class PFace {
-  PVector pos=new PVector(0, 0, 0);
+  PVector pos = new PVector(0, 0, 0);
   PVector[] vert = new PVector[4];
-  float w=1;
-  float h=1;
-  float d=1;
+  float w = 1;
+  float h = 1;
+  float d = 1;
 
   public PFace() {
     vert[0] = new PVector(-1, 1, 0);
@@ -241,12 +220,11 @@ class PFace {
 
   public PVector getDimensions() {
 
-    float sX=0;
-    float sY=0;
-    float sZ=0;
+    float sX = 0;
+    float sY = 0;
+    float sZ = 0;
 
-    for (int i=0; i < vert.length; i++) {
-
+    for (int i = 0; i < vert.length; i++) {
       if (abs(vert[i].x) >= sX) sX = abs(vert[i].x);
       if (abs(vert[i].y) >= sY) sY = abs(vert[i].y);
       if (abs(vert[i].z) >= sZ) sZ = abs(vert[i].z);
@@ -264,13 +242,10 @@ class PFace {
   }
 
   void setRandRot() {
-
-    // println("check this one " + m.getRandVector(true));
-
-    if (!cp5QuantAnim) setRot(m.getRandVector(false), random(-1, 1)*PI/2);
+    if (!cp5QuantAnim)
+      setRot(m.getRandVector(false), random(-1, 1) * PI / 2);
     else {
-
-      setRot(m.getRandVector(true), (int)random(-2, 2)*PI/2);
+      setRot(m.getRandVector(true), (int)random(-2, 2) * PI / 2);
     }
   }
   void setRot(PVector dir, float amount) {
@@ -278,32 +253,32 @@ class PFace {
   }
 
   void setTrans(PVector posI) {
-    pos=new PVector(posI.x, posI.y, posI.z);
-    if (cp5QuantAnim) pos=new PVector((int)posI.x, (int)posI.y, (int)posI.z);
+    pos = new PVector(posI.x, posI.y, posI.z);
+    if (cp5QuantAnim) pos = new PVector((int)posI.x, (int)posI.y, (int)posI.z);
 
-    for (int j=0; j < vert.length; j++) {
-      vert[j].x+=pos.x;
-      vert[j].y+=pos.y;      
-      vert[j].z+=pos.z;
-      if (!cp53DAnim) vert[j].z=0;
+    for (int j = 0; j < vert.length; j++) {
+      vert[j].x += pos.x;
+      vert[j].y += pos.y;
+      vert[j].z += pos.z;
+      if (!cp53DAnim) vert[j].z = 0;
     }
   }
 
   void setScale(float wI, float hI, float dI) {
-    w=wI;
-    h=hI;
-    d=dI;
+    w = wI;
+    h = hI;
+    d = dI;
 
     if (cp5QuantAnim) {
-      w=(int)w;
-      h=(int)h;
-      d=(int)d;
+      w = (int)w;
+      h = (int)h;
+      d = (int)d;
     }
 
-    for (int j=0; j < vert.length; j++) {
-      vert[j].x*=w;
-      vert[j].y*=h;
-      vert[j].z*=d;
+    for (int j = 0; j < vert.length; j++) {
+      vert[j].x *= w;
+      vert[j].y *= h;
+      vert[j].z *= d;
     }
   }
 }
@@ -319,6 +294,7 @@ class PTri extends PMesh {
   public PTri() {
     super();
     type = "tri";
-    faces[0].vert[3] = new PVector((faces[0].vert[0].x + faces[0].vert[2].x)/2.0, (faces[0].vert[0].y + faces[0].vert[2].y)/2.0, (faces[0].vert[0].z + faces[0].vert[2].z)/2.0);
+    PVector[] v = faces[0].vert;
+    faces[0].vert[3] = new PVector((v[0].x + v[2].x)/2.0, (v[0].y + v[2].y)/2.0, (v[0].z + v[2].z)/2.0);
   }
 }

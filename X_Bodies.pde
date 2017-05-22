@@ -9,7 +9,7 @@ int[] listofBody = {
 
 
 int[] listofBody = {
-  0, 1, 2, 4
+  0, 1, 2, 3, 4
 };
 
 /*
@@ -59,10 +59,10 @@ void getNextRandomBody(int i) {
   }
   if (i==1) {
 
-    body[1]=new Body(new PLine());//(new PVector(2, -1, 0), new PVector(3, 0, 0)).face);
+    body[1]=new Body(new PLine());
   }  
   if (i==2) {   
-    body[2]=new Body(new PFace());
+    body[2]=new Body(new PPlate());
   }
   if (i==3) {
     body[3]=new Body(new PTri());
@@ -70,7 +70,7 @@ void getNextRandomBody(int i) {
   if (i==4) {
     if (!cp53DAnim) body[4]=new Body(new PFace());
     else 
-    body[4]=new Body(new PBox().faces);
+    body[4]=new Body(new PBox());
   }
   numRandomBody++;
   println(numRandomBody);
@@ -79,10 +79,13 @@ void getNextRandomBody(int i) {
 float globalScaleMult=0.5;
 
 class PMesh {
+  String type;
   PFace[] faces;
 
   public PMesh() {
+    type = "mesh";
     faces = new PFace[1];
+    faces[0] = new PFace();
   }
 
   public void draw() {
@@ -123,7 +126,6 @@ class PBox extends PMesh {
 
     setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
     setRandRot();
-    // setTrans(new PVector((int)random(-cp5WorldRangeX, cp5WorldRangeX), (int)random(-cp5WorldRangeY, cp5WorldRangeY), (int)random(-cp5WorldRangeY, cp5WorldRangeY)));
     setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
 
@@ -133,6 +135,7 @@ class PBox extends PMesh {
   }
 
   public void setup() {
+    type = "box";
     faces = new PFace[6];
     faces[0] = new PFace(new PVector( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Top)
       new PVector(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Top)
@@ -171,35 +174,35 @@ class PBox extends PMesh {
   }
 }
 
-class PLine extends PFace {
+class PLine extends PMesh {
   public PLine() {
-
-    super(new PVector(-1, 0, 0), new PVector(+1, 0, 0), 0.01);
-    vert[0] = new PVector(-1, 0.01, 0);
-    vert[1] = new PVector(-1, -0.01, 0);
-    vert[2] = new PVector(1, -0.01, 0);
-    vert[3] = new PVector(1, 0.01, 0);
+    super();
+    type = "line";
+    faces[0] = new PFace(new PVector(-1, 0, 0), new PVector(+1, 0, 0), 0.01);
+    faces[0].vert[0] = new PVector(-1, 0.01, 0);
+    faces[0].vert[1] = new PVector(-1, -0.01, 0);
+    faces[0].vert[2] = new PVector(1, -0.01, 0);
+    faces[0].vert[3] = new PVector(1, 0.01, 0);
     setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), 1, 1);
     setRandRot();
-    // setTrans(new PVector(random(-cp5WorldRangeX, cp5WorldRangeX), random(-cp5WorldRangeY, cp5WorldRangeY), random(-cp5WorldRangeY, cp5WorldRangeY)));
     setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
 }
 
 static float pPointSize=0.005;
 
-class PPoint extends PFace {
-  PVector pos=new PVector(0, 0, 0);
-
+class PPoint extends PMesh {
   public PPoint() {
-    super(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
-    // setTrans(new PVector(random(-cp5WorldRangeX, cp5WorldRangeX), random(-cp5WorldRangeY, cp5WorldRangeY), random(-cp5WorldRangeY, cp5WorldRangeY)));
+    super();
+    type = "point";
+    faces[0] = new PFace(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
     setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
   public PPoint(PVector posI) {
-    super(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
-    pos=posI;
-    setTrans(new PVector(pos.x, pos.y, pos.z));
+    super();
+    type = "point";
+    faces[0] = new PFace(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
+    setTrans(new PVector(posI.x, posI.y, posI.z));
   }
 }
 
@@ -211,7 +214,6 @@ class PFace {
   float d=1;
 
   public PFace() {
-
     vert[0] = new PVector(-1, 1, 0);
     vert[1] = new PVector(-1, -1, 0);
     vert[2] = new PVector(1, -1, 0);
@@ -220,7 +222,6 @@ class PFace {
     setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
     setRandRot();    
     PVector dim = getDimensions(); 
-    //  setTrans(new PVector(random(-cp5WorldRangeX, cp5WorldRangeX), random(-cp5WorldRangeY, cp5WorldRangeY), random(-cp5WorldRangeY, cp5WorldRangeY)  ) );
     setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
 
@@ -241,7 +242,7 @@ class PFace {
   public PVector getDimensions() {
 
     float sX=0;
-    float  sY=0;
+    float sY=0;
     float sZ=0;
 
     for (int i=0; i < vert.length; i++) {
@@ -276,7 +277,6 @@ class PFace {
     vert = m.setPVectorRotation(vert, dir, amount);
   }
 
-
   void setTrans(PVector posI) {
     pos=new PVector(posI.x, posI.y, posI.z);
     if (cp5QuantAnim) pos=new PVector((int)posI.x, (int)posI.y, (int)posI.z);
@@ -290,7 +290,6 @@ class PFace {
   }
 
   void setScale(float wI, float hI, float dI) {
-
     w=wI;
     h=hI;
     d=dI;
@@ -309,10 +308,17 @@ class PFace {
   }
 }
 
-class PTri extends PFace {
+class PPlate extends PMesh {
+  public PPlate() {
+    super();
+    type = "plate";
+  }
+}
 
+class PTri extends PMesh {
   public PTri() {
-    super();    
-    vert[3] = new PVector((vert[0].x + vert[2].x)/2.0, (vert[0].y + vert[2].y)/2.0, (vert[0].z + vert[2].z)/2.0);
+    super();
+    type = "tri";
+    faces[0].vert[3] = new PVector((faces[0].vert[0].x + faces[0].vert[2].x)/2.0, (faces[0].vert[0].y + faces[0].vert[2].y)/2.0, (faces[0].vert[0].z + faces[0].vert[2].z)/2.0);
   }
 }

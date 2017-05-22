@@ -31,28 +31,28 @@ class Body {
   }
 
   public Body(PFace face) {
-    element =  new MeshElement[0];
+    element = new MeshElement[0];
     addFace(face);
   }
 
-
-  public Body(PFace[] faces) {    
+  public Body(PMesh mesh) {
     element = new MeshElement[0];
-    for (int i=0; i < faces.length; i++) {   
-      addFace(faces[i]);
+    for (int i = 0; i < mesh.faces.length; i++) {
+      addFace(mesh.faces[i]);
     }
   }
 
-
-  public Body(PTri tri) {
+  public Body(PFace[] faces) {
     element = new MeshElement[0];
-    addFace(tri);
+    for (int i = 0; i < faces.length; i++) {
+      addFace(faces[i]);
+    }
   }
 
   public void addFace(PFace face) {
     WETriangleMesh meshI= new WETriangleMesh();
     Vec3D a = new Vec3D(face.vert[0].x, face.vert[0].y, face.vert[0].z);
-    Vec3D b = new Vec3D(face.vert[1].x, face.vert[1].y, face.vert[1].z);          
+    Vec3D b = new Vec3D(face.vert[1].x, face.vert[1].y, face.vert[1].z);
     Vec3D c = new Vec3D(face.vert[2].x, face.vert[2].y, face.vert[2].z);
     Vec3D d = new Vec3D(face.vert[3].x, face.vert[3].y, face.vert[3].z);
 
@@ -61,13 +61,12 @@ class Body {
     element = (MeshElement[])  append(element, new MeshElement(meshI));
   }
 
-
-  public void  addFace(PTri tri) {
+  public void addFace(PTri tri) {
     WETriangleMesh meshI= new WETriangleMesh();
-    Vec3D a = new Vec3D(tri.vert[0].x, tri.vert[0].y, tri.vert[0].z);
-    Vec3D b = new Vec3D(tri.vert[1].x, tri.vert[1].y, tri.vert[1].z);          
-    Vec3D c = new Vec3D(tri.vert[2].x, tri.vert[2].y, tri.vert[2].z);
-    Vec3D d = new Vec3D(tri.vert[3].x, tri.vert[3].y, tri.vert[3].z);
+    Vec3D a = new Vec3D(tri.faces[0].vert[0].x, tri.faces[0].vert[0].y, tri.faces[0].vert[0].z);
+    Vec3D b = new Vec3D(tri.faces[0].vert[1].x, tri.faces[0].vert[1].y, tri.faces[0].vert[1].z);
+    Vec3D c = new Vec3D(tri.faces[0].vert[2].x, tri.faces[0].vert[2].y, tri.faces[0].vert[2].z);
+    Vec3D d = new Vec3D(tri.faces[0].vert[3].x, tri.faces[0].vert[3].y, tri.faces[0].vert[3].z);
 
     meshI.addFace(a, b, c);
     meshI.addFace(c, d, a);
@@ -89,7 +88,6 @@ class Body {
     }
     return true;
   }
-
 
   // The HEMESH Body Transformer
   public Body(HE_Mesh   meshI) {
@@ -127,16 +125,8 @@ class Body {
     }
   }
 
-
   public void draw(color colorI, boolean debug, boolean drawGrid) {
-
-
-
-
     for (int i=0; i<element.length; i++) {
-
-
-
       element[i].draw(colorI, debug, drawGrid);
     }
   }

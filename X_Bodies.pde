@@ -47,7 +47,7 @@ void getNextRandomBody(int i) {
   }  
   if (i == 4) {
     if (!cp53DAnim)
-      body[4] = new Body(new PFace());
+      body[4] = new Body(new PPlate());
     else 
       body[4] = new Body(new PBox());
   }
@@ -158,10 +158,6 @@ class PLine extends PMesh {
     super();
     type = "line";
     faces[0] = new PFace(new PVector(-1, 0, 0), new PVector(+1, 0, 0), 0.01);
-    faces[0].vert[0] = new PVector(-1, 0.01, 0);
-    faces[0].vert[1] = new PVector(-1, -0.01, 0);
-    faces[0].vert[2] = new PVector(1, -0.01, 0);
-    faces[0].vert[3] = new PVector(1, 0.01, 0);
     setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), 1, 1);
     setRandRot();
     setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));

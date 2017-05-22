@@ -9,7 +9,7 @@ int[] listofBody = {
 
 
 int[] listofBody = {
-  0, 1, 2, 3
+  0, 1, 2, 4
 };
 
 /*
@@ -70,7 +70,7 @@ void getNextRandomBody(int i) {
   if (i==4) {
     if (!cp53DAnim) body[4]=new Body(new PFace());
     else 
-    body[4]=new Body(new PBox().face);
+    body[4]=new Body(new PBox().faces);
   }
   numRandomBody++;
   println(numRandomBody);
@@ -78,11 +78,45 @@ void getNextRandomBody(int i) {
 
 float globalScaleMult=0.5;
 
-class PBox {
-  PFace[] face = new PFace[6];
+class PMesh {
+  PFace[] faces;
 
-  float w, h, d = 1;
-  PVector pos=new PVector(0, 0, 0);
+  public PMesh() {
+    faces = new PFace[1];
+  }
+
+  public void draw() {
+    for (int i = 0; i < faces.length; i++)
+      faces[i].draw();
+  }
+
+  void setTrans(PVector posI) {
+    PVector pos = new PVector(posI.x, posI.y, posI.z);
+    for (int i = 0; i < faces.length; i++) {
+      faces[i].setTrans(pos);
+    }
+  }
+
+  void setRandRot() {
+    if (!cp5QuantAnim) setRot(m.getRandVector(false), random(-1, 1)*PI/2);
+    else {    
+      setRot(m.getRandVector(true), (int)random(-2, 2)*PI/2);
+    }
+  }
+
+  void setRot(PVector dir, float amount) {
+    for (int i = 0; i < faces.length; i++)
+      faces[i].setRot(dir, amount);
+  }
+
+  void setScale(float wI, float hI, float dI) {
+    for (int i = 0; i < faces.length; i++) {
+      faces[i].setScale(wI, hI, dI);
+    }
+  }
+}
+
+class PBox extends PMesh {
 
   public PBox() {
     setup();
@@ -98,69 +132,42 @@ class PBox {
     setScale(wI, hI, dI);
   }
 
-  void setTrans(PVector posI) {
-    pos=new PVector(posI.x, posI.y, posI.z);
-    for (int i=0; i < face.length; i++) {
-      face[i].setTrans(pos);
-    }
-  }
-
-  void setRandRot() {
-    if (!cp5QuantAnim) setRot(m.getRandVector(false), random(-1, 1)*PI/2);
-    else {    
-      setRot(m.getRandVector(true), (int)random(-2, 2)*PI/2);
-    }
-  }
-
-  void setRot(PVector dir, float amount) {
-    for (int i=0; i < face.length; i++)
-      face[i].setRot(dir, amount);
-  }
-
-  void setScale(float wI, float hI, float dI) {
-    w=wI;
-    h=hI;
-    d=dI;
-    for (int i=0; i < face.length; i++) {
-      face[i].setScale(w, h, d);
-    }
-  }
-
   public void setup() {
-    face[0] = new PFace(new PVector( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Top)
+    faces = new PFace[6];
+    faces[0] = new PFace(new PVector( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Top)
       new PVector(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Top)
       new PVector(-1.0f, 1.0f, 1.0f), // Bottom Left Of The Quad (Top)
       new PVector( 1.0f, 1.0f, 1.0f));    // Bottom Right Of The Quad (Top)
 
-    face[1] = new PFace(new PVector( 1.0f, -1.0f, 1.0f), // Top Right Of The Quad (Bottom)
+    faces[1] = new PFace(new PVector( 1.0f, -1.0f, 1.0f), // Top Right Of The Quad (Bottom)
       new PVector(-1.0f, -1.0f, 1.0f), // Top Left Of The Quad (Bottom)
       new PVector(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Bottom)
       new PVector( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Bottom)
 
-    face[2] = new PFace(new PVector( 1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Front)
+    faces[2] = new PFace(new PVector( 1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Front)
       new PVector(-1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Front)
       new PVector(-1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Front)
       new PVector( 1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Front)
 
-    face[3] = new PFace(new PVector( 1.0f, -1.0f, -1.0f), // Top Right Of The Quad (Back)
+    faces[3] = new PFace(new PVector( 1.0f, -1.0f, -1.0f), // Top Right Of The Quad (Back)
       new PVector(-1.0f, -1.0f, -1.0f), // Top Left Of The Quad (Back)
       new PVector(-1.0f, 1.0f, -1.0f), // Bottom Left Of The Quad (Back)
       new PVector( 1.0f, 1.0f, -1.0f));    // Bottom Right Of The Quad (Back)
 
-    face[4] = new PFace(new PVector(-1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Left)
+    faces[4] = new PFace(new PVector(-1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Left)
       new PVector(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Left)
       new PVector(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Left)
       new PVector(-1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Left)
 
-    face[5] = new PFace(new PVector( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Right)
+    faces[5] = new PFace(new PVector( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Right)
       new PVector( 1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Right)
       new PVector( 1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Right)
       new PVector( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Right)
   }
 
   public void draw() {
-    for (int i=0; i <face.length; i++)
-      face[i].draw();
+    for (int i = 0; i < faces.length; i++)
+      faces[i].draw();
   }
 }
 

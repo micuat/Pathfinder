@@ -36,7 +36,6 @@ void getNextRandomBody(int i) {
     body[0] = new Body(new PPoint());
   }
   if (i == 1) {
-
     body[1] = new Body(new PLine());
   }  
   if (i == 2) {
@@ -146,11 +145,6 @@ class PBox extends PMesh {
       new PVector( 1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Right)
       new PVector( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Right)
   }
-
-  public void draw() {
-    for (int i = 0; i < faces.length; i++)
-      faces[i].draw();
-  }
 }
 
 class PLine extends PMesh {
@@ -169,12 +163,15 @@ static float pPointSize = 0.005;
 class PPoint extends PMesh {
   public PPoint() {
     super();
-    type = "point";
-    faces[0] = new PFace(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
-    setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
+    PVector posI = new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY));
+    setup(posI);
   }
   public PPoint(PVector posI) {
     super();
+    setup(posI);
+  }
+
+  void setup(PVector posI) {
     type = "point";
     faces[0] = new PFace(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
     setTrans(new PVector(posI.x, posI.y, posI.z));

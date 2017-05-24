@@ -24,7 +24,12 @@ int calcRandomValue(float from, float to) {
 } 
 
 void setupBodyPrimitives() {
-  sampleOriginBody = new Body(new PFace(new PVector(-0.5, 0.5, 0), new PVector(-0.5, -0.5, 0), new PVector(0.5, -0.5, 0), new PVector(0.5, 0.5, 0)));
+  // TODO
+  // won't work with:
+  // sampleOriginBody = new Body(new PPlate());
+  PPlate p = new PPlate();
+  p.faces[0] = new PFace(new PVector(-0.5, 0.5, 0), new PVector(-0.5, -0.5, 0), new PVector(0.5, -0.5, 0), new PVector(0.5, 0.5, 0));
+  sampleOriginBody = new Body(p);
 
   for (int i = 0; i < body.length; i++)
     getNextRandomBody(i);

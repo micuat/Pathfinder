@@ -181,11 +181,6 @@ class PPoint extends PMesh {
 class PFace {
   WETriangleMesh meshI = new WETriangleMesh();
 
-  Vec3D pos = new Vec3D(0, 0, 0);
-  float w = 1;
-  float h = 1;
-  float d = 1;
-
   public PFace() {
     Vec3D a = new Vec3D(-1, 1, 0);
     Vec3D b = new Vec3D(-1, -1, 0);
@@ -229,22 +224,17 @@ class PFace {
   }
 
   void setTrans(Vec3D posI) {
-    pos = new Vec3D(posI.x, posI.y, posI.z);
-    if (cp5QuantAnim) pos = new Vec3D((int)posI.x, (int)posI.y, (int)posI.z);
+    if (cp5QuantAnim) posI = new Vec3D((int)posI.x, (int)posI.y, (int)posI.z);
 
     for (int j = 0; j < meshI.getNumVertices(); j++) {
-      meshI.getVertexForID(j).x += pos.x;
-      meshI.getVertexForID(j).y += pos.y;
-      meshI.getVertexForID(j).z += pos.z;
+      meshI.getVertexForID(j).x += posI.x;
+      meshI.getVertexForID(j).y += posI.y;
+      meshI.getVertexForID(j).z += posI.z;
       if (!cp53DAnim) meshI.getVertexForID(j).z = 0;
     }
   }
 
-  void setScale(float wI, float hI, float dI) {
-    w = wI;
-    h = hI;
-    d = dI;
-
+  void setScale(float w, float h, float d) {
     if (cp5QuantAnim) {
       w = (int)w;
       h = (int)h;

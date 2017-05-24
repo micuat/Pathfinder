@@ -111,8 +111,8 @@ void setupGui() {
 
   ControlGroup cw = cp5.addGroup("World", width - 275, unitSpace * 20);
   cp5.begin(cw, 0, unitSpace);
-  cp5.addSlider("cp5WorldRangeX", 1, 20).linebreak().setLabel("RangeX").linebreak();
-  cp5.addSlider("cp5WorldRangeY", 1, 20).linebreak().setLabel("RangeY").linebreak();
+  cp5.addSlider("cp5WorldRangeX", 1, 50).linebreak().setLabel("RangeX").linebreak();
+  cp5.addSlider("cp5WorldRangeY", 1, 50).linebreak().setLabel("RangeY").linebreak();
   cp5.addSlider("cp5WorldSpeed", 0, 2).linebreak().setLabel("Rotate Speed").linebreak();
   cp5.addSlider("cp5WorldScale", 1, 50).linebreak().setLabel("Scale").linebreak();
   cp5.addToggle("cp5WorldOrigin").setLabel("Origin");

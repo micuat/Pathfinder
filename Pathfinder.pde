@@ -82,11 +82,24 @@ void drawMenu() {
 
 void drawFrame(PGraphics in) {
   in.beginDraw();
+  //in.ortho();
   in.setMatrix(getMatrix()); // replace the PGraphics-matrix
   in.colorMode(RGB);
   in.background(backgroundCol);
   in.colorMode(HSB, 360);
   in.scale(cp5WorldScale);
+  if(false) {
+    Vec3D p = new Vec3D(0, 0, 0);
+    for(int i = 0; i < transform.transformBody.element.length; i++) {
+      Vec3D pMin = transform.transformBody.element[i].mesh.getBoundingBox().getMin();
+      Vec3D pMax = transform.transformBody.element[i].mesh.getBoundingBox().getMax();
+      //Vec3D p = pMin.interpolateTo(pMax, 0.5f);
+      p.addSelf(pMin);
+      p.addSelf(pMax);
+    }
+    p.scaleSelf(1.0f / (transform.transformBody.element.length * 2.0f));
+    in.translate(-p.x, -p.y, -p.z);
+  }
   in.translate(0, 0, -5);
 
   drawVisuals(in);

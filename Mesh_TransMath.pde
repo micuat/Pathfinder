@@ -152,32 +152,21 @@ class Math {
     return mesh;
   }
 
-  PVector[] setPVectorRotation(PVector[] face, PVector dir, float rot) {
-
-    for (int i = 0; i < face.length; i++) {
-      Vec3D res = new Vec3D(face[i].x, face[i].y, face[i].z);
-      res = res.getRotatedAroundAxis(new Vec3D(dir.x, dir.y, dir.z), rot);
-      face[i] = new PVector(res.x, res.y, res.z);
-    }
-
-    return face;
-  }
-
-  PVector getRandVector(boolean quant) {
+  Vec3D getRandVector(boolean quant) {
     Vec3D res = new Vec3D(0, 0, 1);
 
     if (!cp53DAnim)
-      return new PVector (0, 0, 1);
+      return new Vec3D (0, 0, 1);
 
     if (!quant) { 
       res = new Vec3D(1, 1, 1).randomVector();
       res = res.normalize();
-      return new PVector(res.x, res.y, res.z);
+      return res;
     } else {
       int dir = (int)random(0, 2);
       if (dir == 0) res = new Vec3D(1, 0, 0);
       if (dir == 1) res = new Vec3D(0, 1, 0);
-      return new PVector(res.x, res.y, res.z);
+      return res;
     }
   }
 

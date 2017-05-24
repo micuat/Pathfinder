@@ -28,7 +28,7 @@ void setupBodyPrimitives() {
   // won't work with:
   // sampleOriginBody = new Body(new PPlate());
   PPlate p = new PPlate();
-  p.faces[0] = new PFace(new PVector(-0.5, 0.5, 0), new PVector(-0.5, -0.5, 0), new PVector(0.5, -0.5, 0), new PVector(0.5, 0.5, 0));
+  p.faces[0] = new PFace(new Vec3D(-0.5, 0.5, 0), new Vec3D(-0.5, -0.5, 0), new Vec3D(0.5, -0.5, 0), new Vec3D(0.5, 0.5, 0));
   sampleOriginBody = new Body(p);
 
   for (int i = 0; i < body.length; i++)
@@ -71,13 +71,8 @@ class PMesh {
     faces[0] = new PFace();
   }
 
-  public void draw() {
-    for (int i = 0; i < faces.length; i++)
-      faces[i].draw();
-  }
-
-  void setTrans(PVector posI) {
-    PVector pos = new PVector(posI.x, posI.y, posI.z);
+  void setTrans(Vec3D posI) {
+    Vec3D pos = new Vec3D(posI.x, posI.y, posI.z);
     for (int i = 0; i < faces.length; i++) {
       faces[i].setTrans(pos);
     }
@@ -91,7 +86,7 @@ class PMesh {
     }
   }
 
-  void setRot(PVector dir, float amount) {
+  void setRot(Vec3D dir, float amount) {
     for (int i = 0; i < faces.length; i++)
       faces[i].setRot(dir, amount);
   }
@@ -109,7 +104,7 @@ class PBox extends PMesh {
 
     setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
     setRandRot();
-    setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
+    setTrans(new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
 
   public PBox(float wI, float hI, float dI) {
@@ -120,35 +115,35 @@ class PBox extends PMesh {
   public void setup() {
     type = "box";
     faces = new PFace[6];
-    faces[0] = new PFace(new PVector( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Top)
-      new PVector(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Top)
-      new PVector(-1.0f, 1.0f, 1.0f), // Bottom Left Of The Quad (Top)
-      new PVector( 1.0f, 1.0f, 1.0f));    // Bottom Right Of The Quad (Top)
+    faces[0] = new PFace(new Vec3D( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Top)
+      new Vec3D(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Top)
+      new Vec3D(-1.0f, 1.0f, 1.0f), // Bottom Left Of The Quad (Top)
+      new Vec3D( 1.0f, 1.0f, 1.0f));    // Bottom Right Of The Quad (Top)
 
-    faces[1] = new PFace(new PVector( 1.0f, -1.0f, 1.0f), // Top Right Of The Quad (Bottom)
-      new PVector(-1.0f, -1.0f, 1.0f), // Top Left Of The Quad (Bottom)
-      new PVector(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Bottom)
-      new PVector( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Bottom)
+    faces[1] = new PFace(new Vec3D( 1.0f, -1.0f, 1.0f), // Top Right Of The Quad (Bottom)
+      new Vec3D(-1.0f, -1.0f, 1.0f), // Top Left Of The Quad (Bottom)
+      new Vec3D(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Bottom)
+      new Vec3D( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Bottom)
 
-    faces[2] = new PFace(new PVector( 1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Front)
-      new PVector(-1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Front)
-      new PVector(-1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Front)
-      new PVector( 1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Front)
+    faces[2] = new PFace(new Vec3D( 1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Front)
+      new Vec3D(-1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Front)
+      new Vec3D(-1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Front)
+      new Vec3D( 1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Front)
 
-    faces[3] = new PFace(new PVector( 1.0f, -1.0f, -1.0f), // Top Right Of The Quad (Back)
-      new PVector(-1.0f, -1.0f, -1.0f), // Top Left Of The Quad (Back)
-      new PVector(-1.0f, 1.0f, -1.0f), // Bottom Left Of The Quad (Back)
-      new PVector( 1.0f, 1.0f, -1.0f));    // Bottom Right Of The Quad (Back)
+    faces[3] = new PFace(new Vec3D( 1.0f, -1.0f, -1.0f), // Top Right Of The Quad (Back)
+      new Vec3D(-1.0f, -1.0f, -1.0f), // Top Left Of The Quad (Back)
+      new Vec3D(-1.0f, 1.0f, -1.0f), // Bottom Left Of The Quad (Back)
+      new Vec3D( 1.0f, 1.0f, -1.0f));    // Bottom Right Of The Quad (Back)
 
-    faces[4] = new PFace(new PVector(-1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Left)
-      new PVector(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Left)
-      new PVector(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Left)
-      new PVector(-1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Left)
+    faces[4] = new PFace(new Vec3D(-1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Left)
+      new Vec3D(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Left)
+      new Vec3D(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Left)
+      new Vec3D(-1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Left)
 
-    faces[5] = new PFace(new PVector( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Right)
-      new PVector( 1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Right)
-      new PVector( 1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Right)
-      new PVector( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Right)
+    faces[5] = new PFace(new Vec3D( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Right)
+      new Vec3D( 1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Right)
+      new Vec3D( 1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Right)
+      new Vec3D( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Right)
   }
 }
 
@@ -156,10 +151,10 @@ class PLine extends PMesh {
   public PLine() {
     super();
     type = "line";
-    faces[0] = new PFace(new PVector(-1, 0, 0), new PVector(+1, 0, 0), 0.01);
+    faces[0] = new PFace(new Vec3D(-1, 0, 0), new Vec3D(+1, 0, 0), 0.01);
     setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), 1, 1);
     setRandRot();
-    setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
+    setTrans(new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
 }
 
@@ -168,75 +163,56 @@ static float pPointSize = 0.005;
 class PPoint extends PMesh {
   public PPoint() {
     super();
-    PVector posI = new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY));
+    Vec3D posI = new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY));
     setup(posI);
   }
-  public PPoint(PVector posI) {
+  public PPoint(Vec3D posI) {
     super();
     setup(posI);
   }
 
-  void setup(PVector posI) {
+  void setup(Vec3D posI) {
     type = "point";
-    faces[0] = new PFace(new PVector(-pPointSize, 0, 0), new PVector(pPointSize, 0, 0), pPointSize);
-    setTrans(new PVector(posI.x, posI.y, posI.z));
+    faces[0] = new PFace(new Vec3D(-pPointSize, 0, 0), new Vec3D(pPointSize, 0, 0), pPointSize);
+    setTrans(new Vec3D(posI.x, posI.y, posI.z));
   }
 }
 
 class PFace {
-  PVector pos = new PVector(0, 0, 0);
-  PVector[] vert = new PVector[4];
+  WETriangleMesh meshI = new WETriangleMesh();
+
+  Vec3D pos = new Vec3D(0, 0, 0);
   float w = 1;
   float h = 1;
   float d = 1;
 
   public PFace() {
-    vert[0] = new PVector(-1, 1, 0);
-    vert[1] = new PVector(-1, -1, 0);
-    vert[2] = new PVector(1, -1, 0);
-    vert[3] = new PVector(1, 1, 0);
+    Vec3D a = new Vec3D(-1, 1, 0);
+    Vec3D b = new Vec3D(-1, -1, 0);
+    Vec3D c = new Vec3D(1, -1, 0);
+    Vec3D d = new Vec3D(1, 1, 0);
+
+    meshI.addFace(a, b, c);
+    meshI.addFace(c, d, a);
 
     setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
     setRandRot();    
-    PVector dim = getDimensions(); 
-    setTrans(new PVector(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
+    setTrans(new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
 
-  public PFace(PVector a, PVector b, float heightV) {
-    vert[0] = new PVector(a.x, a.y+heightV, a.z);
-    vert[1] = new PVector(a.x, a.y-heightV, a.z);
-    vert[2] = new PVector(b.x, b.y-heightV, b.z);
-    vert[3] = new PVector(b.x, b.y+heightV, b.z);
+  public PFace(Vec3D A, Vec3D B, float heightV) {
+    Vec3D a = new Vec3D(A.x, A.y+heightV, A.z);
+    Vec3D b = new Vec3D(A.x, A.y-heightV, A.z);
+    Vec3D c = new Vec3D(B.x, B.y-heightV, B.z);
+    Vec3D d = new Vec3D(B.x, B.y+heightV, B.z);
+
+    meshI.addFace(a, b, c);
+    meshI.addFace(c, d, a);
   }
 
-  public PFace(PVector a, PVector b, PVector c, PVector d) {
-    vert[0] = new PVector(a.x, a.y, a.z);
-    vert[1] = new PVector(b.x, b.y, b.z);
-    vert[2] = new PVector(c.x, c.y, c.z);
-    vert[3] = new PVector(d.x, d.y, d.z);
-  }
-
-  public PVector getDimensions() {
-
-    float sX = 0;
-    float sY = 0;
-    float sZ = 0;
-
-    for (int i = 0; i < vert.length; i++) {
-      if (abs(vert[i].x) >= sX) sX = abs(vert[i].x);
-      if (abs(vert[i].y) >= sY) sY = abs(vert[i].y);
-      if (abs(vert[i].z) >= sZ) sZ = abs(vert[i].z);
-    }
-    return new PVector(sX, sY, sZ);
-  }
-
-  public void draw() {
-    beginShape(QUAD);
-    vertex(vert[0].x, vert[0].y, vert[0].z);
-    vertex(vert[1].x, vert[1].y, vert[1].z);
-    vertex(vert[2].x, vert[2].y, vert[2].z);
-    vertex(vert[3].x, vert[3].y, vert[3].z);
-    endShape();
+  public PFace(Vec3D a, Vec3D b, Vec3D c, Vec3D d) {
+    meshI.addFace(a, b, c);
+    meshI.addFace(c, d, a);
   }
 
   void setRandRot() {
@@ -246,19 +222,21 @@ class PFace {
       setRot(m.getRandVector(true), (int)random(-2, 2) * PI / 2);
     }
   }
-  void setRot(PVector dir, float amount) {
-    vert = m.setPVectorRotation(vert, dir, amount);
+  void setRot(Vec3D dir, float amount) {
+    for (int i = 0; i < meshI.getNumVertices(); i++) {
+      meshI.getVertexForID(i).rotateAroundAxis(dir, amount);
+    }
   }
 
-  void setTrans(PVector posI) {
-    pos = new PVector(posI.x, posI.y, posI.z);
-    if (cp5QuantAnim) pos = new PVector((int)posI.x, (int)posI.y, (int)posI.z);
+  void setTrans(Vec3D posI) {
+    pos = new Vec3D(posI.x, posI.y, posI.z);
+    if (cp5QuantAnim) pos = new Vec3D((int)posI.x, (int)posI.y, (int)posI.z);
 
-    for (int j = 0; j < vert.length; j++) {
-      vert[j].x += pos.x;
-      vert[j].y += pos.y;
-      vert[j].z += pos.z;
-      if (!cp53DAnim) vert[j].z = 0;
+    for (int j = 0; j < meshI.getNumVertices(); j++) {
+      meshI.getVertexForID(j).x += pos.x;
+      meshI.getVertexForID(j).y += pos.y;
+      meshI.getVertexForID(j).z += pos.z;
+      if (!cp53DAnim) meshI.getVertexForID(j).z = 0;
     }
   }
 
@@ -273,10 +251,10 @@ class PFace {
       d = (int)d;
     }
 
-    for (int j = 0; j < vert.length; j++) {
-      vert[j].x *= w;
-      vert[j].y *= h;
-      vert[j].z *= d;
+    for (int j = 0; j < meshI.getNumVertices(); j++) {
+      meshI.getVertexForID(j).x *= w;
+      meshI.getVertexForID(j).y *= h;
+      meshI.getVertexForID(j).z *= d;
     }
   }
 }
@@ -292,7 +270,13 @@ class PTri extends PMesh {
   public PTri() {
     super();
     type = "tri";
-    PVector[] v = faces[0].vert;
-    faces[0].vert[3] = new PVector((v[0].x + v[2].x)/2.0, (v[0].y + v[2].y)/2.0, (v[0].z + v[2].z)/2.0);
+    Vec3D a = new Vec3D(-1, 1, 0);
+    Vec3D b = new Vec3D(-1, -1, 0);
+    Vec3D c = new Vec3D(1, -1, 0);
+    Vec3D d = new Vec3D((a.x + c.x)/2.0, (a.y + c.y)/2.0, (a.z + c.z)/2.0);
+    faces[0] = new PFace(a, b, c, d);
+    setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
+    setRandRot();
+    setTrans(new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
 }

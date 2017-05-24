@@ -74,10 +74,4 @@ class Body {
     }
     return true;
   }
-
-  public void draw(color colorI, boolean debug, boolean drawGrid) {
-    for (int i = 0; i < element.length; i++) {
-      element[i].draw(colorI, debug, drawGrid);
-    }
-  }
 }

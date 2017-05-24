@@ -43,10 +43,4 @@ class MeshElement {
     meshTransform.update(rotAmount, rotNormAmount, transAmountX, transAmountY, transAmountZ, sizeAmountX, sizeAmountY, triAmount);
     mesh = meshTransform.cur.copy();
   }
-
-  public void draw(color colorI, boolean debug, boolean drawGrid) {
-    pushMatrix();  
-    //drawMesh(meshTransform.cur, colorI, debug,drawGrid);  
-    popMatrix();
-  }
 }

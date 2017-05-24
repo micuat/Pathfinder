@@ -74,7 +74,7 @@ class PMesh {
   void setTrans(Vec3D posI) {
     Vec3D pos = new Vec3D(posI.x, posI.y, posI.z);
     for (int i = 0; i < faces.length; i++) {
-      faces[i].setTrans(pos);
+      m.setTrans(faces[i].meshI, pos);
     }
   }
 
@@ -88,12 +88,12 @@ class PMesh {
 
   void setRot(Vec3D dir, float amount) {
     for (int i = 0; i < faces.length; i++)
-      faces[i].setRot(dir, amount);
+      m.setRot(faces[i].meshI, dir, amount);
   }
 
   void setScale(float wI, float hI, float dI) {
     for (int i = 0; i < faces.length; i++) {
-      faces[i].setScale(wI, hI, dI);
+      m.setScale(faces[i].meshI, wI, hI, dI);
     }
   }
 }
@@ -190,9 +190,9 @@ class PFace {
     meshI.addFace(a, b, c);
     meshI.addFace(c, d, a);
 
-    setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
-    setRandRot();    
-    setTrans(new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
+    m.setScale(meshI, calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
+    m.setRandRot(meshI);
+    m.setTrans(meshI, new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
   }
 
   public PFace(Vec3D A, Vec3D B, float heightV) {
@@ -208,44 +208,6 @@ class PFace {
   public PFace(Vec3D a, Vec3D b, Vec3D c, Vec3D d) {
     meshI.addFace(a, b, c);
     meshI.addFace(c, d, a);
-  }
-
-  void setRandRot() {
-    if (!cp5QuantAnim)
-      setRot(m.getRandVector(false), random(-1, 1) * PI / 2);
-    else {
-      setRot(m.getRandVector(true), (int)random(-2, 2) * PI / 2);
-    }
-  }
-  void setRot(Vec3D dir, float amount) {
-    for (int i = 0; i < meshI.getNumVertices(); i++) {
-      meshI.getVertexForID(i).rotateAroundAxis(dir, amount);
-    }
-  }
-
-  void setTrans(Vec3D posI) {
-    if (cp5QuantAnim) posI = new Vec3D((int)posI.x, (int)posI.y, (int)posI.z);
-
-    for (int j = 0; j < meshI.getNumVertices(); j++) {
-      meshI.getVertexForID(j).x += posI.x;
-      meshI.getVertexForID(j).y += posI.y;
-      meshI.getVertexForID(j).z += posI.z;
-      if (!cp53DAnim) meshI.getVertexForID(j).z = 0;
-    }
-  }
-
-  void setScale(float w, float h, float d) {
-    if (cp5QuantAnim) {
-      w = (int)w;
-      h = (int)h;
-      d = (int)d;
-    }
-
-    for (int j = 0; j < meshI.getNumVertices(); j++) {
-      meshI.getVertexForID(j).x *= w;
-      meshI.getVertexForID(j).y *= h;
-      meshI.getVertexForID(j).z *= d;
-    }
   }
 }
 

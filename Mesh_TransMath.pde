@@ -152,6 +152,45 @@ class Math {
     return mesh;
   }
 
+  void setRandRot(WETriangleMesh meshI) {
+    if (!cp5QuantAnim)
+      setRot(meshI, getRandVector(false), random(-1, 1) * PI / 2);
+    else {
+      setRot(meshI, getRandVector(true), (int)random(-2, 2) * PI / 2);
+    }
+  }
+
+  void setRot(WETriangleMesh meshI, Vec3D dir, float amount) {
+    for (int i = 0; i < meshI.getNumVertices(); i++) {
+      meshI.getVertexForID(i).rotateAroundAxis(dir, amount);
+    }
+  }
+
+  void setTrans(WETriangleMesh meshI, Vec3D posI) {
+    if (cp5QuantAnim) posI = new Vec3D((int)posI.x, (int)posI.y, (int)posI.z);
+
+    for (int j = 0; j < meshI.getNumVertices(); j++) {
+      meshI.getVertexForID(j).x += posI.x;
+      meshI.getVertexForID(j).y += posI.y;
+      meshI.getVertexForID(j).z += posI.z;
+      if (!cp53DAnim) meshI.getVertexForID(j).z = 0;
+    }
+  }
+
+  void setScale(WETriangleMesh meshI, float w, float h, float d) {
+    if (cp5QuantAnim) {
+      w = (int)w;
+      h = (int)h;
+      d = (int)d;
+    }
+
+    for (int j = 0; j < meshI.getNumVertices(); j++) {
+      meshI.getVertexForID(j).x *= w;
+      meshI.getVertexForID(j).y *= h;
+      meshI.getVertexForID(j).z *= d;
+    }
+  }
+
   Vec3D getRandVector(boolean quant) {
     Vec3D res = new Vec3D(0, 0, 1);
 

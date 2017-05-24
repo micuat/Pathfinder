@@ -75,41 +75,6 @@ class Body {
     return true;
   }
 
-  // The HEMESH Body Transformer
-  public Body(HE_Mesh meshI) {
-    element = new MeshElement[0];
-
-    int count = 0;
-    Iterator<HE_Face> iter = meshI.fItr();
-    for (int i = 0; iter.hasNext(); i++) {
-      HE_Face f = iter.next();
-      count++;
-      if (count % 1 == 0) {
-        final List<WB_IndexedTriangle2D> tris = f.triangulate();
-        final List<HE_Vertex> vertices = f.getFaceVertices();
-        WB_Point3d v0, v1, v2;
-        WB_IndexedTriangle2D tri;
-        WETriangleMesh mesh = new WETriangleMesh();
-        for (int ind = 0; ind < tris.size(); ind++) {
-          tri = tris.get(ind);
-
-          v0 = vertices.get(tri.i1);
-          v1 = vertices.get(tri.i2);
-          v2 = vertices.get(tri.i3);
-
-          Vec3D a = new Vec3D((float)v0.x, (float)v0.y, (float)v0.z);
-          Vec3D b = new Vec3D((float)v1.x, (float)v1.y, (float)v1.z);
-          Vec3D c = new Vec3D((float)v2.x, (float)v2.y, (float)v2.z);
-          Vec3D d = new Vec3D((float)(c.x+a.x)/2, (float)(c.y+a.y)/2, (float)(c.z+a.z)/2);
-
-          mesh.addFace(a, b, c);
-          mesh.addFace(c, d, a);
-          element = (MeshElement[])append(element, new MeshElement(mesh));
-        }
-      }
-    }
-  }
-
   public void draw(color colorI, boolean debug, boolean drawGrid) {
     for (int i = 0; i < element.length; i++) {
       element[i].draw(colorI, debug, drawGrid);

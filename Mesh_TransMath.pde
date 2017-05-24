@@ -93,19 +93,18 @@ class Math {
 
 
   WETriangleMesh getRot(WETriangleMesh src, WETriangleMesh dst, float amount, int clapIndex) {
-    WETriangleMesh mesh = new WETriangleMesh();
-    mesh = src.copy();
+    WETriangleMesh mesh = src.copy();
 
     Vec3D tempA = getNormal(src);
     Vec3D tempB = getNormal(dst);
 
-    Vec3D center = getCenter(mesh);//mesh.computeCentroid();
-    mesh.translate(new Vec3D(-center.x, -center.y, -center.z));    
+    Vec3D center = getCenter(mesh);
+    mesh.translate(new Vec3D(-center.x, -center.y, -center.z));
 
-    Vec3D rotVector = (tempA.cross(tempB)); 
+    Vec3D rotVector = tempA.cross(tempB);
     rotVector.normalize();
 
-    Vec3D[] offSetA = getVertexVec(mesh); 
+    Vec3D[] offSetA = getVertexVec(mesh);
 
     if (rotVector.x == 0 && rotVector.y == 0 && rotVector.z == 0) {
 
@@ -150,9 +149,7 @@ class Math {
     if (cp5QuantAnim) posI = new Vec3D((int)posI.x, (int)posI.y, (int)posI.z);
 
     meshI.translate(posI);
-    for (int j = 0; j < meshI.getNumVertices(); j++) {
-      if (!cp53DAnim) meshI.getVertexForID(j).z = 0;
-    }
+    if (!cp53DAnim) setScale(meshI, 1, 1, 0);
   }
 
   void setScale(WETriangleMesh meshI, float w, float h, float d) {

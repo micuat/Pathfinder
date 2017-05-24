@@ -28,7 +28,7 @@ void setupBodyPrimitives() {
   // won't work with:
   // sampleOriginBody = new Body(new PPlate());
   PPlate p = new PPlate();
-  p.faces[0] = new PFace(new Vec3D(-0.5, 0.5, 0), new Vec3D(-0.5, -0.5, 0), new Vec3D(0.5, -0.5, 0), new Vec3D(0.5, 0.5, 0));
+  p.meshes[0] = create(new Vec3D(-0.5, 0.5, 0), new Vec3D(-0.5, -0.5, 0), new Vec3D(0.5, -0.5, 0), new Vec3D(0.5, 0.5, 0));
   sampleOriginBody = new Body(p);
 
   for (int i = 0; i < body.length; i++)
@@ -61,20 +61,56 @@ void getNextRandomBody(int i) {
 
 float globalScaleMult = 0.5;
 
+WETriangleMesh create() {
+  WETriangleMesh meshI = new WETriangleMesh();
+  Vec3D a = new Vec3D(-1, 1, 0);
+  Vec3D b = new Vec3D(-1, -1, 0);
+  Vec3D c = new Vec3D(1, -1, 0);
+  Vec3D d = new Vec3D(1, 1, 0);
+
+  meshI.addFace(a, b, c);
+  meshI.addFace(c, d, a);
+
+  m.setScale(meshI, calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
+  m.setRandRot(meshI);
+  m.setTrans(meshI, new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
+  return meshI;
+}
+
+WETriangleMesh create(Vec3D A, Vec3D B, float heightV) {
+  WETriangleMesh meshI = new WETriangleMesh();
+  Vec3D a = new Vec3D(A.x, A.y+heightV, A.z);
+  Vec3D b = new Vec3D(A.x, A.y-heightV, A.z);
+  Vec3D c = new Vec3D(B.x, B.y-heightV, B.z);
+  Vec3D d = new Vec3D(B.x, B.y+heightV, B.z);
+
+  meshI.addFace(a, b, c);
+  meshI.addFace(c, d, a);
+  return meshI;
+}
+
+WETriangleMesh create(Vec3D a, Vec3D b, Vec3D c, Vec3D d) {
+  WETriangleMesh meshI = new WETriangleMesh();
+
+  meshI.addFace(a, b, c);
+  meshI.addFace(c, d, a);
+  return meshI;
+}
+
 class PMesh {
   String type;
-  PFace[] faces;
+  WETriangleMesh[] meshes;
 
   public PMesh() {
     type = "mesh";
-    faces = new PFace[1];
-    faces[0] = new PFace();
+    meshes = new WETriangleMesh[1];
+    meshes[0] = new WETriangleMesh();
   }
 
   void setTrans(Vec3D posI) {
     Vec3D pos = new Vec3D(posI.x, posI.y, posI.z);
-    for (int i = 0; i < faces.length; i++) {
-      m.setTrans(faces[i].meshI, pos);
+    for (int i = 0; i < meshes.length; i++) {
+      m.setTrans(meshes[i], pos);
     }
   }
 
@@ -87,13 +123,13 @@ class PMesh {
   }
 
   void setRot(Vec3D dir, float amount) {
-    for (int i = 0; i < faces.length; i++)
-      m.setRot(faces[i].meshI, dir, amount);
+    for (int i = 0; i < meshes.length; i++)
+      m.setRot(meshes[i], dir, amount);
   }
 
   void setScale(float wI, float hI, float dI) {
-    for (int i = 0; i < faces.length; i++) {
-      m.setScale(faces[i].meshI, wI, hI, dI);
+    for (int i = 0; i < meshes.length; i++) {
+      m.setScale(meshes[i], wI, hI, dI);
     }
   }
 }
@@ -114,33 +150,33 @@ class PBox extends PMesh {
 
   public void setup() {
     type = "box";
-    faces = new PFace[6];
-    faces[0] = new PFace(new Vec3D( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Top)
+    meshes = new WETriangleMesh[6];
+    meshes[0] = create(new Vec3D( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Top)
       new Vec3D(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Top)
       new Vec3D(-1.0f, 1.0f, 1.0f), // Bottom Left Of The Quad (Top)
       new Vec3D( 1.0f, 1.0f, 1.0f));    // Bottom Right Of The Quad (Top)
 
-    faces[1] = new PFace(new Vec3D( 1.0f, -1.0f, 1.0f), // Top Right Of The Quad (Bottom)
+    meshes[1] = create(new Vec3D( 1.0f, -1.0f, 1.0f), // Top Right Of The Quad (Bottom)
       new Vec3D(-1.0f, -1.0f, 1.0f), // Top Left Of The Quad (Bottom)
       new Vec3D(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Bottom)
       new Vec3D( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Bottom)
 
-    faces[2] = new PFace(new Vec3D( 1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Front)
+    meshes[2] = create(new Vec3D( 1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Front)
       new Vec3D(-1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Front)
       new Vec3D(-1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Front)
       new Vec3D( 1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Front)
 
-    faces[3] = new PFace(new Vec3D( 1.0f, -1.0f, -1.0f), // Top Right Of The Quad (Back)
+    meshes[3] = create(new Vec3D( 1.0f, -1.0f, -1.0f), // Top Right Of The Quad (Back)
       new Vec3D(-1.0f, -1.0f, -1.0f), // Top Left Of The Quad (Back)
       new Vec3D(-1.0f, 1.0f, -1.0f), // Bottom Left Of The Quad (Back)
       new Vec3D( 1.0f, 1.0f, -1.0f));    // Bottom Right Of The Quad (Back)
 
-    faces[4] = new PFace(new Vec3D(-1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Left)
+    meshes[4] = create(new Vec3D(-1.0f, 1.0f, 1.0f), // Top Right Of The Quad (Left)
       new Vec3D(-1.0f, 1.0f, -1.0f), // Top Left Of The Quad (Left)
       new Vec3D(-1.0f, -1.0f, -1.0f), // Bottom Left Of The Quad (Left)
       new Vec3D(-1.0f, -1.0f, 1.0f));    // Bottom Right Of The Quad (Left)
 
-    faces[5] = new PFace(new Vec3D( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Right)
+    meshes[5] = create(new Vec3D( 1.0f, 1.0f, -1.0f), // Top Right Of The Quad (Right)
       new Vec3D( 1.0f, 1.0f, 1.0f), // Top Left Of The Quad (Right)
       new Vec3D( 1.0f, -1.0f, 1.0f), // Bottom Left Of The Quad (Right)
       new Vec3D( 1.0f, -1.0f, -1.0f));    // Bottom Right Of The Quad (Right)
@@ -151,7 +187,7 @@ class PLine extends PMesh {
   public PLine() {
     super();
     type = "line";
-    faces[0] = new PFace(new Vec3D(-1, 0, 0), new Vec3D(+1, 0, 0), 0.01);
+    meshes[0] = create(new Vec3D(-1, 0, 0), new Vec3D(+1, 0, 0), 0.01);
     setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), 1, 1);
     setRandRot();
     setTrans(new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
@@ -173,47 +209,15 @@ class PPoint extends PMesh {
 
   void setup(Vec3D posI) {
     type = "point";
-    faces[0] = new PFace(new Vec3D(-pPointSize, 0, 0), new Vec3D(pPointSize, 0, 0), pPointSize);
+    meshes[0] = create(new Vec3D(-pPointSize, 0, 0), new Vec3D(pPointSize, 0, 0), pPointSize);
     setTrans(new Vec3D(posI.x, posI.y, posI.z));
-  }
-}
-
-class PFace {
-  WETriangleMesh meshI = new WETriangleMesh();
-
-  public PFace() {
-    Vec3D a = new Vec3D(-1, 1, 0);
-    Vec3D b = new Vec3D(-1, -1, 0);
-    Vec3D c = new Vec3D(1, -1, 0);
-    Vec3D d = new Vec3D(1, 1, 0);
-
-    meshI.addFace(a, b, c);
-    meshI.addFace(c, d, a);
-
-    m.setScale(meshI, calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
-    m.setRandRot(meshI);
-    m.setTrans(meshI, new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
-  }
-
-  public PFace(Vec3D A, Vec3D B, float heightV) {
-    Vec3D a = new Vec3D(A.x, A.y+heightV, A.z);
-    Vec3D b = new Vec3D(A.x, A.y-heightV, A.z);
-    Vec3D c = new Vec3D(B.x, B.y-heightV, B.z);
-    Vec3D d = new Vec3D(B.x, B.y+heightV, B.z);
-
-    meshI.addFace(a, b, c);
-    meshI.addFace(c, d, a);
-  }
-
-  public PFace(Vec3D a, Vec3D b, Vec3D c, Vec3D d) {
-    meshI.addFace(a, b, c);
-    meshI.addFace(c, d, a);
   }
 }
 
 class PPlate extends PMesh {
   public PPlate() {
     super();
+    meshes[0] = create();
     type = "plate";
   }
 }
@@ -226,7 +230,7 @@ class PTri extends PMesh {
     Vec3D b = new Vec3D(-1, -1, 0);
     Vec3D c = new Vec3D(1, -1, 0);
     Vec3D d = new Vec3D((a.x + c.x)/2.0, (a.y + c.y)/2.0, (a.z + c.z)/2.0);
-    faces[0] = new PFace(a, b, c, d);
+    meshes[0] = create(a, b, c, d);
     setScale(calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult), calcRandomValue(1, cp5WorldRangeY*globalScaleMult));
     setRandRot();
     setTrans(new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));

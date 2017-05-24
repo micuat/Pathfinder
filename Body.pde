@@ -25,8 +25,8 @@ class Body {
 
   public Body(PMesh mesh) {
     element = new MeshElement[0];
-    for (int i = 0; i < mesh.faces.length; i++) {
-      element = (MeshElement[])append(element, new MeshElement(mesh.faces[i].meshI));
+    for (int i = 0; i < mesh.meshes.length; i++) {
+      element = (MeshElement[])append(element, new MeshElement(mesh.meshes[i]));
     }
   }
 }

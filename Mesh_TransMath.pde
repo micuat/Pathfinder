@@ -112,7 +112,7 @@ class Math {
 
   WETriangleMesh getRot(WETriangleMesh src, WETriangleMesh dst, float amount, int clapIndex) {
     WETriangleMesh mesh = new WETriangleMesh();
-    mesh = src.copy();  
+    mesh = src.copy();
 
     Vec3D tempA = getNormal(src);
     Vec3D tempB = getNormal(dst);

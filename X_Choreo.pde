@@ -53,41 +53,16 @@ class Choreo {
     aniTri = 0;
 
     for (int i = 0; i < toDoTasks.length; i++) {
-      seq.beginStep();  
-      if (toDoTasks[i].equals("aniRot"))
-        seq.add(Ani.to(this, speed, delay, "aniRot", 100, easings[easingType%easings.length], "onEnd:callCircle"));
-
-      if (toDoTasks[i].equals("aniRotNo"))
-        seq.add(Ani.to(this, speed, delay, "aniRotNo", 100, easings[easingType%easings.length], "onEnd:callCircle"));
-
-      if (toDoTasks[i].equals("aniTransX"))
-        seq.add(Ani.to(this, speed, delay, "aniTransX", 100, easings[easingType%easings.length], "onEnd:callCircle"));
-
-      if (toDoTasks[i].equals("aniTransY"))
-        seq.add(Ani.to(this, speed, delay, "aniTransY", 100, easings[easingType%easings.length], "onEnd:callCircle"));
-
-      if (toDoTasks[i].equals("aniTransZ"))
-        seq.add(Ani.to(this, speed, delay, "aniTransZ", 100, easings[easingType%easings.length], "onEnd:callCircle"));
-
-      if (toDoTasks[i].equals("aniSizeX"))
-        seq.add(Ani.to(this, speed, delay, "aniSizeX", 100, easings[easingType%easings.length], "onEnd:callCircle"));
-
-      if (toDoTasks[i].equals("aniSizeY"))
-        seq.add(Ani.to(this, speed, delay, "aniSizeY", 100, easings[easingType%easings.length], "onEnd:callCircle")); 
-
-      if (toDoTasks[i].equals("aniTri"))
-        seq.add(Ani.to(this, speed, delay, "aniTri", 100, easings[easingType%easings.length], "onEnd:callCircle")); 
+      seq.beginStep();
+      for(String key: transTasks) {
+        if (toDoTasks[i].equals(key))
+          seq.add(Ani.to(this, speed, delay, key, 100, easings[easingType%easings.length]));
+      }
       seq.endStep();
     }
     seq.endSequence();
     if (cp5PlaybackStyle == 1) seq.start();
     else seq.pause();
-  }
-
-  void callCircle(Ani theAni) {
-    // Body here;
-    //here = new Body( transform.transformBody);
-    // visEdges.enter(here,false);
   }
 
   public void setup(TransformInfo info) {

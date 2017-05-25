@@ -90,14 +90,14 @@ void drawFrame(PGraphics in) {
   in.scale(cp5WorldScale);
   if(false) {
     Vec3D p = new Vec3D(0, 0, 0);
-    for(int i = 0; i < transform.transformBody.element.length; i++) {
-      Vec3D pMin = transform.transformBody.element[i].mesh.getBoundingBox().getMin();
-      Vec3D pMax = transform.transformBody.element[i].mesh.getBoundingBox().getMax();
+    for(int i = 0; i < transform.transformBody.element.size(); i++) {
+      Vec3D pMin = transform.transformBody.element.get(i).mesh.getBoundingBox().getMin();
+      Vec3D pMax = transform.transformBody.element.get(i).mesh.getBoundingBox().getMax();
       //Vec3D p = pMin.interpolateTo(pMax, 0.5f);
       p.addSelf(pMin);
       p.addSelf(pMax);
     }
-    p.scaleSelf(1.0f / (transform.transformBody.element.length * 2.0f));
+    p.scaleSelf(1.0f / (transform.transformBody.element.size() * 2.0f));
     in.translate(-p.x, -p.y, -p.z);
   }
   in.translate(0, 0, -5);

@@ -17,8 +17,8 @@ class Trails {
       rib.kill = true;
     }
 
-    for (int i = 0; i < transBody.element.length; i++) {
-      Vec3D pos[] = m.getVertexVec(transBody.element[i].mesh);
+    for (int i = 0; i < transBody.element.size(); i++) {
+      Vec3D pos[] = m.getVertexVec(transBody.element.get(i).mesh);
       for (int j = 0; j < pos.length; j++) {
         Ribbon rib;
 
@@ -27,13 +27,13 @@ class Trails {
       }
     }
 
-    lastNum = transBody.element.length;
+    lastNum = transBody.element.size();
   }
 
   public void update(Body transBody) {
     int num = 0;
-    for (int i = 0; i < transBody.element.length; i++) {
-      Vec3D pos[] = m.getVertexVec(transBody.element[i].mesh); 
+    for (int i = 0; i < transBody.element.size(); i++) {
+      Vec3D pos[] = m.getVertexVec(transBody.element.get(i).mesh);
 
       for (int j = 0; j < pos.length; j++) {
         if (ribbons.size() > num ) {

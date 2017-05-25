@@ -152,8 +152,8 @@ void drawHUD() {
 }
 
 void drawBody(PGraphics in, Body body, color colorFill, color colorStroke) {
-  for (int i = 0; i < body.element.length; i++) {
-    drawMesh(in, body.element[i].mesh, colorFill, colorStroke);
+  for (int i = 0; i < body.element.size(); i++) {
+    drawMesh(in, body.element.get(i).mesh, colorFill, colorStroke);
   }
 }
 

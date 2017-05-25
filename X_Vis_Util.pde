@@ -1,6 +1,6 @@
 Item item;
 
-MeshElement[] elementCopy = new MeshElement[0];
+ArrayList<MeshElement> elementCopy = new ArrayList<MeshElement>(0);
 float rot1 = 0;
 float rot2 = 0;
 
@@ -19,10 +19,10 @@ void enterBodyRecording(Body body, boolean insertLines) {
   rot1 = choreo.aniRot;
   rot2 = choreo.aniRotNo;
 
-  if (elementCopy.length > 0 && elementCopy != null) {
-    for (int i = 0; i < body.element.length && i < elementCopy.length; i++) {
-      Vec3D[] pos = m.getVertexVec(body.element[i].mesh);
-      Vec3D[] posCopy = m.getVertexVec(elementCopy[i].mesh);
+  if (elementCopy.size() > 0 && elementCopy != null) {
+    for (int i = 0; i < body.element.size() && i < elementCopy.size(); i++) {
+      Vec3D[] pos = m.getVertexVec(body.element.get(i).mesh);
+      Vec3D[] posCopy = m.getVertexVec(elementCopy.get(i).mesh);
 
       for (int j = 0; j < pos.length && j < posCopy.length; j++) {
         if (drawPointVsLines)
@@ -37,9 +37,9 @@ void enterBodyRecording(Body body, boolean insertLines) {
     }
   }
 
-  elementCopy = new MeshElement[body.element.length];
-  for (int i = 0; i < elementCopy.length; i++)
-    elementCopy[i] = body.element[i].copy();
+  elementCopy = new ArrayList<MeshElement>(body.element.size());
+  for (int i = 0; i < elementCopy.size(); i++)
+    elementCopy.set(i, body.element.get(i).copy());
 }
 
 class Item {
@@ -135,7 +135,7 @@ class VisEdges {
   }
 
   public void enter(Body body, boolean frame) {
-    if (body.element.length < 30)
+    if (body.element.size() < 30)
       edges.add(new VisMesh(body, frame));
   }
 
@@ -184,15 +184,15 @@ class VisMesh {
   }
 
   void display(PGraphics in) {
-    for (int i = 0; i < body.element.length; i++) {
+    for (int i = 0; i < body.element.size(); i++) {
 
-      Vec3D[] pos = m.getVertexVec(body.element[i].mesh);
+      Vec3D[] pos = m.getVertexVec(body.element.get(i).mesh);
 
       if (cp5DisplayLast && drawMesh )
         drawPolyMesh(in, pos, color(360, 0), color(360, 360 * life), 1);
 
       int till = 0;
-      if (m.isTriangle(body.element[i].mesh)) till = 1;
+      if (m.isTriangle(body.element.get(i).mesh)) till = 1;
       if (pos.length > 3)
         for (int j = 0; j < pos.length - till; j++) {
 

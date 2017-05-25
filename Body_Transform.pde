@@ -38,47 +38,47 @@ class BodyTransform {
   }
 
   void checkTransInfo() {
-    for (int i = 0; i < transformBody.element.length; i++) {
-      info.enterMeshTransInfo(transformBody.element[i].meshTransform.info);
+    for (int i = 0; i < transformBody.element.size(); i++) {
+      info.enterMeshTransInfo(transformBody.element.get(i).meshTransform.info);
     }
     info.invert();    
 
-    for (int g = 0; g < transformBody.element.length; g++) {
-      transformBody.element[g].meshTransform.motionClap = motionClap;
+    for (int g = 0; g < transformBody.element.size(); g++) {
+      transformBody.element.get(g).meshTransform.motionClap = motionClap;
     }
   }
 
   void init() {
     //only check for targetargetBody if the array of targetargetBody is not empty
-    if (targetBody.element.length > 0 && transformBody.element.length > 0) {
+    if (targetBody.element.size() > 0 && transformBody.element.size() > 0) {
 
-      if (transformBody.element.length < targetBody.element.length) resizeOriginClosest();
-      for (int g = 0; g < transformBody.element.length; g++) {
+      if (transformBody.element.size() < targetBody.element.size()) resizeOriginClosest();
+      for (int g = 0; g < transformBody.element.size(); g++) {
         int indexChosenT = -1;
         int indexChosenC = -1;
 
-        if (g % targetBody.element.length == 0) {
-          for (int j = 0; j < max(targetBody.element.length, transformBody.element.length); j++) {
-            if (targetBody.element.length > j)
-              targetBody.element[j].chosen=false;
+        if (g % targetBody.element.size() == 0) {
+          for (int j = 0; j < max(targetBody.element.size(), transformBody.element.size()); j++) {
+            if (targetBody.element.size() > j)
+              targetBody.element.get(j).chosen=false;
           }
         }     
 
         float distV = 10000000;
         float distC = 0;
 
-        MeshElement[] eTrans = transformBody.element;
-        MeshElement[] eTarget = targetBody.element;
-        for (int i = 0; i < eTrans.length; i++) {
+        ArrayList<MeshElement> eTrans = transformBody.element;
+        ArrayList<MeshElement> eTarget = targetBody.element;
+        for (int i = 0; i < eTrans.size(); i++) {
 
           // if this element not already found itargetBody target
-          if (!eTrans[i].chosen) {
+          if (!eTrans.get(i).chosen) {
 
-            for (int j = 0; j < eTarget.length; j++) {
+            for (int j = 0; j < eTarget.size(); j++) {
               //if this target has not yet been found
-              if (!eTarget[j].chosen) {
+              if (!eTarget.get(j).chosen) {
 
-                distC = dist(eTrans[i].center.x, eTrans[i].center.y, eTrans[i].center.z, eTarget[j].center.x, eTarget[j].center.y, eTarget[j].center.z);
+                distC = dist(eTrans.get(i).center.x, eTrans.get(i).center.y, eTrans.get(i).center.z, eTarget.get(j).center.x, eTarget.get(j).center.y, eTarget.get(j).center.z);
 
                 if (distC < distV) {
                   indexChosenT = j;
@@ -90,9 +90,9 @@ class BodyTransform {
           }
         }
 
-        eTrans[indexChosenC].chosen = true;
-        eTarget[indexChosenT].chosen = true;
-        eTrans[indexChosenC].setTargetElement(eTarget[indexChosenT]);
+        eTrans.get(indexChosenC).chosen = true;
+        eTarget.get(indexChosenT).chosen = true;
+        eTrans.get(indexChosenC).setTargetElement(eTarget.get(indexChosenT));
       }
       //search closest
     }
@@ -101,35 +101,35 @@ class BodyTransform {
   void resizeOriginClosest() {
     int n = 0;
     float distLast = 1000000;
-    for (int i = transformBody.element.length; i < targetBody.element.length; i++) {
+    for (int i = transformBody.element.size(); i < targetBody.element.size(); i++) {
 
-      for (int j = 0; j < transformBody.element.length; j++) {
-        float distCheck = transformBody.element[j].center.distanceTo(targetBody.element[i].center);
+      for (int j = 0; j < transformBody.element.size(); j++) {
+        float distCheck = transformBody.element.get(j).center.distanceTo(targetBody.element.get(i).center);
         if (distCheck < distLast) {
           distLast = distCheck;
           n = j;
         }
       }
 
-      transformBody.element = (MeshElement[])append(transformBody.element, new MeshElement(transformBody.element[n].mesh));
+      transformBody.element.add(new MeshElement(transformBody.element.get(n).mesh));
     }
   }
 
   public void update(float aniRot, float aniRotNo, float aniTransX, float aniTransY, float aniTransZ, float aniSizeX, float aniSizeY, float triAmount) {
-    for (int i = 0; i < transformBody.element.length; i++)
-      transformBody.element[i].update(aniRot, aniRotNo, aniTransX, aniTransY, aniTransZ, aniSizeX, aniSizeY, triAmount);
+    for (int i = 0; i < transformBody.element.size(); i++)
+      transformBody.element.get(i).update(aniRot, aniRotNo, aniTransX, aniTransY, aniTransZ, aniSizeX, aniSizeY, triAmount);
   }
 
   public void drawDebug() {
-    showDebugVertNum %= transformBody.element.length;
+    showDebugVertNum %= transformBody.element.size();
     showDebugVertNum = abs(showDebugVertNum);
 
-    for (int i = 0; i < transformBody.element.length; i++) {
+    for (int i = 0; i < transformBody.element.size(); i++) {
       if (showDebugVertNum == i) {
         pushStyle();
         fill(255, 0, 255);
-        //drawMesh(transformBody.element[i].meshTransform.cur, color(255, 255, 0), true,true);
-        //drawMesh(transformBody.element[i].meshTransform.dst, color(255, 255, 0), true,false);
+        //drawMesh(transformBody.element.get(i).meshTransform.cur, color(255, 255, 0), true,true);
+        //drawMesh(transformBody.element.get(i).meshTransform.dst, color(255, 255, 0), true,false);
         popStyle();
       }
     }

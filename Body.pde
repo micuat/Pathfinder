@@ -1,25 +1,25 @@
 class Body {
   int typeId = 0;
-  MeshElement[] element = new MeshElement[0];
+  ArrayList<MeshElement> element = new ArrayList<MeshElement>(0);
 
   public Body() {
   }
 
   public Body(Body source) {
-    element = new MeshElement[0];
+    element = new ArrayList<MeshElement>(0);
 
-    for (int i = 0; i < source.element.length; i++) {
+    for (int i = 0; i < source.element.size(); i++) {
       boolean found = false;
-      for (int j = 0; j < element.length; j++) {
+      for (int j = 0; j < element.size(); j++) {
         if (i != j) {
-          if (m.compareMesh(source.element[i].mesh, element[j].mesh)) { 
+          if (m.compareMesh(source.element.get(i).mesh, element.get(j).mesh)) {
             found = true; 
             println("yes-------------------------------------");
           } else ;
         }
       }
       if (!found)
-        element = (MeshElement[])append(element, new MeshElement(source.element[i].mesh));
+        element.add(new MeshElement(source.element.get(i).mesh));
     }
   }
 
@@ -52,9 +52,9 @@ class Body {
     default:
       mesh = new PPoint();
     }
-    element = new MeshElement[0];
+    element = new ArrayList<MeshElement>(0);
     for (int i = 0; i < mesh.meshes.length; i++) {
-      element = (MeshElement[])append(element, new MeshElement(mesh.meshes[i]));
+      element.add(new MeshElement(mesh.meshes[i]));
     }
   }
 

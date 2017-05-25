@@ -224,30 +224,10 @@ void controlEvent(ControlEvent theEvent) {
       println("yeeeeeeeeeeees");
     }
 
-    if ("object_1 [DropdownList]".equals(name))
-      listofBody[0] = (int)theEvent.getGroup().getValue();
-
-    if ("object_2 [DropdownList]".equals(name))
-      listofBody[1] = (int)theEvent.getGroup().getValue();
-
-    if ("object_3 [DropdownList]".equals(name)) {
-      listofBody[2] = (int)theEvent.getGroup().getValue();
+    for(int i = 0; i < 8; i++) {
+      if (name.equals("object_" + str(i+1) + " [DropdownList]"))
+        listofBody[i] = (int)theEvent.getGroup().getValue();
     }
-
-    if ("object_4 [DropdownList]".equals(name))
-      listofBody[3] = (int)theEvent.getGroup().getValue();
-
-    if ("object_5 [DropdownList]".equals(name))
-      listofBody[4] = (int)theEvent.getGroup().getValue();
-
-    if ("object_6 [DropdownList]".equals(name))
-      listofBody[5] = (int)theEvent.getGroup().getValue();
-
-    if ("object_7 [DropdownList]".equals(name))
-      listofBody[6] = (int)theEvent.getGroup().getValue();
-
-    if ("object_8 [DropdownList]".equals(name))
-      listofBody[7] = (int)theEvent.getGroup().getValue();
     println(listofBody);
   }
 }
@@ -269,35 +249,6 @@ void keyReleased() {
   } 
 
   switch(key) {
-
-  case '0' : 
-    randObj();
-    break;  
-
-  case '1' : 
-    pointPoint();
-    break;  
-
-  case '2' : 
-    lineLine();
-    break;  
-
-  case '3' : 
-    planePlane();
-    break;   
-
-  case '4' : 
-    pointLine();
-    break;
-
-  case '5' : 
-    pointPlane();
-    break;
-
-  case '6' : 
-    linePlane();
-    break;     
-
   case 'n' : 
     choreo.jumpNextTarget();
     break;
@@ -331,48 +282,6 @@ void keyReleased() {
     drawPointVsLines = !drawPointVsLines;
     break;
   }
-}
-
-void pointPoint() {
-  for (int i = 0; i < listofBody.length; i++)
-    listofBody[i] = 0;
-}
-
-void lineLine() {
-  for (int i = 0; i < listofBody.length; i++)
-    listofBody[i] = 1;
-}
-
-void planePlane() {
-  for (int i = 0; i < listofBody.length; i++)
-    listofBody[i] = (i % 2) + 2;
-}
-
-void pointLine() {
-  listofBody[0] = 4;
-  listofBody[1] = 3;
-  listofBody[2] = 4;
-  listofBody[3] = 2;
-}
-
-void pointPlane() {
-  for (int i = 0; i < listofBody.length; i++)
-    listofBody[i] = (i % 2) < 1 ? 0 : 2;
-}
-
-void linePlane() {
-  for (int i = 0; i < listofBody.length; i++)
-    listofBody[i] = (i % 2) < 1 ? 1 : 2;
-}
-
-void randObj() {
-  for (int i = 0; i < listofBody.length; i++)
-    listofBody[i] = (int)random(body.length);
-}
-
-void planeBox() {
-  for (int i = 0; i < listofBody.length; i++)
-    listofBody[i] = (i % 3) + 2;
 }
 
 void fileLoadCP5(File selection)

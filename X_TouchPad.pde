@@ -17,19 +17,6 @@ void oscEvent(OscMessage m) {
   println(" typetag: "+m.typetag());
 
   if (m.addrPattern().equals("/Object/rand")) println("-------------------------------------------------------");
-  else if (m.addrPattern().equals("/Object/pointpoint")) pointPoint();
-  else if (m.addrPattern().equals("/Object/lineline")) lineLine();
-  else if (m.addrPattern().equals("/Object/planeplane")) planePlane();
-
-  else if (m.addrPattern().equals("/Object/pointline")) pointLine();
-  else if (m.addrPattern().equals("/Object/pointplane")) pointPlane();
-  else if (m.addrPattern().equals("/Object/lineplane")) linePlane();
-
-  else if (m.addrPattern().equals("/Object/rand")) randObj();
-  else if (m.addrPattern().equals("/Object/planeBox")) {
-    planeBox();
-    cp53DAnim = true;
-  }
 
   else if (m.addrPattern().equals("/Object/iterate")) {
     cp5PlaybackStyle = 1;

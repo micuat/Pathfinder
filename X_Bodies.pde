@@ -22,30 +22,16 @@ int calcRandomValue(float from, float to) {
 } 
 
 void setupBodyPrimitives() {
-  for (int i = 0; i < body.length; i++)
-    getNextRandomBody(i);
+  for (int i = 0; i < body.length; i++) {
+    body[i] = new Body(i);
+  }
 }
 
 int numRandomBody = 0;
 void getNextRandomBody(int i) {
-  if (i == 0) {
-    body[0] = new Body(new PPoint());
-  }
-  if (i == 1) {
-    body[1] = new Body(new PLine());
-  }  
-  if (i == 2) {
-    body[2] = new Body(new PPlate());
-  }
-  if (i == 3) {
-    body[3] = new Body(new PTri());
-  }  
-  if (i == 4) {
-    if (!cp53DAnim)
-      body[4] = new Body(new PPlate());
-    else 
-      body[4] = new Body(new PBox());
-  }
+  // TODO: why crashes?
+  //body[i].reset();
+  body[i] = new Body(i);
   numRandomBody++;
   println(numRandomBody);
 }

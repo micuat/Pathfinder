@@ -207,63 +207,6 @@ void drawMesh(PGraphics in, WETriangleMesh meshI, color colorFill, color colorSt
       in.popStyle();
     }
 
-    if (false) {
-      in.pushStyle();
-      in.fill(255);
-      in.textSize(66);
-      for (int i = 0; i < 4; i++) {
-        in.stroke(360);
-        in.pushMatrix();
-        in.translate(pos[i].x, cp5WorldRangeY, cp5WorldRangeY);
-        in.box(0.4);
-        in.translate(0, i);
-        in.scale(0.01);
-        in.text(pos[i].x, 0, 0);
-
-        in.popMatrix();
-
-        in.pushMatrix();
-        in.translate(cp5WorldRangeX, pos[i].y, cp5WorldRangeY);
-        in.box(0.4);
-        in.translate(0, i);
-        in.scale(0.01);
-        in.text(pos[i].x, 0, 0);        
-        in.popMatrix();
-
-        in.pushMatrix();
-        in.translate(cp5WorldRangeX, cp5WorldRangeY, pos[i].z);
-        in.box(0.4);
-        in.translate(0, i);
-        in.scale(0.01);
-        in.text(pos[i].x, 0, 0);          
-        in.popMatrix();
-
-        in.pushMatrix();
-        in.translate(pos[i].x, -cp5WorldRangeY, -cp5WorldRangeY);
-        in.box(0.4);
-        in.translate(0, i);
-        in.scale(0.01);
-        in.text(pos[i].x, 0, 0);  
-        in.popMatrix();
-
-        in.pushMatrix();
-        in.translate(-cp5WorldRangeX, pos[i].y, -cp5WorldRangeY);
-        in.box(0.4);
-        in.translate(0, i);
-        in.scale(0.01);
-        in.text(pos[i].x, 0, 0);          
-        in.popMatrix();
-
-        in.pushMatrix();
-        in.translate(-cp5WorldRangeX, -cp5WorldRangeY, pos[i].z);
-        in.box(0.4);
-        in.translate(0, i);
-        in.scale(0.01);
-        in.text(pos[i].x, 0, 0);  
-        in.popMatrix();
-      }
-    }
-
     if (cp5DisplayTrails)
       trails.draw(in);
   }

@@ -142,9 +142,9 @@ void drawGui() {
   cp5.draw(); 
 
   if (mouseX > width - 300) {
-    cam.setMouseControlled(false);  //PeasyCam off
+    cam.setActive(false);  //PeasyCam off
   } else
-    cam.setMouseControlled(true);
+    cam.setActive(true);
   popStyle();
 
   updateObjectGUI();
@@ -203,7 +203,7 @@ void updateObjectGUI() {
 
 void controlEvent(ControlEvent theEvent) {
   if (theEvent.isFrom(r)) {
-    cp5PlaybackStyle = int(theEvent.group().getValue());
+    cp5PlaybackStyle = int(theEvent.getGroup().getValue());
     choreo.changePlayback();
 
     return;

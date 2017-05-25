@@ -170,7 +170,7 @@ class Math {
       return new Vec3D (0, 0, 1);
 
     if (!quant) { 
-      res = new Vec3D(1, 1, 1).randomVector();
+      res = Vec3D.randomVector();
       res = res.normalize();
       return res;
     } else {
@@ -190,8 +190,6 @@ class Math {
 
     Vec3D center = getCenter(mesh);
     mesh.translate(new Vec3D(-center.x, -center.y, -center.z)); 
-
-    Vec3D memNormal = getNormal(mesh);
 
     mesh.rotateAroundAxis(getNormal(mesh), (float)rotAngleToTarget * amount); 
     mesh.translate(center);
@@ -221,7 +219,7 @@ class Math {
       return false;
   }
 
-  WETriangleMesh getTrans(WETriangleMesh src, WETriangleMesh dst, float amountX, float amountY, float amountZ, Vec3D offSet) {
+  WETriangleMesh getTrans(WETriangleMesh src, WETriangleMesh dst, float amountX, float amountY, float amountZ) {
     WETriangleMesh mesh = new WETriangleMesh();
     mesh = src.copy();
     Vec3D cSrc = getCenter(src);
@@ -306,9 +304,6 @@ class TransformInfo {
 
     if (abs(widthSrc - widthDst) < pPointSize) sizeAmountX = 0;
     if (abs(heightSrc - heightDst) < pPointSize) sizeAmountY = 0;
-
-    Vec3D[] verts = m.getVertexVec(src);
-    Vec3D[] vertsT = m.getVertexVec(dst);
 
     if (m.isTriangle(src) == m.isTriangle(dst))
       triAmount = 0;

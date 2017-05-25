@@ -6,7 +6,7 @@ float rot2 = 0;
 
 boolean enterRecording = true;
 
-void enterBodyRecording(Body body, boolean insertLines) {
+void enterBodyRecording(Body body) {
 
   boolean enter = false;
   if (rot1 == 0 && rot2 == 0) {

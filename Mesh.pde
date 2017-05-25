@@ -83,9 +83,6 @@ class MeshElement {
     public void checkMotionClapOffset() {
       motionClapOffset = new Vec3D(0, 0, 0);
       WETriangleMesh srcL = src.copy();
-      Vec3D a1 = m.getCenter(srcL);
-      Vec3D b1 = m.getCenter(dst);
-      Vec3D diff = new Vec3D(b1.x - a1.x, b1.y - a1.y, b1.z - a1.z);
 
       srcL = updateTransAndRot(srcL, src, dst, 1, 1, 0, 0, 0);
       Vec3D a = m.getCenter(srcL);
@@ -125,7 +122,7 @@ class MeshElement {
       cur = m.getRotNormal(cur, dst, rotNormAmount);
       cur = m.update(cur);
 
-      cur = m.getTrans(cur, dst, amountX, amountY, amountZ, motionClapOffset);
+      cur = m.getTrans(cur, dst, amountX, amountY, amountZ);
 
       return cur;
     }
@@ -157,7 +154,6 @@ class MeshElement {
       ay = targetHeight / heightDst;
       dstL.scale(new Vec3D(ax, ay, 0));
 
-      Vec3D center = m.getCenter(curL);
       Vec3D[] verts = m.getVertexVec(curL);
       Vec3D[] vertsT = m.getVertexVec(dstL);
 

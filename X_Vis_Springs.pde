@@ -255,9 +255,9 @@ class Orbit {
       spike = (0.01f * index);
     }
     float noiseVal = noise(x / 100.0, y / 100.0, z / 100.0) - 0.5;
-    x = n.getX() + p.sin(noiseVal) * (r.radius - index/50.0f)*spike; 
-    y = n.getY() + p.sin(noiseVal) * (r.radius - index/50.0f)*spike;
-    z = n.getZ() + (p.sin(noiseVal) * (r.radius - index/50.0f)*spike);
+    x = n.getX() + sin(noiseVal) * (r.radius - index/50.0f)*spike; 
+    y = n.getY() + sin(noiseVal) * (r.radius - index/50.0f)*spike;
+    z = n.getZ() + (sin(noiseVal) * (r.radius - index/50.0f)*spike);
   }
 
   float getX() {

@@ -42,7 +42,7 @@ public void updateVisuals() {
   trails.update(transform.transformBody);
 
   if (enterRecording)
-    enterBodyRecording(transform.transformBody, true);
+    enterBodyRecording(transform.transformBody);
 }
 
 public void drawVisuals(PGraphics in) {

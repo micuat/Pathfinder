@@ -130,12 +130,14 @@ class MeshElement {
       return cur;
     }
 
+    WETriangleMesh sample = create(new Vec3D(-0.5, 0.5, 0), new Vec3D(-0.5, -0.5, 0), new Vec3D(0.5, -0.5, 0), new Vec3D(0.5, 0.5, 0));
+
     public WETriangleMesh updateScale(WETriangleMesh cur, float amountX, float amountY, float triAmount) {
       WETriangleMesh curL = cur.copy();
-      curL = updateTransAndRot(curL, curL, sampleOriginBody.element[0].mesh, 1, 1, 1, 1, 1);
+      curL = updateTransAndRot(curL, curL, sample, 1, 1, 1, 1, 1);
 
       WETriangleMesh dstL = dst.copy();
-      dstL = updateTransAndRot(dstL, dstL, sampleOriginBody.element[0].mesh, 1, 1, 1, 1, 1);
+      dstL = updateTransAndRot(dstL, dstL, sample, 1, 1, 1, 1, 1);
 
       float heightSrc = m.getHeight(src);
       float heightDst = m.getHeight(dst);

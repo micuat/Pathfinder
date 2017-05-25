@@ -1,7 +1,5 @@
 Body[] body = new Body[5];
 
-Body sampleOriginBody;
-
 // TODO: should be defined in GUI?
 int[] listofBody = {
   0, 1, 2, 3, 4
@@ -24,13 +22,6 @@ int calcRandomValue(float from, float to) {
 } 
 
 void setupBodyPrimitives() {
-  // TODO
-  // won't work with:
-  // sampleOriginBody = new Body(new PPlate());
-  PPlate p = new PPlate();
-  p.meshes[0] = create(new Vec3D(-0.5, 0.5, 0), new Vec3D(-0.5, -0.5, 0), new Vec3D(0.5, -0.5, 0), new Vec3D(0.5, 0.5, 0));
-  sampleOriginBody = new Body(p);
-
   for (int i = 0; i < body.length; i++)
     getNextRandomBody(i);
 }

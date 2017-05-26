@@ -237,14 +237,14 @@ class Math {
 
 
 class TransformInfo {
-  float rotAmount = 1;
-  float rotNormAmount = 1;
-  float transAmountX = 1;
-  float transAmountY = 1;
-  float transAmountZ = 1;
-  float sizeAmountX = 1;
-  float sizeAmountY = 1;
-  float triAmount = 1;
+  boolean rotAmount = true;
+  boolean rotNormAmount = true;
+  boolean transAmountX = true;
+  boolean transAmountY = true;
+  boolean transAmountZ = true;
+  boolean sizeAmountX = true;
+  boolean sizeAmountY = true;
+  boolean triAmount = true;
 
   WETriangleMesh src; 
   WETriangleMesh dst;
@@ -258,25 +258,25 @@ class TransformInfo {
   }
 
   public void enterMeshTransInfo(TransformInfo info) {
-    rotAmount *= abs(info.rotAmount - 1);
-    rotNormAmount *= abs(info.rotNormAmount - 1);
-    transAmountX *= abs(info.transAmountX - 1);
-    transAmountY *= abs(info.transAmountY - 1);
-    transAmountZ *= abs(info.transAmountZ - 1);
-    sizeAmountX *= abs(info.sizeAmountX - 1);
-    sizeAmountY *= abs(info.sizeAmountY - 1);
-    triAmount *= abs(info.triAmount - 1);
+    rotAmount &= !info.rotAmount;
+    rotNormAmount &= !info.rotNormAmount;
+    transAmountX &= !info.transAmountX;
+    transAmountY &= !info.transAmountY;
+    transAmountZ &= !info.transAmountZ;
+    sizeAmountX &= !info.sizeAmountX;
+    sizeAmountY &= !info.sizeAmountY;
+    triAmount &= !info.triAmount;
   }
 
   void invert() {
-    rotAmount = abs(rotAmount - 1);
-    rotNormAmount = abs(rotNormAmount - 1);
-    transAmountX = abs(transAmountX - 1);
-    transAmountY = abs(transAmountY - 1);
-    transAmountZ = abs(transAmountZ - 1);
-    sizeAmountX = abs(sizeAmountX - 1);
-    sizeAmountY = abs(sizeAmountY - 1);
-    triAmount = abs(triAmount - 1);
+    rotAmount = !rotAmount;
+    rotNormAmount = !rotNormAmount;
+    transAmountX = !transAmountX;
+    transAmountY = !transAmountY;
+    transAmountZ = !transAmountZ;
+    sizeAmountX = !sizeAmountX;
+    sizeAmountY = !sizeAmountY;
+    triAmount = !triAmount;
   }
 
   void calcMesh(Vec3D offSet) {
@@ -290,9 +290,9 @@ class TransformInfo {
     Vec3D srcC = m.getCenter(src);
     Vec3D dstC = m.getCenter(dst).sub(offSet);    
 
-    if (srcC.x == dstC.x && offSet.x == 0) transAmountX = 0;
-    if (srcC.y == dstC.y && offSet.y == 0) transAmountY = 0;
-    if (srcC.z == dstC.z && offSet.z == 0) transAmountZ = 0;
+    if (srcC.x == dstC.x && offSet.x == 0) transAmountX = false;
+    if (srcC.y == dstC.y && offSet.y == 0) transAmountY = false;
+    if (srcC.z == dstC.z && offSet.z == 0) transAmountZ = false;
   }
 
   void checkSize() {
@@ -302,11 +302,11 @@ class TransformInfo {
     float widthSrc = m.getWidth(src);
     float widthDst = m.getWidth(dst);
 
-    if (abs(widthSrc - widthDst) < pPointSize) sizeAmountX = 0;
-    if (abs(heightSrc - heightDst) < pPointSize) sizeAmountY = 0;
+    if (abs(widthSrc - widthDst) < pPointSize) sizeAmountX = false;
+    if (abs(heightSrc - heightDst) < pPointSize) sizeAmountY = false;
 
     if (m.isTriangle(src) == m.isTriangle(dst))
-      triAmount = 0;
+      triAmount = false;
   }
 
   void checkRot() {
@@ -314,11 +314,11 @@ class TransformInfo {
     Vec3D tempB = m.getNormal(dst);
 
     if (tempA.x == tempB.x && tempA.y == tempB.y && tempA.z == tempB.z)
-      rotAmount = 0;
+      rotAmount = false;
   }
 
   void checkRotNorm() {
     if (m.getRotToTarget(src, dst) == 0)
-      rotNormAmount = 0;
+      rotNormAmount = false;
   }
 }

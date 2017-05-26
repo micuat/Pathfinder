@@ -78,14 +78,14 @@ class Choreo {
   public void setup(TransformInfo info) {
     toDoTasks = new String[0]; 
 
-    if (info.rotNormAmount == 1) toDoTasks = append(toDoTasks, transTasks[1]);
-    if (info.rotAmount == 1) toDoTasks = append(toDoTasks, transTasks[0]);
-    if (info.transAmountY == 1) toDoTasks = append(toDoTasks, transTasks[3]);
-    if (info.transAmountZ == 1) toDoTasks = append(toDoTasks, transTasks[4]);
-    if (info.transAmountX == 1) toDoTasks = append(toDoTasks, transTasks[2]);
-    if (info.sizeAmountY == 1) toDoTasks = append(toDoTasks, transTasks[6]);
-    if (info.sizeAmountX == 1) toDoTasks = append(toDoTasks, transTasks[5]);
-    if (info.triAmount == 1) toDoTasks = append(toDoTasks, transTasks[7]);
+    if (info.rotNormAmount) toDoTasks = append(toDoTasks, transTasks[1]);
+    if (info.rotAmount) toDoTasks = append(toDoTasks, transTasks[0]);
+    if (info.transAmountY) toDoTasks = append(toDoTasks, transTasks[3]);
+    if (info.transAmountZ) toDoTasks = append(toDoTasks, transTasks[4]);
+    if (info.transAmountX) toDoTasks = append(toDoTasks, transTasks[2]);
+    if (info.sizeAmountY) toDoTasks = append(toDoTasks, transTasks[6]);
+    if (info.sizeAmountX) toDoTasks = append(toDoTasks, transTasks[5]);
+    if (info.triAmount) toDoTasks = append(toDoTasks, transTasks[7]);
 
     if (cp5Shuffle) Collections.shuffle(Arrays.asList(toDoTasks));
 

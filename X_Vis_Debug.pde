@@ -82,68 +82,20 @@ void drawHUD() {
     line (100, i * yUnit - 5, 100 + xLength, i * yUnit - 5);
     stroke(360);
     fill(360);
-    if (choreo.toDoTasks[i].equals("aniRot")) {
-      pushMatrix();
-      text("Rot ", 0, i * yUnit);
-      translate(100, -5);
-      line(0, i * yUnit, xLength*choreo.aniRot / 100.0, i * yUnit);
-      popMatrix();
-    }
-
-    if (choreo.toDoTasks[i].equals("aniRotNo")) {
-      pushMatrix();
-      text("Rot No ", 0, i * yUnit);
-      translate(100, -5);
-      line(0, i * yUnit, xLength * choreo.aniRotNo / 100.0, i * yUnit);
-      popMatrix();
-    }
-
-    if (choreo.toDoTasks[i].equals("aniTransX")) {
-      pushMatrix();
-      text("Trans X ", 0, i * yUnit);
-      translate(100, -5);
-      line(0, i * yUnit, xLength * choreo.aniTransX / 100.0, i * yUnit);
-      popMatrix();
-    }
-
-    if (choreo.toDoTasks[i].equals("aniTransY")) {
-      pushMatrix();
-      text("Trans Y ", 0, i * yUnit);
-      translate(100, -5);
-      line(0, i * yUnit, xLength * choreo.aniTransY / 100.0, i * yUnit);
-      popMatrix();
-    }
-
-    if (choreo.toDoTasks[i].equals("aniTransZ")) {
-      pushMatrix();
-      text("Trans Z ", 0, i * yUnit);
-      translate(100, -5);
-      line(0, i * yUnit, xLength * choreo.aniTransZ / 100.0, i * yUnit);
-      popMatrix();
-    }
-
-    if (choreo.toDoTasks[i].equals("aniSizeX")) {
-      pushMatrix();
-      text("Scale X ", 0, i * yUnit);
-      translate(100, -5);
-      line(0, i * yUnit, xLength * choreo.aniSizeX / 100.0, i * yUnit);
-      popMatrix();
-    }
-
-    if (choreo.toDoTasks[i].equals("aniSizeY")) {
-      pushMatrix();
-      text("Scale Y ", 0, i*yUnit);
-      translate(100, -5);
-      line(0, i * yUnit, xLength * choreo.aniSizeY / 100.0, i * yUnit);
-      popMatrix();
-    }
-
-    if (choreo.toDoTasks[i].equals("aniTri")) {
-      pushMatrix();
-      text("Tri Deform ", 0, i * yUnit);
-      translate(100, -5);
-      line(0, i * yUnit, xLength * choreo.aniTri / 100.0, i * yUnit);
-      popMatrix();
+    for(String key: choreo.transTasks) {
+      if (choreo.toDoTasks[i].equals(key)) {
+        pushMatrix();
+        text(choreo.transNames.get(key) + " ", 0, i * yUnit);
+        translate(100, -5);
+        float val = 0;
+        try {
+          val = choreo.getClass().getDeclaredField(key).getFloat(choreo);
+        } catch (Exception e) {
+          println(e);
+        }
+        line(0, i * yUnit, xLength * val / 100.0, i * yUnit);
+        popMatrix();
+      }
     }
   }
 

@@ -31,12 +31,22 @@ class Choreo {
   };
   String[] toDoTasks = {
   };
+  Map<String, String> transNames = new HashMap();
 
   public Choreo(PApplet p5I) {
     p5 = p5I;
   }
 
   public void setupAni() {
+    transNames.put("aniRot", "Rot");
+    transNames.put("aniRotNo", "Rot No");
+    transNames.put("aniTransX", "Trans X");
+    transNames.put("aniTransY", "Trans Y");
+    transNames.put("aniTransZ", "Trans Z");
+    transNames.put("aniSizeX", "Scale X");
+    transNames.put("aniSizeY", "Scale Y");
+    transNames.put("aniTri", "Tri Deform");
+
     speed = cp5TransSpeed;
     delay = cp5TransDelay;
 

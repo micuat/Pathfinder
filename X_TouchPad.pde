@@ -11,10 +11,37 @@ void setupTouchpad() {
 void updateTouchPad() {
 }
 
+class BodyInfo {
+  int x = 0;
+  int y = 0;
+  boolean bRandom = false;
+
+  void setRandom(boolean b) {
+    bRandom = b;
+  }
+
+  void setPosition(int _x, int _y) {
+    x = _x;
+    y = _y;
+  }
+}
+BodyInfo[] bodyInfos = new BodyInfo[5];
+
 void oscEvent(OscMessage m) {
   print("### received an osc message.");
   print(" addrpattern: "+m.addrPattern());
   println(" typetag: "+m.typetag());
+
+  if (m.addrPattern().equals("/pathfinder/set")) {
+    int id = m.get(2).intValue();
+    int x = m.get(0).intValue();
+    int y = m.get(1).intValue();
+    println("received " + id + " " + x + " " + y);
+    if(id >= 0 && id < 5) {
+      bodyInfos[id].setRandom(false);
+      bodyInfos[id].setPosition((int)map(x, 0, 8, -16, 16), (int)map(y, 0, 8, -16, 16));
+    }
+  }
 
   if (m.addrPattern().equals("/Object/rand")) println("-------------------------------------------------------");
 

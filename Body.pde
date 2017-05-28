@@ -52,6 +52,13 @@ class Body {
     default:
       mesh = new PPoint();
     }
+    //mesh.setTrans(new Vec3D(calcRandomValue(-cp5WorldRangeX, cp5WorldRangeX), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY), calcRandomValue(-cp5WorldRangeY, cp5WorldRangeY)));
+    if(bodyInfos[id] == null) {
+      bodyInfos[id] = new BodyInfo();
+    }
+    mesh.setTrans(new Vec3D(bodyInfos[id].x, bodyInfos[id].y, 0));
+    println(id + " " + bodyInfos[id].x + " " + bodyInfos[id].y);
+
     element = new ArrayList<MeshElement>(0);
     for (int i = 0; i < mesh.meshes.length; i++) {
       element.add(new MeshElement(mesh.meshes[i]));

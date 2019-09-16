@@ -349,10 +349,11 @@ void planePlane() {
 }
 
 void pointLine() {
-  listofBody[0] = 4;
-  listofBody[1] = 3;
-  listofBody[2] = 4;
-  listofBody[3] = 2;
+  listofBody[0] = 0;
+  listofBody[1] = 1;
+  listofBody[2] = 0;
+  listofBody[3] = 1;
+  listofBody[4] = 0;
 }
 
 void pointPlane() {

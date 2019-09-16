@@ -63,6 +63,9 @@ RadioButton r;
 
 void setupGui() {
   cp5 = new ControlP5(this);
+  // https://github.com/sojamo/controlp5/issues/29
+  cp5.getProperties().setFormat(ControlP5.SERIALIZED);
+
   cp5.setColorBackground(color(40));
   cp5.setColorForeground(color(130));
   cp5.setColorActive(color(155)); 

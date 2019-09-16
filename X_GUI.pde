@@ -81,8 +81,8 @@ void setupGui() {
     .setItemsPerRow(3)
     .setSpacingColumn(125)
     .addItem("Auto", 1)
-    .addItem("Loop", 2)
-    .addItem("Manual", 3)
+    // .addItem("Loop", 2)
+    // .addItem("Manual", 3)
     .setColorActive(highlight1)
     ;
   r.activate(0);

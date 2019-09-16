@@ -212,42 +212,42 @@ void controlEvent(ControlEvent theEvent) {
   if (theEvent.getId() == 100) selectInput("load settings", "fileLoadCP5");
   if (theEvent.getId() == 101) selectInput("save settings", "fileSaveCP5");
 
-  if (theEvent.isGroup()) {
+  if (theEvent.isController()) {
     // check if the Event was triggered from a ControlGroup
-    println("event from group : " + theEvent.getGroup().getValue() + " from " + theEvent.getGroup());
+    // println("event from group : " + theEvent.getGroup().getValue() + " from " + theEvent.getGroup());
 
-    String name = "" + theEvent.getGroup();
+    String name = "" + theEvent.getName();
 
     println(name);
-    if ("Easing [DropdownList]".equals(name)) {
-      choreo.easingType = (int)theEvent.getGroup().getValue();
+    if ("Easing".equals(name)) {
+      choreo.easingType = (int)theEvent.getValue();
       println("yeeeeeeeeeeees");
     }
 
-    if ("object_1 [DropdownList]".equals(name))
-      listofBody[0] = (int)theEvent.getGroup().getValue();
+    if ("object_1".equals(name))
+      listofBody[0] = (int)theEvent.getValue();
 
-    if ("object_2 [DropdownList]".equals(name))
-      listofBody[1] = (int)theEvent.getGroup().getValue();
+    if ("object_2".equals(name))
+      listofBody[1] = (int)theEvent.getValue();
 
-    if ("object_3 [DropdownList]".equals(name)) {
-      listofBody[2] = (int)theEvent.getGroup().getValue();
+    if ("object_3".equals(name)) {
+      listofBody[2] = (int)theEvent.getValue();
     }
 
-    if ("object_4 [DropdownList]".equals(name))
-      listofBody[3] = (int)theEvent.getGroup().getValue();
+    if ("object_4".equals(name))
+      listofBody[3] = (int)theEvent.getValue();
 
-    if ("object_5 [DropdownList]".equals(name))
-      listofBody[4] = (int)theEvent.getGroup().getValue();
+    if ("object_5".equals(name))
+      listofBody[4] = (int)theEvent.getValue();
 
-    if ("object_6 [DropdownList]".equals(name))
-      listofBody[5] = (int)theEvent.getGroup().getValue();
+    if ("object_6".equals(name))
+      listofBody[5] = (int)theEvent.getValue();
 
-    if ("object_7 [DropdownList]".equals(name))
-      listofBody[6] = (int)theEvent.getGroup().getValue();
+    if ("object_7".equals(name))
+      listofBody[6] = (int)theEvent.getValue();
 
-    if ("object_8 [DropdownList]".equals(name))
-      listofBody[7] = (int)theEvent.getGroup().getValue();
+    if ("object_8".equals(name))
+      listofBody[7] = (int)theEvent.getValue();
     println(listofBody);
   }
 }
